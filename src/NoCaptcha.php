@@ -1,6 +1,8 @@
 <?php namespace Arcanedev\NoCaptcha;
 
 use Arcanedev\NoCaptcha\Contracts\NoCaptchaInterface;
+use Arcanedev\NoCaptcha\Exceptions\ApiException;
+use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
 
 class NoCaptcha implements NoCaptchaInterface
 {
@@ -64,6 +66,8 @@ class NoCaptcha implements NoCaptchaInterface
      */
     protected function setSecret($secret)
     {
+        $this->checkSecret($secret);
+
         $this->secret = $secret;
 
         return $this;
@@ -78,6 +82,8 @@ class NoCaptcha implements NoCaptchaInterface
      */
     protected function setSiteKey($siteKey)
     {
+        $this->checkSiteKey($siteKey);
+
         $this->siteKey = $siteKey;
 
         return $this;
@@ -175,6 +181,52 @@ class NoCaptcha implements NoCaptchaInterface
     private function hasLang()
     {
         return ! empty($this->lang);
+    }
+
+    /**
+     * Check secret key
+     *
+     * @param  string $secret
+     *
+     * @throws ApiException
+     * @throws InvalidTypeException
+     */
+    private function checkSecret(&$secret)
+    {
+        if (! is_string($secret)) {
+            throw new InvalidTypeException(
+                'The secret key must be a string value, '.gettype($secret).' given'
+            );
+        }
+
+        $secret = trim($secret);
+
+        if (empty($secret)) {
+            throw new ApiException('The secret key must not be empty');
+        }
+    }
+
+    /**
+     * Check site key
+     *
+     * @param  string $siteKey
+     *
+     * @throws ApiException
+     * @throws InvalidTypeException
+     */
+    private function checkSiteKey(&$siteKey)
+    {
+        if (! is_string($siteKey)) {
+            throw new InvalidTypeException(
+                'The site key must be a string value, '.gettype($siteKey).' given'
+            );
+        }
+
+        $siteKey = trim($siteKey);
+
+        if (empty($siteKey)) {
+            throw new ApiException('The site key must not be empty');
+        }
     }
 
     /* ------------------------------------------------------------------------------------------------
