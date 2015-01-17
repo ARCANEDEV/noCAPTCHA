@@ -24,7 +24,7 @@ class RequestTest extends TestCase
     {
         parent::setUp();
 
-        $this->request = new Request(self::URL_TO_CURL_OR_WHATEVER);
+        $this->request = new Request;
     }
 
     public function tearDown()
@@ -51,7 +51,7 @@ class RequestTest extends TestCase
      */
     public function testCanCurl()
     {
-        $response = $this->request->send();
+        $response = $this->request->send(self::URL_TO_CURL_OR_WHATEVER);
 
         $this->assertInternalType('array', $response);
         $this->assertTrue(isset($response['url']));
@@ -63,7 +63,7 @@ class RequestTest extends TestCase
      */
     public function testCanGetResponseWithTheUglyFileGetContents()
     {
-        $response = $this->request->send(false);
+        $response = $this->request->send(self::URL_TO_CURL_OR_WHATEVER, false);
 
         $this->assertInternalType('array', $response);
         $this->assertTrue(isset($response['url']));
@@ -78,7 +78,7 @@ class RequestTest extends TestCase
      */
     public function testMustThrowInvalidTypeExceptionOnUrl()
     {
-        new Request(null);
+        $this->request->send(null);
     }
 
     /**
@@ -89,7 +89,7 @@ class RequestTest extends TestCase
      */
     public function testMustThrowApiExceptionOnUrl()
     {
-        new Request('');
+        $this->request->send('');
     }
 
     /**
@@ -100,6 +100,6 @@ class RequestTest extends TestCase
      */
     public function testMustThrowInvalidUrlExceptionOnUrl()
     {
-        new Request('trust-me-im-a-valid-url');
+        $this->request->send('trust-me-im-a-valid-url');
     }
 }

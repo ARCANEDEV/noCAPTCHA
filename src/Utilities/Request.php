@@ -1,10 +1,11 @@
 <?php namespace Arcanedev\NoCaptcha\Utilities;
 
+use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 use Arcanedev\NoCaptcha\Exceptions\ApiException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
 
-class Request
+class Request implements RequestInterface
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -23,12 +24,9 @@ class Request
      */
     /**
      * Constructor
-     *
-     * @param string $url
      */
-    public function __construct($url = null)
+    public function __construct()
     {
-        $this->setUrl($url);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -77,7 +75,7 @@ class Request
      */
     protected function simple()
     {
-        $result   = file_get_contents($this->url);
+        $result = file_get_contents($this->url);
 
         return $result;
     }
@@ -85,12 +83,15 @@ class Request
     /**
      * Run the request and get response
      *
-     * @param bool $curled
+     * @param  string $url
+     * @param  bool   $curled
      *
      * @return array
      */
-    public function send($curled = true)
+    public function send($url, $curled = true)
     {
+        $this->setUrl($url);
+
         $result = ($this->isCurlExists() and $curled === true)
             ? $this->curl()
             : $this->simple();
