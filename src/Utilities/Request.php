@@ -58,7 +58,7 @@ class Request
     /**
      * Create an api request using curl
      *
-     * @return array
+     * @return string
      */
     protected function curl()
     {
@@ -73,7 +73,7 @@ class Request
     /**
      * Create a simple api request using file_get_contents
      *
-     * @return array
+     * @return string
      */
     protected function simple()
     {
