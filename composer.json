@@ -26,5 +26,9 @@
             "Arcanedev\\NoCaptcha\\Tests\\": "tests/"
         }
     },
+    "suggest": {
+        "ext-curl": "Allows to curl google api",
+        "ext-json": "Allows to convert google api json response to array"
+    },
     "minimum-stability": "stable"
 }
