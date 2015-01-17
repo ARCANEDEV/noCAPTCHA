@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\NoCaptcha;
 
 use Arcanedev\NoCaptcha\Contracts\NoCaptchaInterface;
+use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 use Arcanedev\NoCaptcha\Exceptions\ApiException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
 use Arcanedev\NoCaptcha\Utilities\Request;
@@ -40,6 +41,13 @@ class NoCaptcha implements NoCaptchaInterface
      */
     protected $scriptLoaded = false;
 
+    /**
+     * HTTP Request Client
+     *
+     * @var RequestInterface
+     */
+    protected $request;
+
     const CLIENT_URL = 'https://www.google.com/recaptcha/api.js';
     const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
 
@@ -59,6 +67,8 @@ class NoCaptcha implements NoCaptchaInterface
         $this->setSecret($secret);
         $this->setSiteKey($siteKey);
         $this->setLang($lang);
+
+        $this->setRequestClient(new Request);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -129,6 +139,19 @@ class NoCaptcha implements NoCaptchaInterface
     protected function setLang($lang)
     {
         $this->lang = $lang;
+
+        return $this;
+    }
+
+    /**
+     * Set HTTP Request Client
+     * @param RequestInterface $request
+     *
+     * @return NoCaptcha
+     */
+    public function setRequestClient(RequestInterface $request)
+    {
+        $this->request = $request;
 
         return $this;
     }
@@ -278,9 +301,8 @@ class NoCaptcha implements NoCaptchaInterface
      */
     private function sendVerifyRequest(array $query = [])
     {
-        $url = static::VERIFY_URL . '?' . http_build_query($query);
-
-        $response = (new Request($url))->send();
+        $url      = static::VERIFY_URL . '?' . http_build_query($query);
+        $response = $this->request->send($url);
 
         return $response;
     }

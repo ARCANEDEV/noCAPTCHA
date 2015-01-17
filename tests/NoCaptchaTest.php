@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\NoCaptcha\Tests;
 
 use Arcanedev\NoCaptcha\NoCaptcha;
+use Mockery as m;
 
 class NoCaptchaTest extends TestCase
 {
@@ -133,6 +134,45 @@ class NoCaptchaTest extends TestCase
         $tag = '<div class="g-recaptcha" data-sitekey="site-key" data-theme="dark" data-type="audio"></div>';
 
         $this->assertEquals($tag, $this->noCaptcha->display($attributes));
+    }
+
+    /**
+     * @test
+     */
+    public function testCanVerify()
+    {
+        $request = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
+        $request->shouldReceive('send')->andReturn([
+            'success' => true
+        ]);
+
+        $passes = $this->noCaptcha
+            ->setRequestClient($request)
+            ->verify('re-captcha-response');
+
+        $this->assertTrue($passes);
+    }
+
+    /**
+     * @test
+     */
+    public function testCanVerifyButFails()
+    {
+        $passes  = $this->noCaptcha->verify('');
+
+        $this->assertFalse($passes);
+
+        $request = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
+        $request->shouldReceive('send')->andReturn([
+            'success'     => false,
+            'error-codes' => 'invalid-input-response'
+        ]);
+
+        $passes = $this->noCaptcha
+            ->setRequestClient($request)
+            ->verify('re-captcha-response');
+
+        $this->assertFalse($passes);
     }
 
     /* ------------------------------------------------------------------------------------------------
