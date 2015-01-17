@@ -98,7 +98,7 @@ class NoCaptchaTest extends TestCase
         $this->assertEquals($tag, $this->noCaptcha->script());
 
         // Echo out only once
-        $this->assertEquals('', $this->noCaptcha->script());
+        $this->assertEmpty($this->noCaptcha->script());
     }
 
     /**
@@ -114,7 +114,7 @@ class NoCaptchaTest extends TestCase
         $this->assertEquals($tag, $this->noCaptcha->script());
 
         // Echo out only once
-        $this->assertEquals('', $this->noCaptcha->script());
+        $this->assertEmpty($this->noCaptcha->script());
     }
 
     /**
