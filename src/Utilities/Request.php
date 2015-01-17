@@ -165,10 +165,8 @@ class Request
      */
     private function interpretResponse($result)
     {
-        if($this->checkResult($result)) {
-            return json_decode($result, true);
-        }
-
-        return [];
+        return $this->checkResult($result)
+            ? json_decode($result, true)
+            : [];
     }
 }
