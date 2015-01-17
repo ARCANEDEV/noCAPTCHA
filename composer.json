@@ -10,7 +10,9 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=5.4.0",
+        "ext-curl": "*",
+        "ext-json": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.4",
@@ -26,10 +28,6 @@
         "psr-4": {
             "Arcanedev\\NoCaptcha\\Tests\\": "tests/"
         }
-    },
-    "suggest": {
-        "ext-curl": "Allows to curl google api",
-        "ext-json": "Allows to convert google api json response to array"
     },
     "minimum-stability": "stable"
 }
