@@ -96,12 +96,43 @@ class NoCaptchaTest extends TestCase
 
         $this->assertEquals($tag, $this->noCaptcha->script());
 
+        // Echo out only once
+        $this->assertEquals('', $this->noCaptcha->script());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanRenderScriptTagWithLang()
+    {
         $lang = 'fr';
         $tag = '<script src="' . NoCaptcha::CLIENT_URL . '?hl=' . $lang . '" async defer></script>';
 
         $this->noCaptcha = $this->createCaptcha($lang);
 
         $this->assertEquals($tag, $this->noCaptcha->script());
+
+        // Echo out only once
+        $this->assertEquals('', $this->noCaptcha->script());
+    }
+
+    /**
+     * @test
+     */
+    public function testCanDisplayCaptcha()
+    {
+        $tag = '<div class="g-recaptcha" data-sitekey="site-key"></div>';
+
+        $this->assertEquals($tag, $this->noCaptcha->display());
+
+        $attributes = [
+            'data-theme' => 'dark',
+            'data-type'  => 'audio',
+        ];
+
+        $tag = '<div class="g-recaptcha" data-sitekey="site-key" data-theme="dark" data-type="audio"></div>';
+
+        $this->assertEquals($tag, $this->noCaptcha->display($attributes));
     }
 
     /* ------------------------------------------------------------------------------------------------

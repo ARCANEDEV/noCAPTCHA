@@ -3,6 +3,7 @@
 use Arcanedev\NoCaptcha\Contracts\NoCaptchaInterface;
 use Arcanedev\NoCaptcha\Exceptions\ApiException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
+use Arcanedev\NoCaptcha\Utilities\Request;
 
 class NoCaptcha implements NoCaptchaInterface
 {
@@ -31,6 +32,13 @@ class NoCaptcha implements NoCaptchaInterface
      * @var string
      */
     protected $lang;
+
+    /**
+     * Decides if we've already loaded the script file or not.
+     *
+     * @param bool
+     */
+    protected $scriptLoaded = false;
 
     const CLIENT_URL = 'https://www.google.com/recaptcha/api.js';
     const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
@@ -71,6 +79,18 @@ class NoCaptcha implements NoCaptchaInterface
         $this->secret = $secret;
 
         return $this;
+    }
+
+    /**
+     * Get site key attribute
+     *
+     * @return array
+     */
+    protected function getSiteKeyAttribute()
+    {
+        return [
+            'data-sitekey' => $this->siteKey
+        ];
     }
 
     /**
@@ -126,8 +146,6 @@ class NoCaptcha implements NoCaptchaInterface
      */
     public function display($attributes = [])
     {
-        $attributes['data-sitekey'] = $this->siteKey;
-
         return '<div class="g-recaptcha"' . $this->buildAttributes($attributes) . '></div>';
     }
 
@@ -141,6 +159,18 @@ class NoCaptcha implements NoCaptchaInterface
      */
     public function verify($response, $clientIp = null)
     {
+        if (empty($response)) {
+            return false;
+        }
+
+        $response = $this->sendVerifyRequest([
+            'secret'   => $this->secret,
+            'response' => $response,
+            'remoteip' => $clientIp
+        ]);
+
+        return isset($response['success']) and
+               $response['success'] === true;
     }
 
     /**
@@ -150,6 +180,12 @@ class NoCaptcha implements NoCaptchaInterface
      */
     public function script()
     {
+        if ($this->scriptLoaded) {
+            return '';
+        }
+
+        $this->scriptLoaded = true;
+
         return '<script src="' . $this->getScriptSrc() . '" async defer></script>';
     }
 
@@ -234,6 +270,22 @@ class NoCaptcha implements NoCaptchaInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
+     * Send verify request to API and get response
+     *
+     * @param  array $query
+     *
+     * @return array
+     */
+    private function sendVerifyRequest(array $query = [])
+    {
+        $url = static::VERIFY_URL . '?' . http_build_query($query);
+
+        $response = (new Request($url))->send();
+
+        return $response;
+    }
+
+    /**
      * Build attributes
      *
      * @param  array  $attributes
@@ -242,14 +294,15 @@ class NoCaptcha implements NoCaptchaInterface
      */
     protected function buildAttributes(array $attributes)
     {
-        if (count($attributes) == 0) {
-            return '';
-        }
+        $attributes = array_merge(
+            $this->getSiteKeyAttribute(),
+            $attributes
+        );
 
         $output = [];
 
         foreach ($attributes as $key => $value) {
-            $output[] = $key . '="' . $value . '"';
+            $output[] = trim($key) . '="' . trim($value) . '"';
         }
 
         return ' ' . implode(' ', $output);
