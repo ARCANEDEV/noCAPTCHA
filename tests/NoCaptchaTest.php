@@ -21,7 +21,7 @@ class NoCaptchaTest extends TestCase
     {
         parent::setUp();
 
-        $this->noCaptcha = new NoCaptcha;
+        $this->noCaptcha = new NoCaptcha('sectret-key', 'site-key');
     }
 
     public function tearDown()
