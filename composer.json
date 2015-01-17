@@ -1,0 +1,30 @@
+{
+    "name": "arcanedev/no-captcha",
+    "description": "No CAPTCHA (reCAPTCHA)",
+    "keywords": ["recaptcha", "no-captcha", "captcha", "google"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ARCANEDEV",
+            "email": "arcanedev.maroc@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.4",
+        "phpunit/phpcov": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arcanedev\\NoCaptcha\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Arcanedev\\NoCaptcha\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable"
+}
