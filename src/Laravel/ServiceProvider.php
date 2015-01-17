@@ -26,17 +26,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $src = realpath(dirname(__FILE__) . '/..');
-
-        $this->package('arcanedev/no-captcha', 'no-captcha', $src);
-
-        $app = $this->app;
+        $this->package(
+            'arcanedev/no-captcha',
+            'no-captcha',
+            realpath(dirname(__FILE__) . '/..')
+        );
 
         $this->registerServices();
 
-        $this->registerValidatorRules($app);
+        $this->registerValidatorRules();
 
-        $this->registerFormMacros($app);
+        $this->registerFormMacros();
     }
 
     /**
