@@ -1,6 +1,7 @@
 .idea/
 _arcanedev/
 build/
+docs/
 vendor/
 composer.lock
 composer.phar
