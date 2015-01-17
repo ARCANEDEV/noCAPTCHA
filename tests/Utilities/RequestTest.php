@@ -69,4 +69,37 @@ class RequestTest extends TestCase
         $this->assertTrue(isset($response['url']));
         $this->assertEquals(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
     }
+
+    /**
+     * @test
+     *
+     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
+     * @expectedExceptionMessage The url must be a string value, NULL given
+     */
+    public function testMustThrowInvalidTypeExceptionOnUrl()
+    {
+        new Request(null);
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\ApiException
+     * @expectedExceptionMessage The url must not be empty
+     */
+    public function testMustThrowApiExceptionOnUrl()
+    {
+        new Request('');
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
+     * @expectedExceptionMessage The url [trust-me-im-a-valid-url] is invalid
+     */
+    public function testMustThrowInvalidUrlExceptionOnUrl()
+    {
+        new Request('trust-me-im-a-valid-url');
+    }
 }

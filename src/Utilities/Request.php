@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\NoCaptcha\Utilities;
 
+use Arcanedev\NoCaptcha\Exceptions\ApiException;
+use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
+use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
+
 class Request
 {
     /* ------------------------------------------------------------------------------------------------
@@ -102,9 +106,28 @@ class Request
      * Check URL
      *
      * @param string $url
+     *
+     * @throws ApiException
+     * @throws InvalidTypeException
+     * @throws InvalidUrlException
      */
     private function checkUrl(&$url)
     {
+        if (! is_string($url)) {
+            throw new InvalidTypeException(
+                'The url must be a string value, '.gettype($url).' given'
+            );
+        }
+
+        $url = trim($url);
+
+        if (empty($url)) {
+            throw new ApiException('The url must not be empty');
+        }
+
+        if(filter_var($url, FILTER_VALIDATE_URL) === false) {
+            throw new InvalidUrlException('The url [' . $url . '] is invalid');
+        }
     }
 
     /**
@@ -115,6 +138,18 @@ class Request
     private function isCurlExists()
     {
         return function_exists('curl_version');
+    }
+
+    /**
+     * Check Result
+     *
+     * @param string $result
+     *
+     * @return bool
+     */
+    private function checkResult($result)
+    {
+        return is_string($result) and ! empty($result);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -130,6 +165,10 @@ class Request
      */
     private function interpretResponse($result)
     {
-        return json_decode($result, true);
+        if($this->checkResult($result)) {
+            return json_decode($result, true);
+        }
+
+        return [];
     }
 }
