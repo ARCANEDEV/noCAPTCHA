@@ -9,6 +9,15 @@ use Arcanedev\NoCaptcha\Utilities\Request;
 class NoCaptcha implements NoCaptchaInterface
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const CLIENT_URL = 'https://www.google.com/recaptcha/api.js';
+    const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
+    const ATTR_TYPE  = 'data-type';
+    const ATTR_THEME = 'data-theme';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
@@ -48,8 +57,19 @@ class NoCaptcha implements NoCaptchaInterface
      */
     protected $request;
 
-    const CLIENT_URL = 'https://www.google.com/recaptcha/api.js';
-    const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
+    /**
+     * The types of CAPTCHA to serve
+     *
+     * @var array
+     */
+    private $types   = ['image', 'audio'];
+
+    /**
+     * The color themes of the widget
+     *
+     * @var array
+     */
+    private $themes = ['light', 'dark'];
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -92,14 +112,13 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Get site key attribute
-     *
-     * @return array
+     * Get class attribute
      */
-    protected function getSiteKeyAttribute()
+    private function getDefaultAttribute()
     {
         return [
-            'data-sitekey' => $this->siteKey
+            'data-sitekey' => $this->siteKey,
+            'class'        => 'g-recaptcha',
         ];
     }
 
@@ -144,6 +163,22 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
+     * Get script source link
+     *
+     * @return string
+     */
+    private function getScriptSrc()
+    {
+        $link = static::CLIENT_URL;
+
+        if ($this->hasLang()) {
+            $link .= ('?hl=' . $this->getLang());
+        }
+
+        return $link;
+    }
+
+    /**
      * Set HTTP Request Client
      * @param RequestInterface $request
      *
@@ -154,6 +189,26 @@ class NoCaptcha implements NoCaptchaInterface
         $this->request = $request;
 
         return $this;
+    }
+
+    /**
+     * Get image type attribute
+     *
+     * @return array
+     */
+    protected function getImageTypeAttribute()
+    {
+        return [self::ATTR_TYPE => 'image'];
+    }
+
+    /**
+     * Get audio type attribute
+     *
+     * @return array
+     */
+    private function getAudioTypeAttribute()
+    {
+        return [self::ATTR_TYPE => 'audio'];
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -169,7 +224,56 @@ class NoCaptcha implements NoCaptchaInterface
      */
     public function display($attributes = [])
     {
-        return '<div class="g-recaptcha"' . $this->buildAttributes($attributes) . '></div>';
+        return '<div' . $this->attributes($attributes) . '></div>';
+    }
+
+    /**
+     * Prepare attributes
+     *
+     * @param  array $attributes
+     *
+     * @return string
+     */
+    protected function attributes(array $attributes)
+    {
+        $this->checkAttributes($attributes);
+
+        $attributes = array_merge(
+            $attributes,
+            $this->getDefaultAttribute()
+        );
+
+        return $this->buildAttributes($attributes);
+    }
+
+    /**
+     * Display image Captcha
+     *
+     * @param  array $attributes
+     *
+     * @return string
+     */
+    public function image($attributes = [])
+    {
+        return $this->display(array_merge(
+            $attributes,
+            $this->getImageTypeAttribute()
+        ));
+    }
+
+    /**
+     * Display audio Captcha
+     *
+     * @param  array $attributes
+     *
+     * @return string
+     */
+    public function audio($attributes = [])
+    {
+        return $this->display(array_merge(
+            $attributes,
+            $this->getAudioTypeAttribute()
+        ));
     }
 
     /**
@@ -210,22 +314,6 @@ class NoCaptcha implements NoCaptchaInterface
         $this->scriptLoaded = true;
 
         return '<script src="' . $this->getScriptSrc() . '" async defer></script>';
-    }
-
-    /**
-     * Get script source link
-     *
-     * @return string
-     */
-    private function getScriptSrc()
-    {
-        $link = static::CLIENT_URL;
-
-        if ($this->hasLang()) {
-            $link .= ('?hl=' . $this->getLang());
-        }
-
-        return $link;
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -288,6 +376,61 @@ class NoCaptcha implements NoCaptchaInterface
         }
     }
 
+    /**
+     * Check attributes
+     *
+     * @param array $attributes
+     */
+    private function checkAttributes(array &$attributes)
+    {
+        $this->checkTypeAttribute($attributes);
+        $this->checkThemeAttribute($attributes);
+    }
+
+    /**
+     * Check type attribute
+     *
+     * @param array $attributes
+     */
+    private function checkTypeAttribute(array &$attributes)
+    {
+        $this->checkDataAttribute($attributes, self::ATTR_TYPE, 'image', $this->types);
+    }
+
+    /**
+     * Check theme attribute
+     *
+     * @param array $attributes
+     */
+    private function checkThemeAttribute(array &$attributes)
+    {
+        $this->checkDataAttribute($attributes, self::ATTR_THEME, 'light', $this->themes);
+    }
+
+    /**
+     * Check g-recaptcha data Attribute
+     *
+     * @param array  $attributes
+     * @param string $name
+     * @param string $default
+     * @param array  $available
+     */
+    private function checkDataAttribute(array &$attributes, $name, $default, array $available)
+    {
+        if (! array_key_exists($name, $attributes)) {
+            return;
+        }
+
+        if (
+            ! is_string($attributes[ $name ]) or
+            ! in_array($attributes[ $name ], $available)
+        ) {
+            $attributes[ $name ] = $default;
+        }
+
+        $attributes[ $name ] = strtolower(trim($attributes[ $name ]));
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Other functions
      | ------------------------------------------------------------------------------------------------
@@ -316,14 +459,9 @@ class NoCaptcha implements NoCaptchaInterface
      */
     protected function buildAttributes(array $attributes)
     {
-        $attributes = array_merge(
-            $this->getSiteKeyAttribute(),
-            $attributes
-        );
-
         $output = [];
 
-        foreach ($attributes as $key => $value) {
+        foreach (array_reverse($attributes) as $key => $value) {
             $output[] = trim($key) . '="' . trim($value) . '"';
         }
 
