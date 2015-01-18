@@ -66,26 +66,58 @@ class ValidatorRuleTest extends LaravelTestCase
             'error-codes' => 'invalid-input-response'
         ]);
 
-        $validator = $this->validator->make([
-            // Data
+        $data     = [
             'g-recaptcha-response'         => 'google-recaptcha-response',
-        ],[
-            // Rules
+        ];
+        $rules    = [
             'g-recaptcha-response'         => 'required|captcha',
-        ],[
-            // Messages
-            'g-recaptcha-response.captcha' => 'Your captcha error message',
-        ]);
+        ];
+
+        $validator = $this->validator->make($data, $rules);
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
 
-        $messages = $validator->messages();
+        $errors = $validator->messages();
 
-        $this->assertTrue($messages->has('g-recaptcha-response'));
+        $this->assertTrue($errors->has('g-recaptcha-response'));
+        $this->assertEquals(
+            'validation.captcha',
+            $errors->first('g-recaptcha-response')
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testCanFailCaptchaRuleWithMessages()
+    {
+        $this->mockRequest([
+            'success'     => false,
+            'error-codes' => 'invalid-input-response'
+        ]);
+
+        $data     = [
+            'g-recaptcha-response'         => 'google-recaptcha-response',
+        ];
+        $rules    = [
+            'g-recaptcha-response'         => 'required|captcha',
+        ];
+        $messages = [
+            'g-recaptcha-response.captcha' => 'Your captcha error message',
+        ];
+
+        $validator = $this->validator->make($data, $rules, $messages);
+
+        $this->assertFalse($validator->passes());
+        $this->assertTrue($validator->fails());
+
+        $errors = $validator->messages();
+
+        $this->assertTrue($errors->has('g-recaptcha-response'));
         $this->assertEquals(
             'Your captcha error message',
-            $messages->first('g-recaptcha-response')
+            $errors->first('g-recaptcha-response')
         );
     }
 
