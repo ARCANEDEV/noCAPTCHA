@@ -243,6 +243,10 @@ if ($validator->fails()) {
 }
 ```
 
+## Contribution
+
+Any ideas are welcome. Feel free the submit any issues or pull requests.
+
 ## TODOS:
 
   - [x] Documentation
