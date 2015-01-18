@@ -246,7 +246,7 @@ if ($validator->fails()) {
 ## TODOS:
 
   - [x] Documentation
-  - [ ] Examples
+  - [x] Examples
   - [x] More tests and code coverage
   - [x] Laravel Support (v4.2)
   - [ ] Laravel Support (v5.0)
