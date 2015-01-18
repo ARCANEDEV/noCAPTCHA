@@ -394,7 +394,9 @@ class NoCaptcha implements NoCaptchaInterface
      */
     private function checkTypeAttribute(array &$attributes)
     {
-        $this->checkDataAttribute($attributes, self::ATTR_TYPE, 'image', $this->types);
+        if (array_key_exists(self::ATTR_TYPE, $attributes)) {
+            $this->checkDataAttribute($attributes, self::ATTR_TYPE, 'image', $this->types);
+        }
     }
 
     /**
@@ -404,7 +406,9 @@ class NoCaptcha implements NoCaptchaInterface
      */
     private function checkThemeAttribute(array &$attributes)
     {
-        $this->checkDataAttribute($attributes, self::ATTR_THEME, 'light', $this->themes);
+        if (array_key_exists(self::ATTR_THEME, $attributes)) {
+            $this->checkDataAttribute($attributes, self::ATTR_THEME, 'light', $this->themes);
+        }
     }
 
     /**
@@ -417,10 +421,6 @@ class NoCaptcha implements NoCaptchaInterface
      */
     private function checkDataAttribute(array &$attributes, $name, $default, array $available)
     {
-        if (! array_key_exists($name, $attributes)) {
-            return;
-        }
-
         if (
             ! is_string($attributes[ $name ]) or
             ! in_array($attributes[ $name ], $available)
