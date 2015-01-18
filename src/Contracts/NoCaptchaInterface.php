@@ -18,6 +18,24 @@ interface NoCaptchaInterface
     public function display($attributes = []);
 
     /**
+     * Display image Captcha
+     *
+     * @param  array $attributes
+     *
+     * @return string
+     */
+    public function image($attributes = []);
+
+    /**
+     * Display audio Captcha
+     *
+     * @param  array $attributes
+     *
+     * @return string
+     */
+    public function audio($attributes = []);
+
+    /**
      * Verify Response
      *
      * @param  string $response

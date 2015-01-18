@@ -159,6 +159,14 @@ Insert reCAPTCHA inside your form using one of this examples:
     {{ Form::submit('Submit') }}
 {{ Form::close() }}
 
+// Or
+
+{{ Form::open([...]) }}
+    // Other inputs... 
+    {{ Captcha::display() }}
+    {{ Form::submit('Submit') }}
+{{ Form::close() }}
+
 // Remember what your mother told you
 {{ Captcha::script() }}
 ```
@@ -189,7 +197,7 @@ $messages = [
     'g-recaptcha-response.captcha' => 'Your custom validation message.',
 ];
 
-$validator = Validator::make($inputs, $rules, messages);
+$validator = Validator::make($inputs, $rules, $messages);
 
 if ($validator->fails()) {
     $errors = $validation->messages();

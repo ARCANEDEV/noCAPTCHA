@@ -122,18 +122,126 @@ class NoCaptchaTest extends TestCase
      */
     public function testCanDisplayCaptcha()
     {
-        $tag = '<div class="g-recaptcha" data-sitekey="site-key"></div>';
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key"></div>',
+            $this->noCaptcha->display()
+        );
 
-        $this->assertEquals($tag, $this->noCaptcha->display());
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" data-theme="light"></div>',
+            $this->noCaptcha->display([
+                'data-theme' => 'light',
+                'data-type'  => 'image',
+            ])
+        );
 
-        $attributes = [
-            'data-theme' => 'dark',
-            'data-type'  => 'audio',
-        ];
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio" data-theme="dark"></div>',
+            $this->noCaptcha->display([
+                'data-theme' => 'dark',
+                'data-type'  => 'audio',
+            ])
+        );
+    }
 
-        $tag = '<div class="g-recaptcha" data-sitekey="site-key" data-theme="dark" data-type="audio"></div>';
+    /**
+     * @test
+     */
+    public function testCanDisplayImageCaptcha()
+    {
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image"></div>',
+            $this->noCaptcha->image()
+        );
 
-        $this->assertEquals($tag, $this->noCaptcha->display($attributes));
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" data-theme="dark"></div>',
+            $this->noCaptcha->image([
+                'data-theme' => 'dark',
+            ])
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" data-theme="light"></div>',
+            $this->noCaptcha->image([
+                'data-theme' => 'light',
+            ])
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" data-theme="light"></div>',
+            $this->noCaptcha->image([
+                'data-theme' => 'light',
+                'data-type'  => 'audio', // Intruder
+            ])
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testCanDisplayAudioCaptcha()
+    {
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio"></div>',
+            $this->noCaptcha->audio()
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio" data-theme="dark"></div>',
+            $this->noCaptcha->audio([
+                'data-theme' => 'dark',
+            ])
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio" data-theme="light"></div>',
+            $this->noCaptcha->audio([
+                'data-theme' => 'light',
+            ])
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio" data-theme="light"></div>',
+            $this->noCaptcha->audio([
+                'data-theme' => 'light',
+                'data-type'  => 'image', // Intruder
+            ])
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testCanDisplayCaptchaWithDefaults()
+    {
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image"></div>',
+            $this->noCaptcha->display([
+                'data-type'  => 'video'
+            ])
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image"></div>',
+            $this->noCaptcha->display([
+                'data-type'  => true
+            ])
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light"></div>',
+            $this->noCaptcha->display([
+                'data-theme' => 'blue'
+            ])
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light"></div>',
+            $this->noCaptcha->display([
+                'data-theme' => true
+            ])
+        );
     }
 
     /**
