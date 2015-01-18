@@ -1,10 +1,9 @@
-noCAPTCHA (new reCAPTCHA)
+noCAPTCHA (new reCAPTCHA) [![Packagist License](http://img.shields.io/packagist/l/arcanedev/no-captcha.svg?style=flat-square)](https://github.com/ARCANEDEV/noCAPTCHA/blob/master/LICENSE)
 ==============
 [![Travis Status](http://img.shields.io/travis/ARCANEDEV/noCAPTCHA.svg?style=flat-square)](https://travis-ci.org/ARCANEDEV/noCAPTCHA)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/ARCANEDEV/noCaptcha.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ARCANEDEV/noCaptcha.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master)
 [![Github Release](http://img.shields.io/github/release/ARCANEDEV/noCAPTCHA.svg?style=flat-square)](https://github.com/ARCANEDEV/noCAPTCHA/releases)
-[![Packagist License](http://img.shields.io/packagist/l/arcanedev/no-captcha.svg?style=flat-square)](https://github.com/ARCANEDEV/noCAPTCHA/blob/master/LICENSE)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/arcanedev/no-captcha.svg?style=flat-square)](https://packagist.org/packages/arcanedev/no-captcha)
 [![Github Issues](http://img.shields.io/github/issues/ARCANEDEV/noCAPTCHA.svg?style=flat-square)](https://github.com/ARCANEDEV/noCAPTCHA/issues)
 
