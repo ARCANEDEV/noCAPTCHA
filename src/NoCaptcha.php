@@ -104,9 +104,25 @@ class NoCaptcha implements NoCaptchaInterface
      */
     protected function setSecret($secret)
     {
-        $this->checkSecret($secret);
+        $this->checkKey('secret key', $secret);
 
         $this->secret = $secret;
+
+        return $this;
+    }
+
+    /**
+     * Set Site key
+     *
+     * @param  string $siteKey
+     *
+     * @return NoCaptcha
+     */
+    protected function setSiteKey($siteKey)
+    {
+        $this->checkKey('site key', $siteKey);
+
+        $this->siteKey = $siteKey;
 
         return $this;
     }
@@ -120,22 +136,6 @@ class NoCaptcha implements NoCaptchaInterface
             'data-sitekey' => $this->siteKey,
             'class'        => 'g-recaptcha',
         ];
-    }
-
-    /**
-     * Set Site key
-     *
-     * @param  string $siteKey
-     *
-     * @return NoCaptcha
-     */
-    protected function setSiteKey($siteKey)
-    {
-        $this->checkSiteKey($siteKey);
-
-        $this->siteKey = $siteKey;
-
-        return $this;
     }
 
     /**
@@ -180,7 +180,8 @@ class NoCaptcha implements NoCaptchaInterface
 
     /**
      * Set HTTP Request Client
-     * @param RequestInterface $request
+     *
+     * @param  RequestInterface $request
      *
      * @return NoCaptcha
      */
@@ -307,13 +308,14 @@ class NoCaptcha implements NoCaptchaInterface
      */
     public function script()
     {
-        if ($this->scriptLoaded) {
-            return '';
+        $script = '';
+
+        if (! $this->scriptLoaded) {
+            $script = '<script src="' . $this->getScriptSrc() . '" async defer></script>';
+            $this->scriptLoaded = true;
         }
 
-        $this->scriptLoaded = true;
-
-        return '<script src="' . $this->getScriptSrc() . '" async defer></script>';
+        return $script;
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -331,48 +333,52 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Check secret key
+     * Check key
      *
-     * @param  string $secret
+     * @param  string $name
+     * @param  mixed  $value
      *
      * @throws ApiException
      * @throws InvalidTypeException
      */
-    private function checkSecret(&$secret)
+    private function checkKey($name, &$value)
     {
-        if (! is_string($secret)) {
+        $this->checkIsString($name, $value);
+
+        $value = trim($value);
+
+        $this->checkIsNotEmpty($name, $value);
+    }
+
+    /**
+     * Check if the value is a string value
+     *
+     * @param  string $name
+     * @param  mixed  $value
+     *
+     * @throws InvalidTypeException
+     */
+    private function checkIsString($name, $value)
+    {
+        if (! is_string($value)) {
             throw new InvalidTypeException(
-                'The secret key must be a string value, '.gettype($secret).' given'
+                'The ' . $name . ' must be a string value, '.gettype($value).' given'
             );
-        }
-
-        $secret = trim($secret);
-
-        if (empty($secret)) {
-            throw new ApiException('The secret key must not be empty');
         }
     }
 
     /**
-     * Check site key
+     * Check if the value is not empty
      *
-     * @param  string $siteKey
+     * @param string $name
+     * @param string $value
      *
      * @throws ApiException
-     * @throws InvalidTypeException
      */
-    private function checkSiteKey(&$siteKey)
+    private function checkIsNotEmpty($name, $value)
     {
-        if (! is_string($siteKey)) {
-            throw new InvalidTypeException(
-                'The site key must be a string value, '.gettype($siteKey).' given'
-            );
-        }
-
-        $siteKey = trim($siteKey);
-
-        if (empty($siteKey)) {
-            throw new ApiException('The site key must not be empty');
+        if (empty($value)) {
+            throw new ApiException('The ' . $name . ' must not be empty');
         }
     }
 
@@ -394,9 +400,7 @@ class NoCaptcha implements NoCaptchaInterface
      */
     private function checkTypeAttribute(array &$attributes)
     {
-        if (array_key_exists(self::ATTR_TYPE, $attributes)) {
-            $this->checkDataAttribute($attributes, self::ATTR_TYPE, 'image', $this->types);
-        }
+        $this->checkDataAttribute($attributes, self::ATTR_TYPE, 'image', $this->types);
     }
 
     /**
@@ -406,9 +410,7 @@ class NoCaptcha implements NoCaptchaInterface
      */
     private function checkThemeAttribute(array &$attributes)
     {
-        if (array_key_exists(self::ATTR_THEME, $attributes)) {
-            $this->checkDataAttribute($attributes, self::ATTR_THEME, 'light', $this->themes);
-        }
+        $this->checkDataAttribute($attributes, self::ATTR_THEME, 'light', $this->themes);
     }
 
     /**
@@ -421,14 +423,12 @@ class NoCaptcha implements NoCaptchaInterface
      */
     private function checkDataAttribute(array &$attributes, $name, $default, array $available)
     {
-        if (
-            ! is_string($attributes[ $name ]) or
-            ! in_array($attributes[ $name ], $available)
-        ) {
-            $attributes[ $name ] = $default;
+        if (array_key_exists($name, $attributes)) {
+            $attributes[ $name ] = (
+                is_string($attributes[ $name ]) and
+                in_array($attributes[ $name ], $available)
+            ) ? strtolower(trim($attributes[ $name ])) : $default;
         }
-
-        $attributes[ $name ] = strtolower(trim($attributes[ $name ]));
     }
 
     /* ------------------------------------------------------------------------------------------------
