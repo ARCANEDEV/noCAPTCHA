@@ -127,11 +127,16 @@ $secret  = 'your-secret-key';
 $sitekey = 'your-site-key';
 $captcha = new NoCaptcha($secret, $sitekey);
 
-if (! empty($_POST)) {
-    var_dump($captcha->verify($_POST['g-recaptcha-response']));
+if ( ! empty($_POST)) {
+    $response = $_POST['g-recaptcha-response'];
+    $result   = $captcha->verify($response);
+
+    echo $result === true
+        ? 'Yay ! You are a human.'
+        : 'No ! You are a robot.';
+
     exit();
 }
-
 ?>
 
 <form action="?" method="POST">
@@ -145,6 +150,8 @@ if (! empty($_POST)) {
 echo $captcha->script();
 ?>
 ```
+
+Check the [examples folder](https://github.com/ARCANEDEV/noCAPTCHA/tree/master/examples) for more usage details.
 
 ## Laravel
 

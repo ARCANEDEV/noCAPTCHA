@@ -12,7 +12,9 @@ if ( ! empty($_POST)) {
     $response = $_POST['g-recaptcha-response'];
     $result   = $captcha->verify($response);
 
-    echo $result === true ? 'Yay ! You are a human.' : 'No ! You are a robot.';
+    echo $result === true
+        ? 'Yay ! You are a human.'
+        : 'No ! You are a robot.';
 
     exit();
 }
