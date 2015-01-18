@@ -20,10 +20,11 @@ tools:
         runs: 3
     php_code_coverage: false
     php_code_sniffer:
-            config:
-                standard: PSR2
-            filter:
-                paths: ['src']
+        enabled: true
+        config:
+            standard: PSR2
+        filter:
+            paths: ['src']
     php_loc:
         enabled: true
         excluded_dirs: [vendor, tests]
