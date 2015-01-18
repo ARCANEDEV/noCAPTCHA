@@ -444,6 +444,7 @@ class NoCaptcha implements NoCaptchaInterface
      */
     private function sendVerifyRequest(array $query = [])
     {
+        $query    = array_filter($query);
         $url      = static::VERIFY_URL . '?' . http_build_query($query);
         $response = $this->request->send($url);
 
