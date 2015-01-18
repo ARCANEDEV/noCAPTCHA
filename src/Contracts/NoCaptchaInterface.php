@@ -1,9 +1,22 @@
-<?php
-//
-namespace Arcanedev\NoCaptcha\Contracts;
+<?php namespace Arcanedev\NoCaptcha\Contracts;
+
+use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 
 interface NoCaptchaInterface
 {
+    /* ------------------------------------------------------------------------------------------------
+     |  Getters & Setters
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Set HTTP Request Client
+     *
+     * @param  RequestInterface $request
+     *
+     * @return NoCaptchaInterface
+     */
+    public function setRequestClient(RequestInterface $request);
+
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
