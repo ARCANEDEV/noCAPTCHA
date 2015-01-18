@@ -1,7 +1,7 @@
 {
     "name": "arcanedev/no-captcha",
-    "description": "No CAPTCHA (reCAPTCHA)",
-    "keywords": ["recaptcha", "no-captcha", "captcha", "google"],
+    "description": "No CAPTCHA (new Google reCAPTCHA) with Laravel support",
+    "keywords": ["recaptcha", "no-captcha", "captcha", "google", "laravel"],
     "license": "MIT",
     "authors": [
         {

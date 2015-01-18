@@ -16,40 +16,170 @@ With the new API, a significant number of your valid human users will pass the r
 reCAPTCHA comes in the form of a widget that you can easily add to your blog, forum, registration form, etc.
 > - [Google RECAPTCHA](https://developers.google.com/recaptcha/)
 
+![New Google reCAPTCHA](https://developers.google.com/recaptcha/images/newCaptchaAnchor.gif)
+
 ### Requirements
     
     - PHP >= 5.4.0
     - ext-curl: *
     - ext-json: *
 
-## INSTALLATION
+To use reCAPTCHA, you need to have a `site key` and a `secret key`. [Click here](https://www.google.com/recaptcha/admin) to setup a domain and get your keys.
 
-### Composer
+The `site key` is using for the widget and the `secret key` is used to validate the response we get from Google.
 
+For more details, check the [official documentation](https://developers.google.com/recaptcha/).
+
+# INSTALLATION
+
+## Composer
 You can install this package via [Composer](http://getcomposer.org/). Add this to your `composer.json` :
 
 ```json
 {
     "require": {
-        "arcanedev/no-captcha": "~1.0"
+        "arcanedev/no-captcha": "~1.1"
     }
 }
 ```    
 
 Then install it via `composer install` or `composer update`.
 
-## USAGE
+## Laravel
 
-Coming soon ...
+### Setup
+Once the package is installed, you can register the service provider in `app/config/app.php` in the `providers` array:
 
-## Documentation
+```php
+'providers' => [
+    ...
+    'Arcanedev\NoCaptcha\Laravel\ServiceProvider',
+],
+```
 
-Coming soon ...
+And the facade in the `aliases` array:
 
-### TODOS:
+```php
+'aliases' => [
+    ...
+    'Captcha' => 'Arcanedev\NoCaptcha\Laravel\Facade',
+],
+```
 
-  - [ ] Documentation
+### Configuration
+There is not really a need to publish the configuration file. Both the `secret` and `sitekey` should be set in your environment file so it won't be available in your versioning system.
+
+##### Option 1:
+See [Protecting Sensitive Configuration](http://laravel.com/docs/4.2/configuration#protecting-sensitive-configuration) if you don't know how to setup environment variables in Laravel `>= v4.1`.
+
+````php
+<?php
+/**
+ * Edit your .env.php or .env.*.php (If you know what i mean)
+ * By adding this two lines and fill it with your keys.
+ */
+return [
+    'NOCAPTCHA_SECRET'  => 'your-secret-key',
+    'NOCAPTCHA_SITEKEY' => 'your-site-key'
+];
+
+````
+
+##### Option 2:
+Run `php artisan config:publish arcanedev/no-captcha` to publish the config file.
+    
+Edit the `secret` and `sitekey` values in `app/config/packages/arcanedev/no-captcha/config.php` file:
+
+```php
+<?php
+
+return [
+    'secret'  => getenv('NOCAPTCHA_SECRET')  ?: 'no-captcha-secret',
+    'sitekey' => getenv('NOCAPTCHA_SITEKEY') ?: 'no-captcha-sitekey',
+    'lang'    => app()->getLocale(),
+];
+```
+
+###### To :
+
+```php
+<?php
+
+return [
+    'secret'  => 'your-secret-key',
+    'sitekey' => 'your-site-key',
+    'lang'    => 'en', // You can remove this line, it take the lang from config/app.php => 'locale'
+];
+```
+
+# USAGE
+
+## Hard Coded
+Checkout example below:
+```php
+<?php
+
+require_once "vendor/autoload.php";
+
+use Arcanedev\NoCaptcha\NoCaptcha;
+
+$secret  = 'your-secret-key';
+$sitekey = 'your-site-key';
+$captcha = new NoCaptcha($secret, $sitekey);
+
+if ( ! empty($_POST)) {
+    var_dump($captcha->verify($_POST['g-recaptcha-response']));
+    exit();
+}
+
+?>
+
+<form action="?" method="POST">
+    <?= $captcha->display(); ?>
+    <button type="submit">Submit</button>
+</form>
+
+
+<?php
+// At the bottom, before the </body> (If you're a good boy and you listen to your mother)
+echo $captcha->script();
+?>
+```
+
+## Laravel
+Insert reCAPTCHA inside your form using one of this examples:
+
+#### By using Blade syntax
+```php
+{{ Form::open([...]) }}
+    // Other inputs... 
+    {{ Form::captcha() }}
+    {{ Form::submit('Submit') }}
+{{ Form::close() }}
+
+// Remember what your mother told you
+{{ Captcha::script() }}
+```
+
+#### Without using Blade syntax
+```php
+<?php
+echo Form::open([...]);
+    // Other inputs... 
+    echo Form::captcha();
+    echo Form::submit('Submit');
+echo Form::close();
+?>
+
+<?php echo Captcha::script(); ?>
+```
+
+## TODOS:
+
+  - [x] Documentation
   - [ ] Examples
-  - [x] More tests and code coverage.
-  - [ ] Refactoring.
+  - [x] More tests and code coverage
+  - [x] Laravel Support (v4.2)
+  - [ ] Laravel Support (v5.0)
+  - [ ] Refactoring
   
