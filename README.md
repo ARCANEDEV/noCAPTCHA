@@ -127,7 +127,7 @@ $secret  = 'your-secret-key';
 $sitekey = 'your-site-key';
 $captcha = new NoCaptcha($secret, $sitekey);
 
-if ( ! empty($_POST)) {
+if (! empty($_POST)) {
     var_dump($captcha->verify($_POST['g-recaptcha-response']));
     exit();
 }
@@ -135,7 +135,7 @@ if ( ! empty($_POST)) {
 ?>
 
 <form action="?" method="POST">
-    <?= $captcha->display(); ?>
+    <?php echo $captcha->display(); ?>
     <button type="submit">Submit</button>
 </form>
 
@@ -147,9 +147,11 @@ echo $captcha->script();
 ```
 
 ## Laravel
+
+### Views
 Insert reCAPTCHA inside your form using one of this examples:
 
-#### By using Blade syntax
+##### By using Blade syntax
 ```php
 {{ Form::open([...]) }}
     // Other inputs... 
@@ -161,7 +163,7 @@ Insert reCAPTCHA inside your form using one of this examples:
 {{ Captcha::script() }}
 ```
 
-#### Without using Blade syntax
+##### Without using Blade syntax
 ```php
 <?php
 echo Form::open([...]);
@@ -172,6 +174,65 @@ echo Form::close();
 ?>
 
 <?php echo Captcha::script(); ?>
+```
+
+### Back-end (Controller or somewhere in your project ...)
+To validate the response we get from Google, your can use the `captcha` rule in your validator:
+
+```php
+$input    = Input::all();
+$rules    = [
+    // Other validation rules...
+    'g-recaptcha-response' => 'captcha',
+];
+$messages = [
+    'g-recaptcha-response.captcha' => 'Your custom validation message.',
+];
+
+$validator = Validator::make($inputs, $rules, messages);
+
+if ($validator->fails()) {
+    $errors = $validation->messages();
+    
+    var_dump($errors->first('g-recaptcha-response'));
+    
+    // Redirect back or throw an error
+}
+```
+
+If you want to manage the localized messages, edit the `validation.php` files inside your lang directory.
+
+For example:
+```php
+// app/lang/en/validation.php
+return [
+    ...
+    // Add this line with your custom message
+    "captcha" => "If you read this message, then you're a robot.",
+];
+```
+```php
+// app/lang/fr/validation.php
+return [
+    ...
+    // Ajoutez cette ligne avec votre message personnalisé
+    "captcha" => "Si vous lisez ce message, alors vous êtes un robot.",
+];
+```
+
+```php
+$validator = Validator::make(Input::all(), [
+    // Other validation rules...
+    'g-recaptcha-response' => 'captcha',
+]);
+
+if ($validator->fails()) {
+    $errors = $validation->messages();
+    
+    var_dump($errors->first('g-recaptcha-response'));
+    
+    // Redirect back or throw an error
+}
 ```
 
 ## TODOS:
