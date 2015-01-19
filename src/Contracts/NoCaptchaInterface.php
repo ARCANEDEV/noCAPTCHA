@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\NoCaptcha\Contracts;
 
+use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
 use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 
 interface NoCaptchaInterface
@@ -16,6 +17,15 @@ interface NoCaptchaInterface
      * @return NoCaptchaInterface
      */
     public function setRequestClient(RequestInterface $request);
+
+    /**
+     * Set noCaptcha Attributes
+     *
+     * @param  AttributesInterface $attributes
+     *
+     * @return NoCaptchaInterface
+     */
+    public function setAttributes(AttributesInterface $attributes);
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

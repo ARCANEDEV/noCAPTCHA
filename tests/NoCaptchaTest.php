@@ -130,16 +130,16 @@ class NoCaptchaTest extends TestCase
         $this->assertEquals(
             '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" data-theme="light"></div>',
             $this->noCaptcha->display([
-                'data-theme' => 'light',
                 'data-type'  => 'image',
+                'data-theme' => 'light',
             ])
         );
 
         $this->assertEquals(
             '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio" data-theme="dark"></div>',
             $this->noCaptcha->display([
-                'data-theme' => 'dark',
                 'data-type'  => 'audio',
+                'data-theme' => 'dark',
             ])
         );
     }
@@ -155,21 +155,21 @@ class NoCaptchaTest extends TestCase
         );
 
         $this->assertEquals(
-            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" data-theme="dark"></div>',
+            '<div class="g-recaptcha" data-sitekey="site-key" data-theme="dark" data-type="image"></div>',
             $this->noCaptcha->image([
                 'data-theme' => 'dark',
             ])
         );
 
         $this->assertEquals(
-            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" data-theme="light"></div>',
+            '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light" data-type="image"></div>',
             $this->noCaptcha->image([
                 'data-theme' => 'light',
             ])
         );
 
         $this->assertEquals(
-            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" data-theme="light"></div>',
+            '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light" data-type="image"></div>',
             $this->noCaptcha->image([
                 'data-theme' => 'light',
                 'data-type'  => 'audio', // Intruder
@@ -188,21 +188,21 @@ class NoCaptchaTest extends TestCase
         );
 
         $this->assertEquals(
-            '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio" data-theme="dark"></div>',
+            '<div class="g-recaptcha" data-sitekey="site-key" data-theme="dark" data-type="audio"></div>',
             $this->noCaptcha->audio([
                 'data-theme' => 'dark',
             ])
         );
 
         $this->assertEquals(
-            '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio" data-theme="light"></div>',
+            '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light" data-type="audio"></div>',
             $this->noCaptcha->audio([
                 'data-theme' => 'light',
             ])
         );
 
         $this->assertEquals(
-            '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio" data-theme="light"></div>',
+            '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light" data-type="audio"></div>',
             $this->noCaptcha->audio([
                 'data-theme' => 'light',
                 'data-type'  => 'image', // Intruder

@@ -1,9 +1,11 @@
 <?php namespace Arcanedev\NoCaptcha;
 
 use Arcanedev\NoCaptcha\Contracts\NoCaptchaInterface;
+use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
 use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 use Arcanedev\NoCaptcha\Exceptions\ApiException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
+use Arcanedev\NoCaptcha\Utilities\Attributes;
 use Arcanedev\NoCaptcha\Utilities\Request;
 
 class NoCaptcha implements NoCaptchaInterface
@@ -14,8 +16,6 @@ class NoCaptcha implements NoCaptchaInterface
      */
     const CLIENT_URL = 'https://www.google.com/recaptcha/api.js';
     const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
-    const ATTR_TYPE  = 'data-type';
-    const ATTR_THEME = 'data-theme';
 
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -58,18 +58,11 @@ class NoCaptcha implements NoCaptchaInterface
     protected $request;
 
     /**
-     * The types of CAPTCHA to serve
+     * noCaptcha Attributes
      *
-     * @var array
+     * @var Attributes
      */
-    private $types   = ['image', 'audio'];
-
-    /**
-     * The color themes of the widget
-     *
-     * @var array
-     */
-    private $themes = ['light', 'dark'];
+    protected $attributes;
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
@@ -89,6 +82,7 @@ class NoCaptcha implements NoCaptchaInterface
         $this->setLang($lang);
 
         $this->setRequestClient(new Request);
+        $this->setAttributes(new Attributes);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -128,27 +122,6 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Get class attribute
-     */
-    private function getDefaultAttribute()
-    {
-        return [
-            'data-sitekey' => $this->siteKey,
-            'class'        => 'g-recaptcha',
-        ];
-    }
-
-    /**
-     * Get language code
-     *
-     * @return string
-     */
-    protected function getLang()
-    {
-        return $this->lang;
-    }
-
-    /**
      * Set language code
      *
      * @param  string $lang
@@ -157,6 +130,7 @@ class NoCaptcha implements NoCaptchaInterface
      */
     protected function setLang($lang)
     {
+        // TODO: Add check lang or not !!
         $this->lang = $lang;
 
         return $this;
@@ -171,8 +145,8 @@ class NoCaptcha implements NoCaptchaInterface
     {
         $link = static::CLIENT_URL;
 
-        if ($this->hasLang()) {
-            $link .= ('?hl=' . $this->getLang());
+        if (! empty($this->lang)) {
+            $link .= ('?hl=' . $this->lang);
         }
 
         return $link;
@@ -193,23 +167,17 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Get image type attribute
+     * Set noCaptcha Attributes
      *
-     * @return array
+     * @param  AttributesInterface $attributes
+     *
+     * @return NoCaptcha
      */
-    protected function getImageTypeAttribute()
+    public function setAttributes(AttributesInterface $attributes)
     {
-        return [self::ATTR_TYPE => 'image'];
-    }
+        $this->attributes = $attributes;
 
-    /**
-     * Get audio type attribute
-     *
-     * @return array
-     */
-    private function getAudioTypeAttribute()
-    {
-        return [self::ATTR_TYPE => 'audio'];
+        return $this;
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -225,27 +193,11 @@ class NoCaptcha implements NoCaptchaInterface
      */
     public function display($attributes = [])
     {
-        return '<div' . $this->attributes($attributes) . '></div>';
+        $output = $this->attributes->build($this->siteKey, $attributes);
+
+        return '<div ' . $output . '></div>';
     }
 
-    /**
-     * Prepare attributes
-     *
-     * @param  array $attributes
-     *
-     * @return string
-     */
-    protected function attributes(array $attributes)
-    {
-        $this->checkAttributes($attributes);
-
-        $attributes = array_merge(
-            $attributes,
-            $this->getDefaultAttribute()
-        );
-
-        return $this->buildAttributes($attributes);
-    }
 
     /**
      * Display image Captcha
@@ -258,7 +210,7 @@ class NoCaptcha implements NoCaptchaInterface
     {
         return $this->display(array_merge(
             $attributes,
-            $this->getImageTypeAttribute()
+            $this->attributes->getImageAttribute()
         ));
     }
 
@@ -273,7 +225,7 @@ class NoCaptcha implements NoCaptchaInterface
     {
         return $this->display(array_merge(
             $attributes,
-            $this->getAudioTypeAttribute()
+            $this->attributes->getAudioAttribute()
         ));
     }
 
@@ -322,16 +274,6 @@ class NoCaptcha implements NoCaptchaInterface
      |  Check Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * Check if has language code
-     *
-     * @return bool
-     */
-    private function hasLang()
-    {
-        return ! empty($this->lang);
-    }
-
     /**
      * Check key
      *
@@ -382,55 +324,6 @@ class NoCaptcha implements NoCaptchaInterface
         }
     }
 
-    /**
-     * Check attributes
-     *
-     * @param array $attributes
-     */
-    private function checkAttributes(array &$attributes)
-    {
-        $this->checkTypeAttribute($attributes);
-        $this->checkThemeAttribute($attributes);
-    }
-
-    /**
-     * Check type attribute
-     *
-     * @param array $attributes
-     */
-    private function checkTypeAttribute(array &$attributes)
-    {
-        $this->checkDataAttribute($attributes, self::ATTR_TYPE, 'image', $this->types);
-    }
-
-    /**
-     * Check theme attribute
-     *
-     * @param array $attributes
-     */
-    private function checkThemeAttribute(array &$attributes)
-    {
-        $this->checkDataAttribute($attributes, self::ATTR_THEME, 'light', $this->themes);
-    }
-
-    /**
-     * Check g-recaptcha data Attribute
-     *
-     * @param array  $attributes
-     * @param string $name
-     * @param string $default
-     * @param array  $available
-     */
-    private function checkDataAttribute(array &$attributes, $name, $default, array $available)
-    {
-        if (array_key_exists($name, $attributes)) {
-            $attributes[ $name ] = (
-                is_string($attributes[ $name ]) and
-                in_array($attributes[ $name ], $available)
-            ) ? strtolower(trim($attributes[ $name ])) : $default;
-        }
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Other functions
      | ------------------------------------------------------------------------------------------------
@@ -449,23 +342,5 @@ class NoCaptcha implements NoCaptchaInterface
         $response = $this->request->send($url);
 
         return $response;
-    }
-
-    /**
-     * Build attributes
-     *
-     * @param  array  $attributes
-     *
-     * @return string
-     */
-    protected function buildAttributes(array $attributes)
-    {
-        $output = [];
-
-        foreach (array_reverse($attributes) as $key => $value) {
-            $output[] = trim($key) . '="' . trim($value) . '"';
-        }
-
-        return ' ' . implode(' ', $output);
     }
 }
