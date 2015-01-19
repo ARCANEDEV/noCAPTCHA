@@ -37,7 +37,7 @@ You can install this package via [Composer](http://getcomposer.org/). Add this t
 ```json
 {
     "require": {
-        "arcanedev/no-captcha": "~1.1"
+        "arcanedev/no-captcha": "~1.2"
     }
 }
 ```    
