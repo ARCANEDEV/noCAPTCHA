@@ -10,6 +10,24 @@ interface AttributesInterface
     const ATTR_THEME = 'data-theme';
 
     /* ------------------------------------------------------------------------------------------------
+     |  Getters & Setters
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Get Image Attribute
+     *
+     * @return array
+     */
+    public function getImageAttribute();
+
+    /**
+     * Get audio type attribute
+     *
+     * @return array
+     */
+    public function getAudioAttribute();
+
+    /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
