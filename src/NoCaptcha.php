@@ -60,7 +60,7 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * noCaptcha Attributes
      *
-     * @var Attributes
+     * @var AttributesInterface
      */
     protected $attributes;
 
@@ -278,7 +278,7 @@ class NoCaptcha implements NoCaptchaInterface
      * Check key
      *
      * @param  string $name
-     * @param  mixed  $value
+     * @param  string $value
      *
      * @throws ApiException
      * @throws InvalidTypeException
