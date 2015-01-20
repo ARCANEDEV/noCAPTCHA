@@ -198,7 +198,6 @@ class NoCaptcha implements NoCaptchaInterface
         return '<div ' . $output . '></div>';
     }
 
-
     /**
      * Display image Captcha
      *

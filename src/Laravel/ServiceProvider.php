@@ -5,9 +5,9 @@ use Arcanedev\NoCaptcha\NoCaptcha;
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /* ------------------------------------------------------------------------------------------------
-         |  Properties
-         | ------------------------------------------------------------------------------------------------
-         */
+     |  Properties
+     | ------------------------------------------------------------------------------------------------
+     */
     /**
      * Indicates if loading of the provider is deferred.
      *
