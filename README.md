@@ -165,15 +165,20 @@ Insert reCAPTCHA inside your form using one of this examples:
     {{ Form::submit('Submit') }}
 {{ Form::close() }}
 
-// Or
+// Remember what your mother told you
+{{ Captcha::script() }}
+```
 
+###### OR
+
+```php
 {{ Form::open([...]) }}
     // Other inputs... 
     {{ Captcha::display() }}
     {{ Form::submit('Submit') }}
 {{ Form::close() }}
 
-// Remember what your mother told you
+// Same thing
 {{ Captcha::script() }}
 ```
 
@@ -194,7 +199,7 @@ echo Form::close();
 To validate the response we get from Google, your can use the `captcha` rule in your validator:
 
 ```php
-$input    = Input::all();
+$inputs   = Input::all();
 $rules    = [
     // Other validation rules...
     'g-recaptcha-response' => 'captcha',
@@ -206,7 +211,7 @@ $messages = [
 $validator = Validator::make($inputs, $rules, $messages);
 
 if ($validator->fails()) {
-    $errors = $validation->messages();
+    $errors = $validator->messages();
     
     var_dump($errors->first('g-recaptcha-response'));
     
@@ -241,7 +246,7 @@ $validator = Validator::make(Input::all(), [
 ]);
 
 if ($validator->fails()) {
-    $errors = $validation->messages();
+    $errors = $validator->messages();
     
     var_dump($errors->first('g-recaptcha-response'));
     
