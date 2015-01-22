@@ -19,17 +19,6 @@ class Request implements RequestInterface
     protected $url;
 
     /* ------------------------------------------------------------------------------------------------
-     |  Constructor
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-    }
-
-    /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
      */
@@ -60,12 +49,14 @@ class Request implements RequestInterface
      */
     protected function curl()
     {
-        $ch     = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $result = curl_exec($ch);
-        curl_close($ch);
+        $curl    = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL            => $this->url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+        ]);
+        $result = curl_exec($curl);
+        curl_close($curl);
 
         return $result;
     }
@@ -108,7 +99,7 @@ class Request implements RequestInterface
     /**
      * Check URL
      *
-     * @param string $url
+     * @param  string $url
      *
      * @throws ApiException
      * @throws InvalidTypeException
@@ -162,7 +153,7 @@ class Request implements RequestInterface
     /**
      * Convert the json response to array
      *
-     * @param string $result
+     * @param  string $result
      *
      * @return array
      */
