@@ -48,7 +48,7 @@ class Attributes implements AttributesInterface
     /**
      * Set items
      *
-     * @param array $items
+     * @param  array $items
      *
      * @return Attributes
      */
@@ -80,8 +80,8 @@ class Attributes implements AttributesInterface
     /**
      * Set an item
      *
-     * @param string $name
-     * @param string $value
+     * @param  string $name
+     * @param  string $value
      *
      * @return Attributes
      */
@@ -189,7 +189,7 @@ class Attributes implements AttributesInterface
     /**
      * Check if has an item
      *
-     * @param string $name
+     * @param  string $name
      *
      * @return bool
      */
