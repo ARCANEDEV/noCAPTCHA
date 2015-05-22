@@ -273,7 +273,7 @@ class NoCaptcha implements NoCaptchaInterface
         $script = '';
 
         if ( ! $this->scriptLoaded) {
-            $script = '<script src="' . $this->getScriptSrc() . '" async defer></script>';
+            $script = '<script src="' . $this->getScriptSrc($callback) . '" async defer></script>';
             $this->scriptLoaded = true;
         }
 
