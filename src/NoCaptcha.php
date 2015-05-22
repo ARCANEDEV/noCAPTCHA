@@ -124,7 +124,7 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Set language code
      *
-     * @param  array|string $lang
+     * @param  string $lang
      *
      * @return NoCaptcha
      */
@@ -295,7 +295,7 @@ class NoCaptcha implements NoCaptchaInterface
      * Check if the value is a string value
      *
      * @param  string $name
-     * @param  mixed  $value
+     * @param  string $value
      *
      * @throws InvalidTypeException
      */
