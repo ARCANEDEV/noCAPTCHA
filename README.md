@@ -29,9 +29,24 @@ The `site key` is using for the widget and the `secret key` is used to validate 
 
 For more details, check the [official documentation](https://developers.google.com/recaptcha/).
 
-# INSTALLATION
+## Version Compatibility
 
-## Composer
+ Laravel                       | noCaptcha                           | Travis
+:------------------------------|:------------------------------------|:----------------------------------
+![Laravel v4.2.x][laravel_4_2] | ![noCaptcha v1.2.x][no_captcha_1_2] | ![Travis Build v1.2.x][travis_4_2]
+![Laravel v5.0.x][laravel_5_0] | ![noCaptcha v2.0.x][no_captcha_2_0] | ![Travis Build v2.0.x][travis_5_0]
+ 
+[laravel_4_2]: https://img.shields.io/badge/v4.2.x-supported-brightgreen.svg?style=flat-square "Laravel v4.2.x"
+[no_captcha_1_2]: https://img.shields.io/badge/version-1.2.x-blue.svg?style=flat-square "noCaptcha v1.2.x"
+[travis_4_2]: https://img.shields.io/travis/ARCANEDEV/noCAPTCHA/laravel-4.svg?style=flat-square "Travis Build v1.2.x"
+
+[laravel_5_0]: https://img.shields.io/badge/v5.0.x-supported-brightgreen.svg?style=flat-square "Laravel v5.0.x"
+[no_captcha_2_0]: https://img.shields.io/badge/version-2.0.x-blue.svg?style=flat-square "noCaptcha v2.0.x"
+[travis_5_0]: https://img.shields.io/travis/ARCANEDEV/noCAPTCHA/laravel-5.svg?style=flat-square "Travis Build v2.0.x"
+
+## INSTALLATION
+
+### Composer
 You can install this package via [Composer](http://getcomposer.org/). Add this to your `composer.json` :
 
 ```json
@@ -44,9 +59,9 @@ You can install this package via [Composer](http://getcomposer.org/). Add this t
 
 Then install it via `composer install` or `composer update`.
 
-## Laravel
+### Laravel
 
-### Setup
+#### Setup
 Once the package is installed, you can register the service provider in `app/config/app.php` in the `providers` array:
 
 ```php
@@ -65,7 +80,7 @@ And the facade in the `aliases` array:
 ],
 ```
 
-### Configuration
+#### Configuration
 There is not really a need to publish the configuration file. Both the `secret` and `sitekey` should be set in your environment file so it won't be available in your versioning system.
 
 ##### Option 1:
@@ -111,9 +126,9 @@ return [
 ];
 ```
 
-# USAGE
+## USAGE
 
-## Hard Coded
+### Hard Coded
 Checkout example below:
 ```php
 <?php
@@ -152,12 +167,12 @@ echo $captcha->script();
 
 Check the [examples folder](https://github.com/ARCANEDEV/noCAPTCHA/tree/master/examples) for more usage details.
 
-## Laravel
+### Laravel
 
-### Views
+#### Views
 Insert reCAPTCHA inside your form using one of this examples:
 
-##### By using Blade syntax
+###### By using Blade syntax
 ```php
 {{ Form::open([...]) }}
     // Other inputs... 
@@ -182,7 +197,7 @@ Insert reCAPTCHA inside your form using one of this examples:
 {{ Captcha::script() }}
 ```
 
-##### Without using Blade syntax
+###### Without using Blade syntax
 ```php
 <?php
 echo Form::open([...]);
@@ -195,7 +210,7 @@ echo Form::close();
 <?php echo Captcha::script(); ?>
 ```
 
-### Back-end (Controller or somewhere in your project ...)
+#### Back-end (Controller or somewhere in your project ...)
 To validate the response we get from Google, your can use the `captcha` rule in your validator:
 
 ```php
@@ -264,6 +279,6 @@ Any ideas are welcome. Feel free the submit any issues or pull requests.
   - [x] Examples
   - [x] More tests and code coverage
   - [x] Laravel Support (v4.2)
-  - [ ] Laravel Support (v5.0)
+  - [x] Laravel Support (v5.0)
   - [ ] Refactoring
   
