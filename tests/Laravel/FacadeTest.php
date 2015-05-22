@@ -24,10 +24,8 @@ class FacadeTest extends LaravelTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
-    public function testCanRenderScriptTag()
+    /** @test */
+    public function it_can_render_script_tag()
     {
         $this->assertEquals(
             $this->getScriptTag(),
