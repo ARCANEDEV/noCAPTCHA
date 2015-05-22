@@ -1,6 +1,5 @@
 <?php namespace Arcanedev\NoCaptcha;
 
-use Arcanedev\NoCaptcha\Contracts\ConfigInterface;
 use Arcanedev\NoCaptcha\Contracts\NoCaptchaInterface;
 use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
 use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
