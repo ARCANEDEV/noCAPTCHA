@@ -1,7 +1,6 @@
 <?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
 
 use Arcanedev\NoCaptcha\Laravel\Facade as NoCaptcha;
-
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
 class FacadeTest extends LaravelTestCase
@@ -24,10 +23,8 @@ class FacadeTest extends LaravelTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
-    public function testCanRenderScriptTag()
+    /** @test */
+    public function it_can_render_script_tag()
     {
         $this->assertEquals(
             $this->getScriptTag(),
@@ -36,20 +33,6 @@ class FacadeTest extends LaravelTestCase
 
         // Echo out only once
         $this->assertEmpty(NoCaptcha::script());
-    }
-
-    /**
-     * @test
-     */
-    public function testCanRenderScriptTagBasedOnAppLocale()
-    {
-        $locale = 'fr';
-        $this->app['config']->set('app.locale', $locale);
-
-        $this->assertEquals(
-            $this->getScriptTag('fr'),
-            NoCaptcha::script()
-        );
     }
 
     /* ------------------------------------------------------------------------------------------------

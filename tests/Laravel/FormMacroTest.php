@@ -22,10 +22,8 @@ class FormMacroTest extends LaravelTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
-    public function testCanRenderCaptcha()
+    /** @test */
+    public function it_can_render_captcha()
     {
         $captcha = $this->app['form']->captcha();
 

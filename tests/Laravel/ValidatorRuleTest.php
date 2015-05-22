@@ -1,6 +1,5 @@
 <?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
 
-use Arcanedev\NoCaptcha\Laravel\Facade as NoCaptcha;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 use Mockery as m;
 
@@ -37,10 +36,8 @@ class ValidatorRuleTest extends LaravelTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
-    public function testCanPassCaptchaRule()
+    /** @test */
+    public function it_can_passes_captcha_rule()
     {
         $this->mockRequest([
             'success' => true
@@ -56,10 +53,8 @@ class ValidatorRuleTest extends LaravelTestCase
         $this->assertFalse($validator->fails());
     }
 
-    /**
-     * @test
-     */
-    public function testCanFailCaptchaRule()
+    /** @test */
+    public function it_can_fails_captcha_rule()
     {
         $this->mockRequest([
             'success'     => false,
@@ -69,6 +64,7 @@ class ValidatorRuleTest extends LaravelTestCase
         $data     = [
             'g-recaptcha-response'         => 'google-recaptcha-response',
         ];
+
         $rules    = [
             'g-recaptcha-response'         => 'required|captcha',
         ];
@@ -87,10 +83,8 @@ class ValidatorRuleTest extends LaravelTestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testCanFailCaptchaRuleWithMessages()
+    /** @test */
+    public function it_can_fail_captcha_rule_with_messages()
     {
         $this->mockRequest([
             'success'     => false,
@@ -127,7 +121,7 @@ class ValidatorRuleTest extends LaravelTestCase
      */
     private function mockRequest($returns)
     {
-        $request = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
+        $request = m::mock('Arcanedev\\NoCaptcha\\Utilities\\Request');
         $request->shouldReceive('send')->andReturn($returns);
 
         $captcha = $this->app['arcanedev.no-captcha']->setRequestClient($request);

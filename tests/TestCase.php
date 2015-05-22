@@ -1,6 +1,8 @@
 <?php namespace Arcanedev\NoCaptcha\Tests;
 
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+use PHPUnit_Framework_TestCase;
+
+abstract class TestCase extends PHPUnit_Framework_TestCase
 {
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions

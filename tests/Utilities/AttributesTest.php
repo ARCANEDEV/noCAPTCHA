@@ -6,10 +6,15 @@ use Arcanedev\NoCaptcha\Utilities\Attributes;
 class AttributesTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Properties
+     |  Constants
      | ------------------------------------------------------------------------------------------------
      */
     const ATTRIBUTES_CLASS = 'Arcanedev\\NoCaptcha\\Utilities\\Attributes';
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Properties
+     | ------------------------------------------------------------------------------------------------
+     */
     /** @var Attributes */
     private $attributes;
 
@@ -35,10 +40,8 @@ class AttributesTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
-    public function testCanBeInstantiated()
+    /** @test */
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(self::ATTRIBUTES_CLASS, $this->attributes);
         $siteKey = 'my-site-key';
@@ -48,10 +51,8 @@ class AttributesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testCanBuildTypeAttribute()
+    /** @test */
+    public function it_can_build_type_attribute()
     {
         $siteKey    = 'my-site-key';
         $attributes = 'class="g-recaptcha" data-sitekey="' . $siteKey . '" data-type="image"';
@@ -78,10 +79,8 @@ class AttributesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testCanBuildThemeAttribute()
+    /** @test */
+    public function it_can_build_theme_attribute()
     {
         $siteKey    = 'my-site-key';
 
@@ -109,10 +108,8 @@ class AttributesTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testCanBuildWithCustomAttributes()
+    /** @test */
+    public function it_can_build_with_custom_attributes()
     {
         $siteKey = 'my-site-key';
         $this->assertEquals(
