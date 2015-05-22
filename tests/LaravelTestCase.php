@@ -23,34 +23,31 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
     /**
      * Register Service Providers
      *
-     * @return array
-     */
-    protected function getPackageProviders()
-    {
-        return [
-            'Arcanedev\NoCaptcha\Laravel\ServiceProvider'
-        ];
-    }
-
-    /**
-     * Register Aliases
+     * @param  \Illuminate\Foundation\Application  $app
      *
      * @return array
      */
-    protected function getPackageAliases()
+    protected function getPackageProviders($app)
     {
         return [
-            'Facade' => 'Arcanedev\NoCaptcha\Laravel\Facade'
+            'Illuminate\Html\HtmlServiceProvider',
+            'Arcanedev\NoCaptcha\Laravel\ServiceProvider',
         ];
     }
 
     /**
-     * Define environment setup.
+     * Get package aliases.
      *
      * @param  \Illuminate\Foundation\Application  $app
-     * @return void
+     *
+     * @return array
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getPackageAliases($app)
     {
+        return [
+            'Form'      => 'Illuminate\Html\FormFacade',
+            'HTML'      => 'Illuminate\Html\HtmlFacade',
+            'NoCaptcha' => 'Arcanedev\NoCaptcha\Laravel\Facade',
+        ];
     }
 }

@@ -107,7 +107,7 @@ class NoCaptchaTest extends TestCase
     public function testCanRenderScriptTagWithLang()
     {
         $lang = 'fr';
-        $tag = '<script src="' . NoCaptcha::CLIENT_URL . '?hl=' . $lang . '" async defer></script>';
+        $tag  = '<script src="' . NoCaptcha::CLIENT_URL . '?hl=' . $lang . '" async defer></script>';
 
         $this->noCaptcha = $this->createCaptcha($lang);
 

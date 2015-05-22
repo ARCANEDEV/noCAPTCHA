@@ -1,8 +1,9 @@
 <?php namespace Arcanedev\NoCaptcha\Laravel;
 
 use Arcanedev\NoCaptcha\NoCaptcha;
+use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+class ServiceProvider extends IlluminateServiceProvider
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -26,16 +27,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot()
     {
-        $this->package(
-            'arcanedev/no-captcha',
-            'no-captcha',
-            realpath(dirname(__FILE__) . '/..')
-        );
+        $configFile = __DIR__ . '/../config/no-captcha.php';
 
-        $this->registerServices();
+        $this->mergeConfigFrom($configFile, 'no-captcha');
+        $this->publishes([
+            $configFile => config_path('no-captcha.php')
+        ], 'config');
 
         $this->registerValidatorRules();
-
         $this->registerFormMacros();
     }
 
@@ -44,7 +43,14 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      *
      * @return void
      */
-    public function register() {}
+    public function register()
+    {
+        $this->app->bind('arcanedev.no-captcha', function() {
+            $config = config('no-captcha');
+
+            return new NoCaptcha($config['secret'], $config['sitekey'], $config['lang']);
+        });
+    }
 
     /**
      * Get the services provided by the provider.
@@ -53,9 +59,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function provides()
     {
-        return [
-            'arcanedev.no-captcha'
-        ];
+        return ['arcanedev.no-captcha'];
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -63,26 +67,16 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Register Services
-     */
-    private function registerServices()
-    {
-        $this->app->bind('arcanedev.no-captcha', function($app) {
-            $config = $app['config']->get('no-captcha::config');
-
-            return new NoCaptcha($config['secret'], $config['sitekey'], $config['lang']);
-        });
-    }
-
-    /**
      * Register Validator rules
      */
     private function registerValidatorRules()
     {
-        $this->app['validator']->extend('captcha', function($attribute, $value) {
-            $ip = $this->app['request']->getClientIp();
+        $app = $this->app;
 
-            return $this->app['arcanedev.no-captcha']->verify($value, $ip);
+        $this->app['validator']->extend('captcha', function($attribute, $value) use ($app) {
+            $ip = $app['request']->getClientIp();
+
+            return $app['arcanedev.no-captcha']->verify($value, $ip);
         });
     }
 
@@ -93,7 +87,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         if ($this->app->bound('form')) {
             $this->app['form']->macro('captcha', function($attributes = []) {
-                return $this->app['arcanedev.no-captcha']->display($attributes);
+                return app('arcanedev.no-captcha')->display($attributes);
             });
         }
     }

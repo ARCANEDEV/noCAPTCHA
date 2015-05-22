@@ -38,20 +38,6 @@ class FacadeTest extends LaravelTestCase
         $this->assertEmpty(NoCaptcha::script());
     }
 
-    /**
-     * @test
-     */
-    public function testCanRenderScriptTagBasedOnAppLocale()
-    {
-        $locale = 'fr';
-        $this->app['config']->set('app.locale', $locale);
-
-        $this->assertEquals(
-            $this->getScriptTag('fr'),
-            NoCaptcha::script()
-        );
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
