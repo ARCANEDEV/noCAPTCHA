@@ -145,7 +145,7 @@ class NoCaptcha implements NoCaptchaInterface
     {
         $link = static::CLIENT_URL;
 
-        if (! empty($this->lang)) {
+        if ( ! empty($this->lang)) {
             $link .= ('?hl=' . $this->lang);
         }
 
@@ -301,9 +301,9 @@ class NoCaptcha implements NoCaptchaInterface
      */
     private function checkIsString($name, $value)
     {
-        if (! is_string($value)) {
+        if ( ! is_string($value)) {
             throw new InvalidTypeException(
-                'The ' . $name . ' must be a string value, '.gettype($value).' given'
+                'The ' . $name . ' must be a string value, ' . gettype($value) . ' given'
             );
         }
     }
