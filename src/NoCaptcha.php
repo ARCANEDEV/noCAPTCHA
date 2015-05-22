@@ -145,7 +145,7 @@ class NoCaptcha implements NoCaptchaInterface
     {
         $link = static::CLIENT_URL;
 
-        if (! empty($this->lang)) {
+        if ( ! empty($this->lang)) {
             $link .= ('?hl=' . $this->lang);
         }
 
@@ -261,7 +261,7 @@ class NoCaptcha implements NoCaptchaInterface
     {
         $script = '';
 
-        if (! $this->scriptLoaded) {
+        if ( ! $this->scriptLoaded) {
             $script = '<script src="' . $this->getScriptSrc() . '" async defer></script>';
             $this->scriptLoaded = true;
         }
@@ -295,15 +295,15 @@ class NoCaptcha implements NoCaptchaInterface
      * Check if the value is a string value
      *
      * @param  string $name
-     * @param  mixed  $value
+     * @param  string $value
      *
      * @throws InvalidTypeException
      */
     private function checkIsString($name, $value)
     {
-        if (! is_string($value)) {
+        if ( ! is_string($value)) {
             throw new InvalidTypeException(
-                'The ' . $name . ' must be a string value, '.gettype($value).' given'
+                'The ' . $name . ' must be a string value, ' . gettype($value) . ' given'
             );
         }
     }
