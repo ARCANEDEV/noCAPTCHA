@@ -6,13 +6,17 @@ use Mockery as m;
 class NoCaptchaTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const NO_CAPTCHA_CLASS = 'Arcanedev\\NoCaptcha\\NoCaptcha';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var NoCaptcha */
     private $noCaptcha;
-
-    const NO_CAPTCHA_CLASS = 'Arcanedev\\NoCaptcha\\NoCaptcha';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -36,10 +40,8 @@ class NoCaptchaTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
-    public function testCanBeInstantiated()
+    /** @test */
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(self::NO_CAPTCHA_CLASS, $this->noCaptcha);
     }
@@ -50,7 +52,7 @@ class NoCaptchaTest extends TestCase
      * @expectedException        \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
      * @expectedExceptionMessage The secret key must be a string value, NULL given
      */
-    public function testMustThrowInvalidTypeExceptionOnSecretKey()
+    public function it_must_throw_invalid_type_exception_on_secret_key()
     {
         new NoCaptcha(null, null);
     }
@@ -61,7 +63,7 @@ class NoCaptchaTest extends TestCase
      * @expectedException        \Arcanedev\NoCaptcha\Exceptions\ApiException
      * @expectedExceptionMessage The secret key must not be empty
      */
-    public function testMustThrowApiExceptionOnEmptySecretKey()
+    public function it_must_throw_api_exception_on_empty_secret_key()
     {
         new NoCaptcha('   ', null);
     }
@@ -72,7 +74,7 @@ class NoCaptchaTest extends TestCase
      * @expectedException \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
      * @expectedExceptionMessage The site key must be a string value, NULL given
      */
-    public function testMustThrowInvalidTypeExceptionOnSiteKey()
+    public function it_must_throw_invalid_type_exception_on_site_key()
     {
         new NoCaptcha('secret', null);
     }
@@ -83,15 +85,13 @@ class NoCaptchaTest extends TestCase
      * @expectedException        \Arcanedev\NoCaptcha\Exceptions\ApiException
      * @expectedExceptionMessage The site key must not be empty
      */
-    public function testMustThrowApiExceptionOnEmptySiteKey()
+    public function it_must_throw_api_exception_on_empty_site_key()
     {
         new NoCaptcha('secret', '   ');
     }
 
-    /**
-     * @test
-     */
-    public function testCanRenderScriptTag()
+    /** @test */
+    public function it_can_render_script_tag()
     {
         $tag = '<script src="' . NoCaptcha::CLIENT_URL . '" async defer></script>';
 
@@ -101,10 +101,8 @@ class NoCaptchaTest extends TestCase
         $this->assertEmpty($this->noCaptcha->script());
     }
 
-    /**
-     * @test
-     */
-    public function testCanRenderScriptTagWithLang()
+    /** @test */
+    public function it_can_render_script_tag_with_lang()
     {
         $lang = 'fr';
         $tag  = '<script src="' . NoCaptcha::CLIENT_URL . '?hl=' . $lang . '" async defer></script>';
@@ -113,18 +111,46 @@ class NoCaptchaTest extends TestCase
 
         $this->assertEquals($tag, $this->noCaptcha->script());
 
-        // Echo out only once
+        // Not even twice
         $this->assertEmpty($this->noCaptcha->script());
     }
 
-    /**
-     * @test
-     */
-    public function testCanDisplayCaptcha()
+    /** @test */
+    public function it_can_render_script_with_callback()
+    {
+        $captchas = ['captcha-1', 'captcha-2'];
+        $script   =
+            '<script src="' . NoCaptcha::CLIENT_URL . '?onload=CaptchaCallback&render=explicit" async defer></script>
+            <script>
+                var CaptchaCallback = function(){
+                    grecaptcha.render(\'captcha-1\', {\'sitekey\' : \'site-key\'});
+                    grecaptcha.render(\'captcha-2\', {\'sitekey\' : \'site-key\'});
+                };
+            </script>';
+
+        $this->assertEquals(
+            array_map('trim', preg_split('/\r\n|\r|\n/', $script)),
+            array_map('trim', preg_split('/\r\n|\r|\n/', $this->noCaptcha->scriptWithCallback($captchas)))
+        );
+
+        // Not even twice
+        $this->assertEmpty($this->noCaptcha->script());
+        $this->assertEmpty($this->noCaptcha->scriptWithCallback($captchas));
+    }
+
+    /** @test */
+    public function it_can_display_captcha()
     {
         $this->assertEquals(
             '<div class="g-recaptcha" data-sitekey="site-key"></div>',
             $this->noCaptcha->display()
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" id="captcha-1"></div>',
+            $this->noCaptcha->display([
+                'id'        => 'captcha-1'
+            ])
         );
 
         $this->assertEquals(
@@ -144,10 +170,8 @@ class NoCaptchaTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testCanDisplayImageCaptcha()
+    /** @test */
+    public function it_can_display_image_captcha()
     {
         $this->assertEquals(
             '<div class="g-recaptcha" data-sitekey="site-key" data-type="image"></div>',
@@ -177,9 +201,7 @@ class NoCaptchaTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function testCanDisplayAudioCaptcha()
     {
         $this->assertEquals(
@@ -210,10 +232,8 @@ class NoCaptchaTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testCanDisplayCaptchaWithDefaults()
+    /** @test */
+    public function it_can_display_captcha_with_defaults()
     {
         $this->assertEquals(
             '<div class="g-recaptcha" data-sitekey="site-key" data-type="image"></div>',
@@ -244,10 +264,8 @@ class NoCaptchaTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function testCanVerify()
+    /** @test */
+    public function it_can_verify()
     {
         $request = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
         $request->shouldReceive('send')->andReturn([
@@ -261,10 +279,8 @@ class NoCaptchaTest extends TestCase
         $this->assertTrue($passes);
     }
 
-    /**
-     * @test
-     */
-    public function testCanVerifyButFails()
+    /** @test */
+    public function it_can_verify_with_fails()
     {
         $passes  = $this->noCaptcha->verify('');
 

@@ -36,10 +36,8 @@ class ServiceProviderTest extends LaravelTestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
-    public function testCanGetWhatHeProvides()
+    /** @test */
+    public function it_can_get_what_he_provides()
     {
         // This is for 100% code converge
         $this->assertEquals([

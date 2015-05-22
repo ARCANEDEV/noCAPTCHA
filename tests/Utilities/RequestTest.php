@@ -6,15 +6,19 @@ use Arcanedev\NoCaptcha\Utilities\Request;
 class RequestTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
+     |  Constants
+     | ------------------------------------------------------------------------------------------------
+     */
+    const REQUEST_CLASS           = 'Arcanedev\\NoCaptcha\\Utilities\\Request';
+
+    const URL_TO_CURL_OR_WHATEVER = 'http://httpbin.org/get';
+
+    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /** @var Request */
     private $request;
-
-    const REQUEST_CLASS           = 'Arcanedev\\NoCaptcha\\Utilities\\Request';
-
-    const URL_TO_CURL_OR_WHATEVER = 'http://httpbin.org/get';
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -38,18 +42,14 @@ class RequestTest extends TestCase
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @test
-     */
-    public function testCanBeInstantiated()
+    /** @test */
+    public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(self::REQUEST_CLASS, $this->request);
     }
 
-    /**
-     * @test
-     */
-    public function testCanCurl()
+    /** @test */
+    public function it_can_curl()
     {
         $response = $this->request->send(self::URL_TO_CURL_OR_WHATEVER);
 
@@ -58,10 +58,8 @@ class RequestTest extends TestCase
         $this->assertEquals(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
     }
 
-    /**
-     * @test
-     */
-    public function testCanGetResponseWithTheUglyFileGetContents()
+    /** @test */
+    public function it_can_get_response_with_the_ugly_file_get_contents()
     {
         $response = $this->request->send(self::URL_TO_CURL_OR_WHATEVER, false);
 
@@ -76,7 +74,7 @@ class RequestTest extends TestCase
      * @expectedException        \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
      * @expectedExceptionMessage The url must be a string value, NULL given
      */
-    public function testMustThrowInvalidTypeExceptionOnUrl()
+    public function it_must_throw_invalid_type_exception_on_url()
     {
         $this->request->send(null);
     }
@@ -87,7 +85,7 @@ class RequestTest extends TestCase
      * @expectedException        \Arcanedev\NoCaptcha\Exceptions\ApiException
      * @expectedExceptionMessage The url must not be empty
      */
-    public function testMustThrowApiExceptionOnUrl()
+    public function it_must_throw_api_exception_on_url()
     {
         $this->request->send('');
     }
@@ -98,7 +96,7 @@ class RequestTest extends TestCase
      * @expectedException        \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
      * @expectedExceptionMessage The url [trust-me-im-a-valid-url] is invalid
      */
-    public function testMustThrowInvalidUrlExceptionOnUrl()
+    public function it_must_throw_invalid_url_exception_on_url()
     {
         $this->request->send('trust-me-im-a-valid-url');
     }
