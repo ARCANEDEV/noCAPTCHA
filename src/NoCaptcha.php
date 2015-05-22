@@ -139,14 +139,23 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Get script source link
      *
+     * @param  string null $callback
+     *
      * @return string
      */
-    private function getScriptSrc()
+    private function getScriptSrc($callback = null)
     {
-        $link = static::CLIENT_URL;
+        $first = true;
+        $link  = static::CLIENT_URL;
 
+        // TODO: Refactor to query builder
         if ( ! empty($this->lang)) {
             $link .= ('?hl=' . $this->lang);
+            $first = false;
+        }
+
+        if ( ! is_null($callback)) {
+            $link .= ($first ? '?' : '&') . "onload={$callback}&render=explicit";
         }
 
         return $link;
@@ -249,24 +258,54 @@ class NoCaptcha implements NoCaptchaInterface
         ]);
 
         return isset($response['success']) and
-               $response['success'] === true;
+        $response['success'] === true;
     }
 
     /**
      * Get script tag
      *
+     * @param  string|null $callback
+     *
      * @return string
      */
-    public function script()
+    public function script($callback = null)
     {
         $script = '';
 
-        if (! $this->scriptLoaded) {
-            $script = '<script src="' . $this->getScriptSrc() . '" async defer></script>';
+        if ( ! $this->scriptLoaded) {
+            $script = '<script src="' . $this->getScriptSrc($callback) . '" async defer></script>';
             $this->scriptLoaded = true;
         }
 
         return $script;
+    }
+
+    /**
+     * Get script tag with callback function
+     *
+     * @param  array $captchas
+     *
+     * @return string
+     */
+    public function scriptWithCallback(array $captchas)
+    {
+        $script = $this->script('CaptchaCallback');
+
+        if (empty($script) or empty($captchas)) {
+            return $script;
+        }
+
+        $captchas = implode(PHP_EOL, array_map(function($captcha) {
+            return "grecaptcha.render('{$captcha}', {'sitekey' : '{$this->siteKey}'});";
+        }, $captchas));
+
+        return implode(PHP_EOL, [$script, implode(PHP_EOL, [
+            '<script>',
+            'var CaptchaCallback = function(){',
+            $captchas,
+            '};',
+            '</script>'
+        ])]);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -295,7 +334,7 @@ class NoCaptcha implements NoCaptchaInterface
      * Check if the value is a string value
      *
      * @param  string $name
-     * @param  mixed  $value
+     * @param  string $value
      *
      * @throws InvalidTypeException
      */

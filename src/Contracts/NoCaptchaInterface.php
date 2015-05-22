@@ -74,4 +74,13 @@ interface NoCaptchaInterface
      * @return string
      */
     public function script();
+
+    /**
+     * Get script tag with callback function
+     *
+     * @param  array $captchas
+     *
+     * @return string
+     */
+    public function scriptWithCallback(array $captchas);
 }
