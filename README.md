@@ -47,7 +47,9 @@ For more details, check the [official documentation](https://developers.google.c
 ## INSTALLATION
 
 ### Composer
-You can install this package via [Composer](http://getcomposer.org/). Add this to your `composer.json` :
+You can install this package via [Composer](http://getcomposer.org/) by running this command `composer require "arcanedev/no-captcha:~2.0"`.
+
+Or by adding the package to your `composer.json` 
 
 ```json
 {
@@ -57,9 +59,9 @@ You can install this package via [Composer](http://getcomposer.org/). Add this t
 }
 ```    
 
-> For Laravel 4.2, use `~1.2` version.
-
 Then install it via `composer install` or `composer update`.
+
+> For Laravel 4.2, use `~1.2` version.
 
 ### Laravel
 
