@@ -6,15 +6,16 @@ use Arcanedev\NoCaptcha\NoCaptcha;
 
 $secret  = 'your-secret-key';
 $sitekey = 'your-site-key';
-$captcha = new NoCaptcha($secret, $sitekey);
+$lang    = 'fr';
+$captcha = new NoCaptcha($secret, $sitekey, $lang);
 
 if ( ! empty($_POST)) {
     $response = $_POST['g-recaptcha-response'];
     $result   = $captcha->verify($response);
 
     echo $result === true
-        ? 'Yay ! You are a human.'
-        : 'No ! You are a robot.';
+        ? 'Yay ! Tu es un humain.'
+        : 'Non ! Tu es un robot.';
 
     exit();
 }
@@ -22,7 +23,7 @@ if ( ! empty($_POST)) {
 
 <form method="POST">
     <?php echo $captcha->display(); ?>
-    <button type="submit">Submit</button>
+    <button type="submit">Envoyer</button>
 </form>
 
 <?php echo $captcha->script(); ?>
