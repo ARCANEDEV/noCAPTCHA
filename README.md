@@ -31,11 +31,13 @@ For more details, check the [official documentation](https://developers.google.c
 
 ## Version Compatibility
 
+> Note: This is a framework-agnostic package, so you can use any version of this package in your PHP project.
+
  Laravel                       | noCaptcha                           | Travis
 :------------------------------|:------------------------------------|:----------------------------------
 ![Laravel v4.2.x][laravel_4_2] | ![noCaptcha v1.2.x][no_captcha_1_2] | ![Travis Build v1.2.x][travis_4_2]
 ![Laravel v5.0.x][laravel_5_0] | ![noCaptcha v2.0.x][no_captcha_2_0] | ![Travis Build v2.0.x][travis_5_0]
- 
+
 [laravel_4_2]: https://img.shields.io/badge/v4.2.x-supported-brightgreen.svg?style=flat-square "Laravel v4.2.x"
 [no_captcha_1_2]: https://img.shields.io/badge/version-1.2.x-blue.svg?style=flat-square "noCaptcha v1.2.x"
 [travis_4_2]: https://img.shields.io/travis/ARCANEDEV/noCAPTCHA/laravel-4.svg?style=flat-square "Travis Build v1.2.x"
