@@ -280,6 +280,13 @@ class NoCaptcha implements NoCaptchaInterface
         return $script;
     }
 
+    /**
+     * Get script tag with a callback function
+     *
+     * @param  array $captchas
+     *
+     * @return string
+     */
     public function scriptWithCallback(array $captchas)
     {
         $script = $this->script('CaptchaCallback');

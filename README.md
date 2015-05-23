@@ -3,9 +3,9 @@ noCAPTCHA (new reCAPTCHA) [![Packagist License](http://img.shields.io/packagist/
 [![Travis Status](http://img.shields.io/travis/ARCANEDEV/noCAPTCHA.svg?style=flat-square)](https://travis-ci.org/ARCANEDEV/noCAPTCHA)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/ARCANEDEV/noCaptcha.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ARCANEDEV/noCaptcha.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master)
-[![Github Release](http://img.shields.io/github/release/ARCANEDEV/noCAPTCHA.svg?style=flat-square)](https://github.com/ARCANEDEV/noCAPTCHA/releases)
-[![Packagist Downloads](https://img.shields.io/packagist/dt/arcanedev/no-captcha.svg?style=flat-square)](https://packagist.org/packages/arcanedev/no-captcha)
 [![Github Issues](http://img.shields.io/github/issues/ARCANEDEV/noCAPTCHA.svg?style=flat-square)](https://github.com/ARCANEDEV/noCAPTCHA/issues)
+[![Packagist Release](https://img.shields.io/packagist/v/arcanedev/no-captcha.svg?style=flat-square)](https://packagist.org/packages/arcanedev/no-captcha)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/arcanedev/no-captcha.svg?style=flat-square)](https://packagist.org/packages/arcanedev/no-captcha)
 
 *By [ARCANEDEV&copy;](http://www.arcanedev.net/)*
 
@@ -31,11 +31,13 @@ For more details, check the [official documentation](https://developers.google.c
 
 ## Version Compatibility
 
+> Note: This is a framework-agnostic package, so you can use any version of this package in your PHP project.
+
  Laravel                       | noCaptcha                           | Travis
 :------------------------------|:------------------------------------|:----------------------------------
 ![Laravel v4.2.x][laravel_4_2] | ![noCaptcha v1.2.x][no_captcha_1_2] | ![Travis Build v1.2.x][travis_4_2]
 ![Laravel v5.0.x][laravel_5_0] | ![noCaptcha v2.0.x][no_captcha_2_0] | ![Travis Build v2.0.x][travis_5_0]
- 
+
 [laravel_4_2]: https://img.shields.io/badge/v4.2.x-supported-brightgreen.svg?style=flat-square "Laravel v4.2.x"
 [no_captcha_1_2]: https://img.shields.io/badge/version-1.2.x-blue.svg?style=flat-square "noCaptcha v1.2.x"
 [travis_4_2]: https://img.shields.io/travis/ARCANEDEV/noCAPTCHA/laravel-4.svg?style=flat-square "Travis Build v1.2.x"
@@ -47,22 +49,26 @@ For more details, check the [official documentation](https://developers.google.c
 ## INSTALLATION
 
 ### Composer
-You can install this package via [Composer](http://getcomposer.org/). Add this to your `composer.json` :
+You can install this package via [Composer](http://getcomposer.org/) by running this command `composer require "arcanedev/no-captcha:~2.0"`.
+
+Or by adding the package to your `composer.json` 
 
 ```json
 {
     "require": {
-        "arcanedev/no-captcha": "~1.2"
+        "arcanedev/no-captcha": "~2.0"
     }
 }
 ```    
 
 Then install it via `composer install` or `composer update`.
 
+> For Laravel 4.2, use `~1.2` version.
+
 ### Laravel
 
 #### Setup
-Once the package is installed, you can register the service provider in `app/config/app.php` in the `providers` array:
+Once the package is installed, you can register the service provider in `config/app.php` in the `providers` array:
 
 ```php
 'providers' => [
@@ -80,29 +86,29 @@ And the facade in the `aliases` array:
 ],
 ```
 
+> For Laravel 4.2, the config file is located in `app/config/app.php`
+
 #### Configuration
 There is not really a need to publish the configuration file. Both the `secret` and `sitekey` should be set in your environment file so it won't be available in your versioning system.
 
-##### Option 1:
-See [Protecting Sensitive Configuration](http://laravel.com/docs/4.2/configuration#protecting-sensitive-configuration) if you don't know how to setup environment variables in Laravel `>= v4.1`.
-
-````php
-<?php
-/**
- * Edit your .env.php or .env.*.php (If you know what i mean)
- * By adding this two lines and fill it with your keys.
- */
-return [
-    'NOCAPTCHA_SECRET'  => 'your-secret-key',
-    'NOCAPTCHA_SITEKEY' => 'your-site-key'
-];
+##### Option 1 - Environment Configuration:
+See [Environment Configuration documentation](http://laravel.com/docs/5.0/configuration#environment-configuration).
 
 ````
+// Edit your .env file by adding this two lines and fill it with your keys.
+ 
+NOCAPTCHA_SECRET=your-secret-key
+NOCAPTCHA_SITEKEY=your-site-key
+````
 
-##### Option 2:
-Run `php artisan config:publish arcanedev/no-captcha` to publish the config file.
-    
-Edit the `secret` and `sitekey` values in `app/config/packages/arcanedev/no-captcha/config.php` file:
+> For Laravel 4.2: [Protecting Sensitive Configuration](http://laravel.com/docs/4.2/configuration#protecting-sensitive-configuration)
+
+##### Option 2 - Publish configuration file:
+Run `php artisan vendor:publish` to publish the config file.
+
+Edit the `secret` and `sitekey` values in `config/no-captcha.php` file:
+
+> For Laravel 4.2, run `php artisan config:publish arcanedev/no-captcha` and the file is located in `app/config/packages/arcanedev/no-captcha/config.php`. 
 
 ```php
 <?php
@@ -122,7 +128,7 @@ return [
 return [
     'secret'  => 'your-secret-key',
     'sitekey' => 'your-site-key',
-    'lang'    => 'en', // You can remove this line, it take the lang from config/app.php => 'locale'
+    'lang'    => 'en',              // Optional
 ];
 ```
 
@@ -133,7 +139,7 @@ Checkout example below:
 ```php
 <?php
 
-require_once "vendor/autoload.php";
+require_once('vendor/autoload.php');
 
 use Arcanedev\NoCaptcha\NoCaptcha;
 
@@ -158,9 +164,8 @@ if ( ! empty($_POST)) {
     <button type="submit">Submit</button>
 </form>
 
-
 <?php
-// At the bottom, before the </body> (If you're a good boy and you listen to your mother)
+// At the bottom, before the </body> (If you're a good programmer and you listen to your mother)
 echo $captcha->script();
 ?>
 ```
@@ -174,28 +179,17 @@ Insert reCAPTCHA inside your form using one of this examples:
 
 ###### By using Blade syntax
 ```php
-{{ Form::open([...]) }}
+{!! Form::open([...]) !!}
     // Other inputs... 
-    {{ Form::captcha() }}
-    {{ Form::submit('Submit') }}
-{{ Form::close() }}
+    {!! Form::captcha() !!}  OR  {!! Captcha::display() !!}
+    {!! Form::submit('Submit') !!}
+{!! Form::close() !!}
 
 // Remember what your mother told you
-{{ Captcha::script() }}
+{!! Captcha::script() !!}
 ```
 
-###### OR
-
-```php
-{{ Form::open([...]) }}
-    // Other inputs... 
-    {{ Captcha::display() }}
-    {{ Form::submit('Submit') }}
-{{ Form::close() }}
-
-// Same thing
-{{ Captcha::script() }}
-```
+> For Laravel 4.2, use `{{ ... }}` instead of `{!! ... !!}`
 
 ###### Without using Blade syntax
 ```php
@@ -238,21 +232,23 @@ If you want to manage the localized messages, edit the `validation.php` files in
 
 For example:
 ```php
-// app/lang/en/validation.php
+// resources/lang/en/validation.php
 return [
     ...
     // Add this line with your custom message
-    "captcha" => "If you read this message, then you're a robot.",
+    'captcha'   => "If you read this message, then you're a robot.",
 ];
 ```
 ```php
-// app/lang/fr/validation.php
+// resources/lang/fr/validation.php
 return [
     ...
     // Ajoutez cette ligne avec votre message personnalisé
-    "captcha" => "Si vous lisez ce message, alors vous êtes un robot.",
+    'captcha'   => 'Si vous lisez ce message, alors vous êtes un robot.',
 ];
 ```
+
+> For Laravel 4.2, the lang folder is located in `app/lang` 
 
 ```php
 $validator = Validator::make(Input::all(), [
@@ -271,7 +267,7 @@ if ($validator->fails()) {
 
 ## Contribution
 
-Any ideas are welcome. Feel free the submit any issues or pull requests.
+Any ideas are welcome. Feel free to submit any issues or pull requests.
 
 ## TODOS:
 
