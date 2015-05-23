@@ -18,7 +18,7 @@ if ( ! empty($_POST)) {
 }
 ?>
 
-<form action="?" method="POST">
+<form method="POST">
     <?php
         echo $captcha->image(['data-theme' => 'dark']);
         // Or : $captcha->display(['data-theme' => 'light']);

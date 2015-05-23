@@ -18,7 +18,7 @@ if ( ! empty($_POST)) {
 }
 ?>
 
-<form action="?" method="POST">
+<form method="POST">
     <?php
         echo $captcha->audio();
         // Or : $captcha->display(['data-type' => 'audio']);

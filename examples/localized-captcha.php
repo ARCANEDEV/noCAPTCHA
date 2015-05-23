@@ -15,13 +15,13 @@ if ( ! empty($_POST)) {
 
     echo $result === true
         ? 'Yay ! Tu es un humain.'
-        : 'Non ! Tu es un robots.';
+        : 'Non ! Tu es un robot.';
 
     exit();
 }
 ?>
 
-<form action="?" method="POST">
+<form method="POST">
     <?php echo $captcha->display(); ?>
     <button type="submit">Envoyer</button>
 </form>
