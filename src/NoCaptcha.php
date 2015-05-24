@@ -123,6 +123,7 @@ class NoCaptcha implements NoCaptchaInterface
 
     /**
      * Set language code
+     * @todo: Adding locale check OR not ?
      *
      * @param  string $lang
      *
@@ -130,7 +131,6 @@ class NoCaptcha implements NoCaptchaInterface
      */
     protected function setLang($lang)
     {
-        // TODO: Add check lang or not !!
         $this->lang = $lang;
 
         return $this;
@@ -139,26 +139,26 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Get script source link
      *
-     * @param  string null $callback
+     * @param  string|null $callbackName
      *
      * @return string
      */
-    private function getScriptSrc($callback = null)
+    private function getScriptSrc($callbackName = null)
     {
-        $first = true;
-        $link  = static::CLIENT_URL;
+        $queries = [];
 
-        // TODO: Refactor to query builder
         if ( ! empty($this->lang)) {
-            $link .= ('?hl=' . $this->lang);
-            $first = false;
+            $queries['hl'] = $this->lang;
         }
 
-        if ( ! is_null($callback)) {
-            $link .= ($first ? '?' : '&') . "onload={$callback}&render=explicit";
+        if ( ! is_null($callbackName) and ! empty($callbackName)) {
+            $queries['onload'] = $callbackName;
+            $queries['render'] = 'explicit';
         }
 
-        return $link;
+        $queries = count($queries) ? '?' . http_build_query($queries) : '';
+
+        return static::CLIENT_URL . $queries;
     }
 
     /**
@@ -264,16 +264,16 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Get script tag
      *
-     * @param  string|null $callback
+     * @param  string|null $callbackName
      *
      * @return string
      */
-    public function script($callback = null)
+    public function script($callbackName = null)
     {
         $script = '';
 
         if ( ! $this->scriptLoaded) {
-            $script = '<script src="' . $this->getScriptSrc($callback) . '" async defer></script>';
+            $script = '<script src="' . $this->getScriptSrc($callbackName) . '" async defer></script>';
             $this->scriptLoaded = true;
         }
 
@@ -283,29 +283,40 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Get script tag with a callback function
      *
-     * @param  array $captchas
+     * @param  array  $captchas
+     * @param  string $callbackName
      *
      * @return string
      */
-    public function scriptWithCallback(array $captchas)
+    public function scriptWithCallback(array $captchas, $callbackName = 'captchaRenderCallback')
     {
-        $script = $this->script('CaptchaCallback');
+        $script = $this->script($callbackName);
 
         if (empty($script) or empty($captchas)) {
             return $script;
         }
 
-        $captchas = implode(PHP_EOL, array_map(function($captcha) {
-            return "grecaptcha.render('{$captcha}', {'sitekey' : '{$this->siteKey}'});";
-        }, $captchas));
-
         return implode(PHP_EOL, [$script, implode(PHP_EOL, [
             '<script>',
-                'var CaptchaCallback = function(){',
-                    $captchas,
+                "var $callbackName = function() {",
+                    $this->renderCaptchas($captchas),
                 '};',
             '</script>'
         ])]);
+    }
+
+    /**
+     * Rendering captchas with callback function
+     *
+     * @param  array $captchas
+     *
+     * @return string
+     */
+    private function renderCaptchas(array $captchas)
+    {
+        return implode(PHP_EOL, array_map(function($captcha) {
+            return "grecaptcha.render('{$captcha}', {'sitekey' : '{$this->siteKey}'});";
+        }, $captchas));
     }
 
     /* ------------------------------------------------------------------------------------------------

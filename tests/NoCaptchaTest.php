@@ -120,9 +120,9 @@ class NoCaptchaTest extends TestCase
     {
         $captchas = ['captcha-1', 'captcha-2'];
         $script   =
-            '<script src="' . NoCaptcha::CLIENT_URL . '?onload=CaptchaCallback&render=explicit" async defer></script>
+            '<script src="' . NoCaptcha::CLIENT_URL . '?onload=captchaRenderCallback&render=explicit" async defer></script>
             <script>
-                var CaptchaCallback = function(){
+                var captchaRenderCallback = function() {
                     grecaptcha.render(\'captcha-1\', {\'sitekey\' : \'site-key\'});
                     grecaptcha.render(\'captcha-2\', {\'sitekey\' : \'site-key\'});
                 };
