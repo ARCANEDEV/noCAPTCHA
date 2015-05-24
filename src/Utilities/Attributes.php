@@ -70,7 +70,7 @@ class Attributes implements AttributesInterface
      */
     private function getItem($name)
     {
-        if (! $this->hasItem($name)) {
+        if ( ! $this->hasItem($name)) {
             return null;
         }
 

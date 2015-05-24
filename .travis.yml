@@ -4,21 +4,22 @@ php:
   - 5.4
   - 5.5
   - 5.6
-  - 7
+  - nightly
   - hhvm
 
 matrix:
-    allow_failures:
-        - php: hhvm
+  allow_failures:
+    - php: nightly
+    - php: hhvm
 
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer install --prefer-source --no-interaction --dev
+  - travis_retry composer install --prefer-source --no-interaction
 
 script:
   - mkdir -p build/logs
   - phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi

@@ -258,7 +258,7 @@ class NoCaptcha implements NoCaptchaInterface
         ]);
 
         return isset($response['success']) and
-        $response['success'] === true;
+               $response['success'] === true;
     }
 
     /**
@@ -281,7 +281,7 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Get script tag with callback function
+     * Get script tag with a callback function
      *
      * @param  array $captchas
      *
@@ -301,9 +301,9 @@ class NoCaptcha implements NoCaptchaInterface
 
         return implode(PHP_EOL, [$script, implode(PHP_EOL, [
             '<script>',
-            'var CaptchaCallback = function(){',
-            $captchas,
-            '};',
+                'var CaptchaCallback = function(){',
+                    $captchas,
+                '};',
             '</script>'
         ])]);
     }

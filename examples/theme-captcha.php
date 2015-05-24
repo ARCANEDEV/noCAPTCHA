@@ -1,6 +1,6 @@
 <?php
 
-require_once "../vendor/autoload.php";
+require_once(__DIR__ . '/../vendor/autoload.php');
 
 use Arcanedev\NoCaptcha\NoCaptcha;
 
@@ -18,7 +18,7 @@ if ( ! empty($_POST)) {
 }
 ?>
 
-<form action="?" method="POST">
+<form method="POST">
     <?php
         echo $captcha->image(['data-theme' => 'dark']);
         // Or : $captcha->display(['data-theme' => 'light']);
