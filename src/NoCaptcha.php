@@ -147,11 +147,11 @@ class NoCaptcha implements NoCaptchaInterface
     {
         $queries = [];
 
-        if ( ! empty($this->lang)) {
+        if ($this->hasLang()) {
             $queries['hl'] = $this->lang;
         }
 
-        if ( ! is_null($callbackName) and ! empty($callbackName)) {
+        if ($this->hasCallbackName($callbackName)) {
             $queries['onload'] = $callbackName;
             $queries['render'] = 'explicit';
         }
@@ -323,6 +323,28 @@ class NoCaptcha implements NoCaptchaInterface
      |  Check Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Check if has lang
+     *
+     * @return bool
+     */
+    private function hasLang()
+    {
+        return ! empty($this->lang);
+    }
+
+    /**
+     * Check if callback is not empty
+     *
+     * @param  string|null $callbackName
+     *
+     * @return bool
+     */
+    private function hasCallbackName($callbackName)
+    {
+        return ! (is_null($callbackName) or trim($callbackName) === '');
+    }
+
     /**
      * Check key
      *
