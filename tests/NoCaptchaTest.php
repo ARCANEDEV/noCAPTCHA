@@ -265,6 +265,17 @@ class NoCaptchaTest extends TestCase
     }
 
     /** @test */
+    public function it_can_display_captcha_with_style_attribute()
+    {
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" style="transform: scale(0.77); transform-origin: 0 0;"></div>',
+            $this->noCaptcha->display([
+                'style' => 'transform: scale(0.77); transform-origin: 0 0;'
+            ])
+        );
+    }
+
+    /** @test */
     public function it_can_verify()
     {
         $request = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
