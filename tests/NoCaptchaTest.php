@@ -274,7 +274,7 @@ class NoCaptchaTest extends TestCase
             ])
         );
     }
-    
+
     /** @test */
     public function it_can_verify()
     {
