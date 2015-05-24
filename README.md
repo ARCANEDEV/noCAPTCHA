@@ -4,6 +4,7 @@ noCAPTCHA (new reCAPTCHA) [![Packagist License](http://img.shields.io/packagist/
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/ARCANEDEV/noCaptcha.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ARCANEDEV/noCaptcha.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master)
 [![Github Issues](http://img.shields.io/github/issues/ARCANEDEV/noCAPTCHA.svg?style=flat-square)](https://github.com/ARCANEDEV/noCAPTCHA/issues)
+[![Minimum PHP Version](http://img.shields.io/badge/PHP-%3E=_5.4-8892BF.svg?style=flat-square)](http://php.net/)
 [![Packagist Release](https://img.shields.io/packagist/v/arcanedev/no-captcha.svg?style=flat-square)](https://packagist.org/packages/arcanedev/no-captcha)
 [![Packagist Downloads](https://img.shields.io/packagist/dt/arcanedev/no-captcha.svg?style=flat-square)](https://packagist.org/packages/arcanedev/no-captcha)
 
