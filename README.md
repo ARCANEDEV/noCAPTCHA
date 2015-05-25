@@ -17,6 +17,16 @@ reCAPTCHA comes in the form of a widget that you can easily add to your blog, fo
 
 ![New Google reCAPTCHA](https://developers.google.com/recaptcha/images/newCaptchaAnchor.gif)
 
+## Features
+* Implements Google's New "NoCaptcha ReCaptcha Field"
+* Framework agnostic package
+* Well Tested & Super-high test coverage
+* IDE Friendly and Well documented
+* Multiple Captchas Rendering
+* Customizable Captcha (type [image or audio], theme [light or dark], language and even the size)
+* [Wiki](https://github.com/ARCANEDEV/noCAPTCHA/wiki), [Exemples](https://github.com/ARCANEDEV/noCAPTCHA/tree/master/examples).
+* And more...
+
 ## Table of contents
 1. [Requirements](https://github.com/ARCANEDEV/noCAPTCHA/wiki/1.-Requirements)
 2. [Version Compatibility](https://github.com/ARCANEDEV/noCAPTCHA/wiki/2.-Version-Compatibility)
@@ -37,5 +47,5 @@ Any ideas are welcome. Feel free to submit any issues or pull requests.
   - [x] More tests and code coverage
   - [x] Laravel Support (v4.2)
   - [x] Laravel Support (v5.0)
-  - [ ] Refactoring
+  - [ ] Laravel Support (v5.1)
   
