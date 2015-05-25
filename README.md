@@ -24,7 +24,7 @@ reCAPTCHA comes in the form of a widget that you can easily add to your blog, fo
 * IDE Friendly and Well documented
 * Multiple Captchas Rendering
 * Customizable Captcha (type [image or audio], theme [light or dark], language and even the size)
-* [Wiki](https://github.com/ARCANEDEV/noCAPTCHA/wiki), [Exemples](https://github.com/ARCANEDEV/noCAPTCHA/tree/master/examples).
+* [Wiki](https://github.com/ARCANEDEV/noCAPTCHA/wiki), [Examples](https://github.com/ARCANEDEV/noCAPTCHA/tree/master/examples).
 * And more...
 
 ## Table of contents
