@@ -44,6 +44,10 @@ class NoCaptchaTest extends TestCase
     public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(self::NO_CAPTCHA_CLASS, $this->noCaptcha);
+        $this->assertEquals(
+            '<script src="' . NoCaptcha::CLIENT_URL . '" async defer></script>',
+            $this->noCaptcha->script()
+        );
     }
 
     /**
@@ -88,6 +92,18 @@ class NoCaptchaTest extends TestCase
     public function it_must_throw_api_exception_on_empty_site_key()
     {
         new NoCaptcha('secret', '   ');
+    }
+
+    /** @test */
+    public function it_can_switch_locale()
+    {
+        $locale = 'fr';
+        $this->noCaptcha->setLang($locale);
+        $this->assertInstanceOf(self::NO_CAPTCHA_CLASS, $this->noCaptcha);
+        $this->assertEquals(
+            '<script src="' . NoCaptcha::CLIENT_URL . '?hl=' . $locale . '" async defer></script>',
+            $this->noCaptcha->script()
+        );
     }
 
     /** @test */
