@@ -129,7 +129,7 @@ class NoCaptcha implements NoCaptchaInterface
      *
      * @return NoCaptcha
      */
-    protected function setLang($lang)
+    public function setLang($lang)
     {
         $this->lang = $lang;
 
