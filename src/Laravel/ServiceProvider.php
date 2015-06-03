@@ -27,7 +27,7 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     public function boot()
     {
-        $configFile = __DIR__ . '/../config/no-captcha.php';
+        $configFile = __DIR__ . '/../../config/no-captcha.php';
 
         $this->mergeConfigFrom($configFile, 'no-captcha');
         $this->publishes([
