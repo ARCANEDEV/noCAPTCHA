@@ -22,8 +22,6 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -40,8 +38,6 @@ class ServiceProvider extends IlluminateServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -67,7 +63,7 @@ class ServiceProvider extends IlluminateServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Register Validator rules
+     * Register Validator rules.
      */
     private function registerValidatorRules()
     {
@@ -81,7 +77,7 @@ class ServiceProvider extends IlluminateServiceProvider
     }
 
     /**
-     * Register Form Macros
+     * Register Form Macros.
      */
     private function registerFormMacros()
     {
