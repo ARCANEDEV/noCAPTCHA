@@ -47,5 +47,4 @@ Any ideas are welcome. Feel free to submit any issues or pull requests.
   - [x] More tests and code coverage
   - [x] Laravel Support (v4.2)
   - [x] Laravel Support (v5.0)
-  - [ ] Laravel Support (v5.1)
-  
+  - [x] Laravel Support (v5.1)
