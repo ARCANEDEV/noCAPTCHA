@@ -3,6 +3,10 @@
 use Arcanedev\NoCaptcha\Tests\TestCase;
 use Arcanedev\NoCaptcha\Utilities\Attributes;
 
+/**
+ * Class AttributesTest
+ * @package Arcanedev\NoCaptcha\Tests\Utilities
+ */
 class AttributesTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------

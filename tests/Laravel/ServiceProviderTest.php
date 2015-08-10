@@ -3,6 +3,10 @@
 use Arcanedev\NoCaptcha\Laravel\ServiceProvider;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
+/**
+ * Class ServiceProviderTest
+ * @package Arcanedev\NoCaptcha\Tests\Laravel
+ */
 class ServiceProviderTest extends LaravelTestCase
 {
     /* ------------------------------------------------------------------------------------------------

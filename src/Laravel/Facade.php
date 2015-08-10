@@ -1,6 +1,12 @@
 <?php namespace Arcanedev\NoCaptcha\Laravel;
 
-class Facade extends \Illuminate\Support\Facades\Facade
+use Illuminate\Support\Facades\Facade as IlluminateFacade;
+
+/**
+ * Class Facade
+ * @package Arcanedev\NoCaptcha\Laravel
+ */
+class Facade extends IlluminateFacade
 {
     /**
      * Get the registered name of the component.
