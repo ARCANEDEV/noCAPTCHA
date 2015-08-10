@@ -2,6 +2,10 @@
 
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
+/**
+ * Class FormMacroTest
+ * @package Arcanedev\NoCaptcha\Tests\Laravel
+ */
 class FormMacroTest extends LaravelTestCase
 {
     /* ------------------------------------------------------------------------------------------------

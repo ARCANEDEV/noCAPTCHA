@@ -5,6 +5,10 @@ use Arcanedev\NoCaptcha\Exceptions\ApiException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
 
+/**
+ * Class Request
+ * @package Arcanedev\NoCaptcha\Utilities
+ */
 class Request implements RequestInterface
 {
     /* ------------------------------------------------------------------------------------------------
