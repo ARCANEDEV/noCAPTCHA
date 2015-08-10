@@ -12,7 +12,8 @@
     "require": {
         "php": ">=5.5.9",
         "ext-curl": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "psr/http-message": "~1.0"
     },
     "require-dev": {
         "orchestra/testbench": "~3.1",
