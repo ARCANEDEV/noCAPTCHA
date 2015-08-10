@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
 
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
+use Arcanedev\NoCaptcha\Utilities\Request;
 use Mockery as m;
 
 /**
@@ -125,7 +126,7 @@ class ValidatorRuleTest extends LaravelTestCase
      */
     private function mockRequest($returns)
     {
-        $request = m::mock('Arcanedev\\NoCaptcha\\Utilities\\Request');
+        $request = m::mock(Request::class);
         $request->shouldReceive('send')->andReturn($returns);
 
         $captcha = $this->app['arcanedev.no-captcha']->setRequestClient($request);

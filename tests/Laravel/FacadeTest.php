@@ -1,7 +1,6 @@
 <?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
 
 use Arcanedev\NoCaptcha\Laravel\Facade as NoCaptcha;
-
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
 /**

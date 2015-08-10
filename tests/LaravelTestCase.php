@@ -34,8 +34,8 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            'Illuminate\Html\HtmlServiceProvider',
-            'Arcanedev\NoCaptcha\Laravel\ServiceProvider',
+            \Illuminate\Html\HtmlServiceProvider::class,
+            \Arcanedev\NoCaptcha\Laravel\ServiceProvider::class,
         ];
     }
 
@@ -49,9 +49,21 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'Form'      => 'Illuminate\Html\FormFacade',
-            'HTML'      => 'Illuminate\Html\HtmlFacade',
-            'NoCaptcha' => 'Arcanedev\NoCaptcha\Laravel\Facade',
+            'Form'      => \Illuminate\Html\FormFacade::class,
+            'HTML'      => \Illuminate\Html\HtmlFacade::class,
+            'NoCaptcha' => \Arcanedev\NoCaptcha\Laravel\Facade::class,
         ];
+    }
+
+    /**
+     * Call artisan command and return code.
+     *
+     * @param  string $command
+     * @param  array  $parameters
+     *
+     * @return int
+     */
+    public function artisan($command, $parameters = [])
+    {
     }
 }
