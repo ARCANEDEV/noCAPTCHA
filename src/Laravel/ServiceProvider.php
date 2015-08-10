@@ -3,6 +3,10 @@
 use Arcanedev\NoCaptcha\NoCaptcha;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
+/**
+ * Class ServiceProvider
+ * @package Arcanedev\NoCaptcha\Laravel
+ */
 class ServiceProvider extends IlluminateServiceProvider
 {
     /* ------------------------------------------------------------------------------------------------

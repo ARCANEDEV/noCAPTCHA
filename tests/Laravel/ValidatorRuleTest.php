@@ -3,6 +3,10 @@
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 use Mockery as m;
 
+/**
+ * Class ValidatorRuleTest
+ * @package Arcanedev\NoCaptcha\Tests\Laravel
+ */
 class ValidatorRuleTest extends LaravelTestCase
 {
     /* ------------------------------------------------------------------------------------------------

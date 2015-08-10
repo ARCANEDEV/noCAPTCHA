@@ -3,6 +3,10 @@
 use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
 use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 
+/**
+ * Interface NoCaptchaInterface
+ * @package Arcanedev\NoCaptcha\Contracts
+ */
 interface NoCaptchaInterface
 {
     /* ------------------------------------------------------------------------------------------------

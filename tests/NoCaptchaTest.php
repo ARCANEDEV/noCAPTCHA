@@ -3,6 +3,10 @@
 use Arcanedev\NoCaptcha\NoCaptcha;
 use Mockery as m;
 
+/**
+ * Class NoCaptchaTest
+ * @package Arcanedev\NoCaptcha\Tests
+ */
 class NoCaptchaTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
@@ -218,7 +222,7 @@ class NoCaptchaTest extends TestCase
     }
 
     /** @test */
-    public function testCanDisplayAudioCaptcha()
+    public function it_can_display_audio_captcha()
     {
         $this->assertEquals(
             '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio"></div>',
