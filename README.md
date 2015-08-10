@@ -45,7 +45,7 @@ Any ideas are welcome. Feel free to submit any issues or pull requests.
   - [x] Documentation
   - [x] Examples
   - [x] More tests and code coverage
+  - [x] PSR-7 Support (ServerRequest verification)
   - [x] Laravel Support (v4.2)
   - [x] Laravel Support (v5.0)
-  - [ ] Laravel Support (v5.1)
-  
+  - [x] Laravel Support (v5.1)
