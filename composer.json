@@ -12,10 +12,11 @@
     "require": {
         "php": ">=5.4.0",
         "ext-curl": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "psr/http-message": "~1.0"
     },
     "require-dev": {
-        "orchestra/testbench": "~2.2",
+        "orchestra/testbench": "~2.2.0",
         "phpunit/phpcov": "~2.0",
         "mockery/mockery": "~0.9"
     },

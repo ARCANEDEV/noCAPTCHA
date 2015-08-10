@@ -7,6 +7,7 @@ use Arcanedev\NoCaptcha\Exceptions\ApiException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
 use Arcanedev\NoCaptcha\Utilities\Attributes;
 use Arcanedev\NoCaptcha\Utilities\Request;
+use Psr\Http\Message\ServerRequestInterface;
 
 class NoCaptcha implements NoCaptchaInterface
 {
@@ -257,8 +258,32 @@ class NoCaptcha implements NoCaptchaInterface
             'remoteip' => $clientIp
         ]);
 
-        return isset($response['success']) and
-               $response['success'] === true;
+        return isset($response['success']) && $response['success'] === true;
+    }
+
+
+    /**
+     * Calls the reCAPTCHA siteverify API to verify whether the user passes CAPTCHA
+     * test using a PSR-7 ServerRequest object.
+     *
+     * @param  ServerRequestInterface $request
+     *
+     * @return bool
+     */
+    public function verifyRequest(ServerRequestInterface $request)
+    {
+        $body   = $request->getParsedBody();
+        $server = $request->getServerParams();
+
+        $response = isset($body['g-recaptcha-response'])
+            ? $body['g-recaptcha-response']
+            : '';
+
+        $remoteIp = isset($server['REMOTE_ADDR'])
+            ? $server['REMOTE_ADDR']
+            : null;
+
+        return $this->verify($response, $remoteIp);
     }
 
     /**
@@ -292,7 +317,7 @@ class NoCaptcha implements NoCaptchaInterface
     {
         $script = $this->script($callbackName);
 
-        if (empty($script) or empty($captchas)) {
+        if (empty($script) || empty($captchas)) {
             return $script;
         }
 
@@ -342,7 +367,7 @@ class NoCaptcha implements NoCaptchaInterface
      */
     private function hasCallbackName($callbackName)
     {
-        return ! (is_null($callbackName) or trim($callbackName) === '');
+        return ! (is_null($callbackName) || trim($callbackName) === '');
     }
 
     /**

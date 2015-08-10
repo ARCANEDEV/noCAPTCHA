@@ -295,14 +295,42 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_verify()
     {
-        $request = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
-        $request->shouldReceive('send')->andReturn([
+        $requestClient = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
+        $requestClient->shouldReceive('send')->andReturn([
             'success' => true
         ]);
 
+        /** @var \Arcanedev\NoCaptcha\Utilities\Request $requestClient */
         $passes = $this->noCaptcha
-            ->setRequestClient($request)
+            ->setRequestClient($requestClient)
             ->verify('re-captcha-response');
+
+        $this->assertTrue($passes);
+    }
+
+    /** @test */
+    public function it_can_verify_psr7_request()
+    {
+        $requestClient = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
+        $requestClient->shouldReceive('send')->andReturn([
+            'success' => true
+        ]);
+
+        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
+        $request->shouldReceive('getParsedBody')->andReturn([
+            'g-recaptcha-response' => true,
+        ]);
+        $request->shouldReceive('getServerParams')->andReturn([
+            'REMOTE_ADDR' => '127.0.0.1'
+        ]);
+
+        /**
+         * @var \Psr\Http\Message\ServerRequestInterface $request
+         * @var \Arcanedev\NoCaptcha\Utilities\Request   $requestClient
+         */
+        $passes = $this->noCaptcha
+            ->setRequestClient($requestClient)
+            ->verifyRequest($request);
 
         $this->assertTrue($passes);
     }
