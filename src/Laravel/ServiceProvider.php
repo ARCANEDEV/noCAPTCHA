@@ -1,8 +1,13 @@
 <?php namespace Arcanedev\NoCaptcha\Laravel;
 
 use Arcanedev\NoCaptcha\NoCaptcha;
+use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+/**
+ * Class ServiceProvider
+ * @package Arcanedev\NoCaptcha\Laravel
+ */
+class ServiceProvider extends IlluminateServiceProvider
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties

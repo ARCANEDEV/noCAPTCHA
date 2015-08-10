@@ -3,6 +3,10 @@
 use Arcanedev\NoCaptcha\Laravel\Facade as NoCaptcha;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
+/**
+ * Class FacadeTest
+ * @package Arcanedev\NoCaptcha\Tests\Laravel
+ */
 class FacadeTest extends LaravelTestCase
 {
     /* ------------------------------------------------------------------------------------------------

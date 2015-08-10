@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\NoCaptcha\Contracts\Utilities;
 
+/**
+ * Interface RequestInterface
+ * @package Arcanedev\NoCaptcha\Contracts\Utilities
+ */
 interface RequestInterface
 {
     /* ------------------------------------------------------------------------------------------------

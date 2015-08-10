@@ -9,6 +9,10 @@ use Arcanedev\NoCaptcha\Utilities\Attributes;
 use Arcanedev\NoCaptcha\Utilities\Request;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Class NoCaptcha
+ * @package Arcanedev\NoCaptcha
+ */
 class NoCaptcha implements NoCaptchaInterface
 {
     /* ------------------------------------------------------------------------------------------------

@@ -1,5 +1,9 @@
 <?php namespace Arcanedev\NoCaptcha\Tests;
 
+/**
+ * Class LaravelTestCase
+ * @package Arcanedev\NoCaptcha\Tests
+ */
 abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
 {
     /* ------------------------------------------------------------------------------------------------
