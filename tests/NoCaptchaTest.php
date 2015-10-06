@@ -2,7 +2,7 @@
 
 use Arcanedev\NoCaptcha\NoCaptcha;
 use Arcanedev\NoCaptcha\Utilities\Request;
-use Mockery as m;
+use Prophecy\Argument;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -296,14 +296,13 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_verify()
     {
-        $requestClient = m::mock(Request::class);
-        $requestClient->shouldReceive('send')->andReturn([
-            'success' => true
-        ]);
+        $requestClient = $this->prophesize(Request::class);
+        $requestClient->send(Argument::type('string'))
+            ->willReturn(['success' => true]);
 
         /** @var Request $requestClient */
         $passes = $this->noCaptcha
-            ->setRequestClient($requestClient)
+            ->setRequestClient($requestClient->reveal())
             ->verify('re-captcha-response');
 
         $this->assertTrue($passes);
@@ -312,26 +311,25 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_verify_psr7_request()
     {
-        $requestClient = m::mock(Request::class);
-        $requestClient->shouldReceive('send')->andReturn([
-            'success' => true
-        ]);
+        /**
+         * @var ServerRequestInterface  $request
+         * @var Request                 $requestClient
+         */
+        $requestClient = $this->prophesize(Request::class);
+        $requestClient->send(Argument::type('string'))
+            ->willReturn(['success' => true]);
 
-        $request = m::mock(ServerRequestInterface::class);
-        $request->shouldReceive('getParsedBody')->andReturn([
+        $request = $this->prophesize(ServerRequestInterface::class);
+        $request->getParsedBody()->willReturn([
             'g-recaptcha-response' => true,
         ]);
-        $request->shouldReceive('getServerParams')->andReturn([
+        $request->getServerParams()->willReturn([
             'REMOTE_ADDR' => '127.0.0.1'
         ]);
 
-        /**
-         * @var ServerRequestInterface $request
-         * @var Request                $requestClient
-         */
         $passes = $this->noCaptcha
-            ->setRequestClient($requestClient)
-            ->verifyRequest($request);
+            ->setRequestClient($requestClient->reveal())
+            ->verifyRequest($request->reveal());
 
         $this->assertTrue($passes);
     }
@@ -343,14 +341,15 @@ class NoCaptchaTest extends TestCase
 
         $this->assertFalse($passes);
 
-        $request = m::mock(Request::class);
-        $request->shouldReceive('send')->andReturn([
-            'success'     => false,
-            'error-codes' => 'invalid-input-response'
-        ]);
+        $requestClient = $this->prophesize(Request::class);
+        $requestClient->send(Argument::type('string'))
+            ->willReturn([
+                'success'     => false,
+                'error-codes' => 'invalid-input-response'
+            ]);
 
         $passes = $this->noCaptcha
-            ->setRequestClient($request)
+            ->setRequestClient($requestClient->reveal())
             ->verify('re-captcha-response');
 
         $this->assertFalse($passes);
