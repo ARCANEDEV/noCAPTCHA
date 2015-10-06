@@ -1,11 +1,13 @@
 <?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
 
-use Arcanedev\NoCaptcha\Laravel\Facade as NoCaptcha;
+use Arcanedev\NoCaptcha\Facades\NoCaptcha as NoCaptcha;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
 /**
- * Class FacadeTest
- * @package Arcanedev\NoCaptcha\Tests\Laravel
+ * Class     FacadeTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class FacadeTest extends LaravelTestCase
 {

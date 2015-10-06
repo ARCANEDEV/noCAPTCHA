@@ -1,10 +1,14 @@
 <?php namespace Arcanedev\NoCaptcha\Tests;
 
+use Orchestra\Testbench\TestCase as BaseTestCase;
+
 /**
- * Class LaravelTestCase
- * @package Arcanedev\NoCaptcha\Tests
+ * Class     LaravelTestCase
+ *
+ * @package  Arcanedev\NoCaptcha\Tests
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
+abstract class LaravelTestCase extends BaseTestCase
 {
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -51,19 +55,7 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
         return [
             'Form'      => \Arcanedev\LaravelHtml\Facades\Form::class,
             'HTML'      => \Arcanedev\LaravelHtml\Facades\Html::class,
-            'NoCaptcha' => \Arcanedev\NoCaptcha\Laravel\Facade::class,
+            'NoCaptcha' => \Arcanedev\NoCaptcha\Facades\NoCaptcha::class,
         ];
-    }
-
-    /**
-     * Call artisan command and return code.
-     *
-     * @param  string $command
-     * @param  array  $parameters
-     *
-     * @return int
-     */
-    public function artisan($command, $parameters = [])
-    {
     }
 }

@@ -4,8 +4,10 @@ use Arcanedev\NoCaptcha\Tests\TestCase;
 use Arcanedev\NoCaptcha\Utilities\Request;
 
 /**
- * Class RequestTest
- * @package Arcanedev\NoCaptcha\Tests\Utilities
+ * Class     RequestTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests\Utilities
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class RequestTest extends TestCase
 {
@@ -73,8 +75,8 @@ class RequestTest extends TestCase
     /**
      * @test
      *
-     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
-     * @expectedExceptionMessage The url must be a string value, NULL given
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
+     * @expectedExceptionMessage  The url must be a string value, NULL given
      */
     public function it_must_throw_invalid_type_exception_on_url()
     {
@@ -84,8 +86,8 @@ class RequestTest extends TestCase
     /**
      * @test
      *
-     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage The url must not be empty
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
+     * @expectedExceptionMessage  The url must not be empty
      */
     public function it_must_throw_api_exception_on_url()
     {
@@ -95,8 +97,8 @@ class RequestTest extends TestCase
     /**
      * @test
      *
-     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
-     * @expectedExceptionMessage The url [trust-me-im-a-valid-url] is invalid
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
+     * @expectedExceptionMessage  The url [trust-me-im-a-valid-url] is invalid
      */
     public function it_must_throw_invalid_url_exception_on_url()
     {

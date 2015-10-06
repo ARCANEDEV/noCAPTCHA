@@ -1,9 +1,9 @@
 <?php namespace Arcanedev\NoCaptcha\Exceptions;
 
 /**
- * Class     ApiException
+ * Class     NoCaptchaException
  *
  * @package  Arcanedev\NoCaptcha\Exceptions
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class ApiException extends NoCaptchaException {}
+abstract class NoCaptchaException extends \Exception {}

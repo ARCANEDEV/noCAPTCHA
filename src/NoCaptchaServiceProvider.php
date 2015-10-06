@@ -3,8 +3,10 @@
 use Arcanedev\Support\PackageServiceProvider as ServiceProvider;
 
 /**
- * Class NoCaptchaServiceProvider
- * @package Arcanedev\NoCaptcha\Laravel
+ * Class     NoCaptchaServiceProvider
+ *
+ * @package  Arcanedev\NoCaptcha
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class NoCaptchaServiceProvider extends ServiceProvider
 {
@@ -114,6 +116,7 @@ class NoCaptchaServiceProvider extends ServiceProvider
         $app = $this->app;
 
         $this->app['validator']->extend('captcha', function($attribute, $value) use ($app) {
+            unset($attribute);
             $ip = $app['request']->getClientIp();
 
             return $app['arcanedev.no-captcha']->verify($value, $ip);

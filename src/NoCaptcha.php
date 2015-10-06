@@ -4,14 +4,15 @@ use Arcanedev\NoCaptcha\Contracts\NoCaptchaInterface;
 use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
 use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 use Arcanedev\NoCaptcha\Exceptions\ApiException;
-use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
 use Arcanedev\NoCaptcha\Utilities\Attributes;
 use Arcanedev\NoCaptcha\Utilities\Request;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class NoCaptcha
- * @package Arcanedev\NoCaptcha
+ * Class     NoCaptcha
+ *
+ * @package  Arcanedev\NoCaptcha
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class NoCaptcha implements NoCaptchaInterface
 {
@@ -380,7 +381,6 @@ class NoCaptcha implements NoCaptchaInterface
      * @param  string $value
      *
      * @throws ApiException
-     * @throws InvalidTypeException
      */
     private function checkKey($name, &$value)
     {
@@ -397,12 +397,12 @@ class NoCaptcha implements NoCaptchaInterface
      * @param  string $name
      * @param  string $value
      *
-     * @throws InvalidTypeException
+     * @throws ApiException
      */
     private function checkIsString($name, $value)
     {
         if ( ! is_string($value)) {
-            throw new InvalidTypeException(
+            throw new ApiException(
                 'The ' . $name . ' must be a string value, ' . gettype($value) . ' given'
             );
         }

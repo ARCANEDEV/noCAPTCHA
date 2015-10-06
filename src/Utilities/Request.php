@@ -2,12 +2,13 @@
 
 use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 use Arcanedev\NoCaptcha\Exceptions\ApiException;
-use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
 
 /**
- * Class Request
- * @package Arcanedev\NoCaptcha\Utilities
+ * Class     Request
+ *
+ * @package  Arcanedev\NoCaptcha\Utilities
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class Request implements RequestInterface
 {
@@ -106,13 +107,12 @@ class Request implements RequestInterface
      * @param  string $url
      *
      * @throws ApiException
-     * @throws InvalidTypeException
      * @throws InvalidUrlException
      */
     private function checkUrl(&$url)
     {
         if ( ! is_string($url)) {
-            throw new InvalidTypeException(
+            throw new InvalidUrlException(
                 'The url must be a string value, ' . gettype($url) . ' given'
             );
         }
@@ -120,7 +120,7 @@ class Request implements RequestInterface
         $url = trim($url);
 
         if (empty($url)) {
-            throw new ApiException('The url must not be empty');
+            throw new InvalidUrlException('The url must not be empty');
         }
 
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {

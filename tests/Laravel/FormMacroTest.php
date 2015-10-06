@@ -3,25 +3,13 @@
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
 /**
- * Class FormMacroTest
- * @package Arcanedev\NoCaptcha\Tests\Laravel
+ * Class     FormMacroTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class FormMacroTest extends LaravelTestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
@@ -29,11 +17,13 @@ class FormMacroTest extends LaravelTestCase
     /** @test */
     public function it_can_render_captcha()
     {
-        $captcha = $this->app['form']->captcha();
+        if ($this->app->bound('form')) {
+            $captcha = $this->app['form']->captcha();
 
-        $this->assertEquals(
-            '<div class="g-recaptcha" data-sitekey="no-captcha-sitekey"></div>',
-            $captcha
-        );
+            $this->assertEquals(
+                '<div class="g-recaptcha" data-sitekey="no-captcha-sitekey"></div>',
+                $captcha
+            );
+        }
     }
 }

@@ -3,8 +3,10 @@
 use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
 
 /**
- * Class Attributes
- * @package Arcanedev\NoCaptcha\Utilities
+ * Class     Attributes
+ *
+ * @package  Arcanedev\NoCaptcha\Utilities
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class Attributes implements AttributesInterface
 {
@@ -12,7 +14,11 @@ class Attributes implements AttributesInterface
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /** @var array  */
+    /**
+     * Attribute collection.
+     *
+     * @var array
+     */
     protected $items = [];
 
     /* ------------------------------------------------------------------------------------------------

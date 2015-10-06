@@ -6,8 +6,10 @@ use Mockery as m;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class NoCaptchaTest
- * @package Arcanedev\NoCaptcha\Tests
+ * Class     NoCaptchaTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class NoCaptchaTest extends TestCase
 {
@@ -53,8 +55,8 @@ class NoCaptchaTest extends TestCase
     /**
      * @test
      *
-     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
-     * @expectedExceptionMessage The secret key must be a string value, NULL given
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
+     * @expectedExceptionMessage  The secret key must be a string value, NULL given
      */
     public function it_must_throw_invalid_type_exception_on_secret_key()
     {
@@ -64,8 +66,8 @@ class NoCaptchaTest extends TestCase
     /**
      * @test
      *
-     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage The secret key must not be empty
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
+     * @expectedExceptionMessage  The secret key must not be empty
      */
     public function it_must_throw_api_exception_on_empty_secret_key()
     {
@@ -75,8 +77,8 @@ class NoCaptchaTest extends TestCase
     /**
      * @test
      *
-     * @expectedException \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
-     * @expectedExceptionMessage The site key must be a string value, NULL given
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
+     * @expectedExceptionMessage  The site key must be a string value, NULL given
      */
     public function it_must_throw_invalid_type_exception_on_site_key()
     {
@@ -86,8 +88,8 @@ class NoCaptchaTest extends TestCase
     /**
      * @test
      *
-     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage The site key must not be empty
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
+     * @expectedExceptionMessage  The site key must not be empty
      */
     public function it_must_throw_api_exception_on_empty_site_key()
     {

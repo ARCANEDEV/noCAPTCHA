@@ -5,8 +5,10 @@ use Arcanedev\NoCaptcha\Utilities\Request;
 use Mockery as m;
 
 /**
- * Class ValidatorRuleTest
- * @package Arcanedev\NoCaptcha\Tests\Laravel
+ * Class     ValidatorRuleTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ValidatorRuleTest extends LaravelTestCase
 {
