@@ -1,22 +1,21 @@
-<?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
+<?php namespace Arcanedev\NoCaptcha\Tests;
 
-use Arcanedev\NoCaptcha\Laravel\ServiceProvider;
-use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
+use Arcanedev\NoCaptcha\NoCaptchaServiceProvider;
 
 /**
- * Class ServiceProviderTest
+ * Class NoCaptchaServiceProviderTest
  * @package Arcanedev\NoCaptcha\Tests\Laravel
  */
-class ServiceProviderTest extends LaravelTestCase
+class NoCaptchaServiceProviderTest extends LaravelTestCase
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @var ServiceProvider
+     * @var NoCaptchaServiceProvider
      */
-    private $serviceProvider;
+    private $provider;
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -26,14 +25,14 @@ class ServiceProviderTest extends LaravelTestCase
     {
         parent::setUp();
 
-        $this->serviceProvider = new ServiceProvider($this->app);
+        $this->provider = $this->app->getProvider(NoCaptchaServiceProvider::class);
     }
 
     public function tearDown()
     {
         parent::tearDown();
 
-        unset($this->serviceProvider);
+        unset($this->provider);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -46,6 +45,6 @@ class ServiceProviderTest extends LaravelTestCase
         // This is for 100% code converge
         $this->assertEquals([
             'arcanedev.no-captcha'
-        ], $this->serviceProvider->provides());
+        ], $this->provider->provides());
     }
 }

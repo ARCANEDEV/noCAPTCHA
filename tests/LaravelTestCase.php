@@ -35,7 +35,7 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
     {
         return [
             \Illuminate\Html\HtmlServiceProvider::class,
-            \Arcanedev\NoCaptcha\Laravel\ServiceProvider::class,
+            \Arcanedev\NoCaptcha\NoCaptchaServiceProvider::class,
         ];
     }
 
