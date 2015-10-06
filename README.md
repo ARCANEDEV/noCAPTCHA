@@ -40,8 +40,10 @@ reCAPTCHA comes in the form of a widget that you can easily add to your blog, fo
 
 Any ideas are welcome. Feel free to submit any issues or pull requests.
 
-## TODOS:
+## TODOS
+  - [ ] Proxy support
 
+## DONE
   - [x] Documentation
   - [x] Examples
   - [x] More tests and code coverage
