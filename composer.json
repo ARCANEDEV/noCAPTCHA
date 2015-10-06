@@ -18,7 +18,7 @@
     },
     "require-dev": {
         "orchestra/testbench": "~3.1.0",
-        "illuminate/html": "~5.0",
+        "arcanedev/laravel-html": "~5.0",
         "phpunit/phpcov": "~2.0",
         "mockery/mockery": "~0.9"
     },

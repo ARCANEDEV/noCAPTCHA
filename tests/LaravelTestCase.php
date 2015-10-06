@@ -34,7 +34,7 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Illuminate\Html\HtmlServiceProvider::class,
+            \Arcanedev\LaravelHtml\HtmlServiceProvider::class,
             \Arcanedev\NoCaptcha\NoCaptchaServiceProvider::class,
         ];
     }
@@ -49,8 +49,8 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'Form'      => \Illuminate\Html\FormFacade::class,
-            'HTML'      => \Illuminate\Html\HtmlFacade::class,
+            'Form'      => \Arcanedev\LaravelHtml\Facades\Form::class,
+            'HTML'      => \Arcanedev\LaravelHtml\Facades\Html::class,
             'NoCaptcha' => \Arcanedev\NoCaptcha\Laravel\Facade::class,
         ];
     }
