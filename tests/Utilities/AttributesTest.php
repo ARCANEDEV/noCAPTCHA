@@ -10,12 +10,6 @@ use Arcanedev\NoCaptcha\Utilities\Attributes;
 class AttributesTest extends TestCase
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const ATTRIBUTES_CLASS = 'Arcanedev\\NoCaptcha\\Utilities\\Attributes';
-
-    /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
@@ -47,7 +41,7 @@ class AttributesTest extends TestCase
     /** @test */
     public function it_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::ATTRIBUTES_CLASS, $this->attributes);
+        $this->assertInstanceOf(Attributes::class, $this->attributes);
         $siteKey = 'my-site-key';
         $this->assertEquals(
             'class="g-recaptcha" data-sitekey="' . $siteKey . '"',

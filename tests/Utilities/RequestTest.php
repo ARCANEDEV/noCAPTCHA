@@ -13,8 +13,6 @@ class RequestTest extends TestCase
      |  Constants
      | ------------------------------------------------------------------------------------------------
      */
-    const REQUEST_CLASS           = 'Arcanedev\\NoCaptcha\\Utilities\\Request';
-
     const URL_TO_CURL_OR_WHATEVER = 'http://httpbin.org/get';
 
     /* ------------------------------------------------------------------------------------------------
@@ -49,7 +47,7 @@ class RequestTest extends TestCase
     /** @test */
     public function it_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::REQUEST_CLASS, $this->request);
+        $this->assertInstanceOf(Request::class, $this->request);
     }
 
     /** @test */

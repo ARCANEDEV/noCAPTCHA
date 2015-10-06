@@ -1,7 +1,9 @@
 <?php namespace Arcanedev\NoCaptcha\Tests;
 
 use Arcanedev\NoCaptcha\NoCaptcha;
+use Arcanedev\NoCaptcha\Utilities\Request;
 use Mockery as m;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class NoCaptchaTest
@@ -9,12 +11,6 @@ use Mockery as m;
  */
 class NoCaptchaTest extends TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Constants
-     | ------------------------------------------------------------------------------------------------
-     */
-    const NO_CAPTCHA_CLASS = 'Arcanedev\\NoCaptcha\\NoCaptcha';
-
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
@@ -47,7 +43,7 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_be_instantiated()
     {
-        $this->assertInstanceOf(self::NO_CAPTCHA_CLASS, $this->noCaptcha);
+        $this->assertInstanceOf(NoCaptcha::class, $this->noCaptcha);
         $this->assertEquals(
             '<script src="' . NoCaptcha::CLIENT_URL . '" async defer></script>',
             $this->noCaptcha->script()
@@ -103,7 +99,7 @@ class NoCaptchaTest extends TestCase
     {
         $locale = 'fr';
         $this->noCaptcha->setLang($locale);
-        $this->assertInstanceOf(self::NO_CAPTCHA_CLASS, $this->noCaptcha);
+        $this->assertInstanceOf(NoCaptcha::class, $this->noCaptcha);
         $this->assertEquals(
             '<script src="' . NoCaptcha::CLIENT_URL . '?hl=' . $locale . '" async defer></script>',
             $this->noCaptcha->script()
@@ -298,12 +294,12 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_verify()
     {
-        $requestClient = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
+        $requestClient = m::mock(Request::class);
         $requestClient->shouldReceive('send')->andReturn([
             'success' => true
         ]);
 
-        /** @var \Arcanedev\NoCaptcha\Utilities\Request $requestClient */
+        /** @var Request $requestClient */
         $passes = $this->noCaptcha
             ->setRequestClient($requestClient)
             ->verify('re-captcha-response');
@@ -314,12 +310,12 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_verify_psr7_request()
     {
-        $requestClient = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
+        $requestClient = m::mock(Request::class);
         $requestClient->shouldReceive('send')->andReturn([
             'success' => true
         ]);
 
-        $request = m::mock('Psr\Http\Message\ServerRequestInterface');
+        $request = m::mock(ServerRequestInterface::class);
         $request->shouldReceive('getParsedBody')->andReturn([
             'g-recaptcha-response' => true,
         ]);
@@ -328,8 +324,8 @@ class NoCaptchaTest extends TestCase
         ]);
 
         /**
-         * @var \Psr\Http\Message\ServerRequestInterface $request
-         * @var \Arcanedev\NoCaptcha\Utilities\Request   $requestClient
+         * @var ServerRequestInterface $request
+         * @var Request                $requestClient
          */
         $passes = $this->noCaptcha
             ->setRequestClient($requestClient)
@@ -345,7 +341,7 @@ class NoCaptchaTest extends TestCase
 
         $this->assertFalse($passes);
 
-        $request = m::mock('Arcanedev\NoCaptcha\Utilities\Request');
+        $request = m::mock(Request::class);
         $request->shouldReceive('send')->andReturn([
             'success'     => false,
             'error-codes' => 'invalid-input-response'
