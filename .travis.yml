@@ -14,6 +14,7 @@ before_script:
   - travis_retry composer install --prefer-source --no-interaction
 
 script:
+  - composer validate
   - mkdir -p build/logs
   - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
