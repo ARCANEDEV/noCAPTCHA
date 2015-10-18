@@ -1,25 +1,30 @@
 {
     "name": "arcanedev/no-captcha",
     "description": "No CAPTCHA (new Google reCAPTCHA) with Laravel support",
-    "keywords": ["recaptcha", "no-captcha", "captcha", "google", "laravel"],
-    "license": "MIT",
+    "keywords": ["arcanedev", "recaptcha", "no-captcha", "captcha", "google", "laravel"],
+    "homepage": "https://github.com/ARCANEDEV/noCAPTCHA",
     "authors": [
         {
-            "name": "ARCANEDEV",
-            "email": "arcanedev.maroc@gmail.com"
+            "name":     "ARCANEDEV",
+            "email":    "arcanedev.maroc@gmail.com",
+            "homepage": "https://github.com/ARCANEDEV",
+            "role":     "Developer"
         }
     ],
+    "type":    "library",
+    "license": "MIT",
     "require": {
-        "php": ">=5.5.9",
-        "ext-curl": "*",
-        "ext-json": "*",
-        "psr/http-message": "~1.0"
+        "php":                    ">=5.5.9",
+        "ext-curl":               "*",
+        "ext-json":               "*",
+        "arcanedev/support":      "~3.0",
+        "psr/http-message":       "~1.0"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.1.0",
-        "illuminate/html": "~5.0",
-        "phpunit/phpcov": "~2.0",
-        "mockery/mockery": "~0.9"
+        "orchestra/testbench":    "~3.1.0",
+        "arcanedev/laravel-html": "~5.0",
+        "phpunit/phpcov":         "~2.0",
+        "phpunit/phpunit":        "~4.0|~5.0"
     },
     "autoload": {
         "psr-4": {
@@ -31,5 +36,9 @@
             "Arcanedev\\NoCaptcha\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    }
 }

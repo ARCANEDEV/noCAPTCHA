@@ -2,11 +2,13 @@
 
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 use Arcanedev\NoCaptcha\Utilities\Request;
-use Mockery as m;
+use Prophecy\Argument;
 
 /**
- * Class ValidatorRuleTest
- * @package Arcanedev\NoCaptcha\Tests\Laravel
+ * Class     ValidatorRuleTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ValidatorRuleTest extends LaravelTestCase
 {
@@ -126,10 +128,13 @@ class ValidatorRuleTest extends LaravelTestCase
      */
     private function mockRequest($returns)
     {
-        $request = m::mock(Request::class);
-        $request->shouldReceive('send')->andReturn($returns);
+        $request = $this->prophesize(Request::class);
+        $request->send(Argument::type('string'))
+            ->willReturn($returns);
 
-        $captcha = $this->app['arcanedev.no-captcha']->setRequestClient($request);
+        $captcha = $this->app['arcanedev.no-captcha']
+            ->setRequestClient($request->reveal());
+
         $this->app['arcanedev.no-captcha'] = $captcha;
     }
 }

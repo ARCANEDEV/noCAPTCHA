@@ -2,12 +2,13 @@
 
 use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 use Arcanedev\NoCaptcha\Exceptions\ApiException;
-use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
 
 /**
- * Class Request
- * @package Arcanedev\NoCaptcha\Utilities
+ * Class     Request
+ *
+ * @package  Arcanedev\NoCaptcha\Utilities
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class Request implements RequestInterface
 {
@@ -29,9 +30,9 @@ class Request implements RequestInterface
     /**
      * Set URL
      *
-     * @param  string $url
+     * @param  string  $url
      *
-     * @return $this
+     * @return self
      */
     protected function setUrl($url)
     {
@@ -80,8 +81,8 @@ class Request implements RequestInterface
     /**
      * Run the request and get response
      *
-     * @param  string $url
-     * @param  bool   $curled
+     * @param  string  $url
+     * @param  bool    $curled
      *
      * @return array
      */
@@ -89,7 +90,7 @@ class Request implements RequestInterface
     {
         $this->setUrl($url);
 
-        $result = ($this->isCurlExists() and $curled === true)
+        $result = ($this->isCurlExists() && $curled === true)
             ? $this->curl()
             : $this->simple();
 
@@ -103,16 +104,15 @@ class Request implements RequestInterface
     /**
      * Check URL
      *
-     * @param  string $url
+     * @param  string  $url
      *
      * @throws ApiException
-     * @throws InvalidTypeException
      * @throws InvalidUrlException
      */
     private function checkUrl(&$url)
     {
         if ( ! is_string($url)) {
-            throw new InvalidTypeException(
+            throw new InvalidUrlException(
                 'The url must be a string value, ' . gettype($url) . ' given'
             );
         }
@@ -120,7 +120,7 @@ class Request implements RequestInterface
         $url = trim($url);
 
         if (empty($url)) {
-            throw new ApiException('The url must not be empty');
+            throw new InvalidUrlException('The url must not be empty');
         }
 
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
@@ -141,13 +141,13 @@ class Request implements RequestInterface
     /**
      * Check Result
      *
-     * @param string $result
+     * @param  string  $result
      *
      * @return bool
      */
     private function checkResult($result)
     {
-        return is_string($result) and ! empty($result);
+        return is_string($result) && ! empty($result);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -157,7 +157,7 @@ class Request implements RequestInterface
     /**
      * Convert the json response to array
      *
-     * @param  string $result
+     * @param  string  $result
      *
      * @return array
      */

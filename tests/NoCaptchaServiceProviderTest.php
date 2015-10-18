@@ -1,22 +1,23 @@
-<?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
+<?php namespace Arcanedev\NoCaptcha\Tests;
 
-use Arcanedev\NoCaptcha\Laravel\ServiceProvider;
-use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
+use Arcanedev\NoCaptcha\NoCaptchaServiceProvider;
 
 /**
- * Class ServiceProviderTest
- * @package Arcanedev\NoCaptcha\Tests\Laravel
+ * Class     NoCaptchaServiceProviderTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class ServiceProviderTest extends LaravelTestCase
+class NoCaptchaServiceProviderTest extends LaravelTestCase
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * @var ServiceProvider
+     * @var NoCaptchaServiceProvider
      */
-    private $serviceProvider;
+    private $provider;
 
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -26,14 +27,14 @@ class ServiceProviderTest extends LaravelTestCase
     {
         parent::setUp();
 
-        $this->serviceProvider = new ServiceProvider($this->app);
+        $this->provider = $this->app->getProvider(NoCaptchaServiceProvider::class);
     }
 
     public function tearDown()
     {
         parent::tearDown();
 
-        unset($this->serviceProvider);
+        unset($this->provider);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -43,9 +44,11 @@ class ServiceProviderTest extends LaravelTestCase
     /** @test */
     public function it_can_get_what_he_provides()
     {
-        // This is for 100% code converge
-        $this->assertEquals([
-            'arcanedev.no-captcha'
-        ], $this->serviceProvider->provides());
+        $expected = [
+            'arcanedev.no-captcha',
+            \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class
+        ];
+
+        $this->assertEquals($expected, $this->provider->provides());
     }
 }

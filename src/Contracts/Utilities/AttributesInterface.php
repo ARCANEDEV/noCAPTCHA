@@ -1,8 +1,10 @@
 <?php namespace Arcanedev\NoCaptcha\Contracts\Utilities;
 
 /**
- * Interface AttributesInterface
- * @package Arcanedev\NoCaptcha\Contracts\Utilities
+ * Interface  AttributesInterface
+ *
+ * @package   Arcanedev\NoCaptcha\Contracts\Utilities
+ * @author    ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 interface AttributesInterface
 {
@@ -38,8 +40,8 @@ interface AttributesInterface
     /**
      * Build attributes
      *
-     * @param  string $siteKey
-     * @param  array  $items
+     * @param  string  $siteKey
+     * @param  array   $items
      *
      * @return string
      */

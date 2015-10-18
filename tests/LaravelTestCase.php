@@ -1,25 +1,15 @@
 <?php namespace Arcanedev\NoCaptcha\Tests;
 
+use Orchestra\Testbench\TestCase as BaseTestCase;
+
 /**
- * Class LaravelTestCase
- * @package Arcanedev\NoCaptcha\Tests
+ * Class     LaravelTestCase
+ *
+ * @package  Arcanedev\NoCaptcha\Tests
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
+abstract class LaravelTestCase extends BaseTestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
@@ -34,8 +24,8 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Illuminate\Html\HtmlServiceProvider::class,
-            \Arcanedev\NoCaptcha\Laravel\ServiceProvider::class,
+            \Arcanedev\LaravelHtml\HtmlServiceProvider::class,
+            \Arcanedev\NoCaptcha\NoCaptchaServiceProvider::class,
         ];
     }
 
@@ -49,21 +39,9 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'Form'      => \Illuminate\Html\FormFacade::class,
-            'HTML'      => \Illuminate\Html\HtmlFacade::class,
-            'NoCaptcha' => \Arcanedev\NoCaptcha\Laravel\Facade::class,
+            'Form'      => \Arcanedev\LaravelHtml\Facades\Form::class,
+            'HTML'      => \Arcanedev\LaravelHtml\Facades\Html::class,
+            'NoCaptcha' => \Arcanedev\NoCaptcha\Facades\NoCaptcha::class,
         ];
-    }
-
-    /**
-     * Call artisan command and return code.
-     *
-     * @param  string $command
-     * @param  array  $parameters
-     *
-     * @return int
-     */
-    public function artisan($command, $parameters = [])
-    {
     }
 }
