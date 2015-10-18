@@ -30,9 +30,9 @@ class Request implements RequestInterface
     /**
      * Set URL
      *
-     * @param  string $url
+     * @param  string  $url
      *
-     * @return $this
+     * @return self
      */
     protected function setUrl($url)
     {
@@ -81,8 +81,8 @@ class Request implements RequestInterface
     /**
      * Run the request and get response
      *
-     * @param  string $url
-     * @param  bool   $curled
+     * @param  string  $url
+     * @param  bool    $curled
      *
      * @return array
      */
@@ -90,7 +90,7 @@ class Request implements RequestInterface
     {
         $this->setUrl($url);
 
-        $result = ($this->isCurlExists() and $curled === true)
+        $result = ($this->isCurlExists() && $curled === true)
             ? $this->curl()
             : $this->simple();
 
@@ -104,7 +104,7 @@ class Request implements RequestInterface
     /**
      * Check URL
      *
-     * @param  string $url
+     * @param  string  $url
      *
      * @throws ApiException
      * @throws InvalidUrlException
@@ -141,13 +141,13 @@ class Request implements RequestInterface
     /**
      * Check Result
      *
-     * @param string $result
+     * @param  string  $result
      *
      * @return bool
      */
     private function checkResult($result)
     {
-        return is_string($result) and ! empty($result);
+        return is_string($result) && ! empty($result);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -157,7 +157,7 @@ class Request implements RequestInterface
     /**
      * Convert the json response to array
      *
-     * @param  string $result
+     * @param  string  $result
      *
      * @return array
      */
