@@ -28,7 +28,7 @@ class Attributes implements AttributesInterface
     /**
      * Get all items
      *
-     * @param  string $siteKey
+     * @param  string  $siteKey
      *
      * @return array
      */
@@ -43,7 +43,7 @@ class Attributes implements AttributesInterface
     /**
      * Get Default attributes
      *
-     * @param  string $siteKey
+     * @param  string  $siteKey
      *
      * @return array
      */
@@ -58,9 +58,9 @@ class Attributes implements AttributesInterface
     /**
      * Set items
      *
-     * @param  array $items
+     * @param  array  $items
      *
-     * @return Attributes
+     * @return self
      */
     private function setItems($items)
     {
@@ -74,7 +74,7 @@ class Attributes implements AttributesInterface
     /**
      * Get an item value by name
      *
-     * @param  string $name
+     * @param  string  $name
      *
      * @return string
      */
@@ -90,10 +90,10 @@ class Attributes implements AttributesInterface
     /**
      * Set an item
      *
-     * @param  string $name
-     * @param  string $value
+     * @param  string  $name
+     * @param  string  $value
      *
-     * @return Attributes
+     * @return self
      */
     private function setItem($name, $value)
     {
@@ -129,8 +129,8 @@ class Attributes implements AttributesInterface
     /**
      * Build attributes
      *
-     * @param  string $siteKey
-     * @param  array  $items
+     * @param  string  $siteKey
+     * @param  array   $items
      *
      * @return string
      */
@@ -179,9 +179,9 @@ class Attributes implements AttributesInterface
     /**
      * Check data Attribute
      *
-     * @param string $name
-     * @param string $default
-     * @param array  $available
+     * @param  string  $name
+     * @param  string  $default
+     * @param  array   $available
      */
     private function checkDataAttribute($name, $default, array $available)
     {
@@ -199,7 +199,7 @@ class Attributes implements AttributesInterface
     /**
      * Check if has an item
      *
-     * @param  string $name
+     * @param  string  $name
      *
      * @return bool
      */

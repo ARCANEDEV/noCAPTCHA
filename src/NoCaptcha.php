@@ -77,9 +77,9 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Constructor
      *
-     * @param string      $secret
-     * @param string      $siteKey
-     * @param string|null $lang
+     * @param  string       $secret
+     * @param  string       $siteKey
+     * @param  string|null  $lang
      */
     public function __construct($secret, $siteKey, $lang = null)
     {
@@ -98,9 +98,9 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Set the secret key
      *
-     * @param  string $secret
+     * @param  string  $secret
      *
-     * @return NoCaptcha
+     * @return self
      */
     protected function setSecret($secret)
     {
@@ -114,9 +114,9 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Set Site key
      *
-     * @param  string $siteKey
+     * @param  string  $siteKey
      *
-     * @return NoCaptcha
+     * @return self
      */
     protected function setSiteKey($siteKey)
     {
@@ -129,11 +129,10 @@ class NoCaptcha implements NoCaptchaInterface
 
     /**
      * Set language code
-     * @todo: Adding locale check OR not ?
      *
-     * @param  string $lang
+     * @param  string  $lang
      *
-     * @return NoCaptcha
+     * @return self
      */
     public function setLang($lang)
     {
@@ -145,7 +144,7 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Get script source link
      *
-     * @param  string|null $callbackName
+     * @param  string|null  $callbackName
      *
      * @return string
      */
@@ -170,9 +169,9 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Set HTTP Request Client
      *
-     * @param  RequestInterface $request
+     * @param  RequestInterface  $request
      *
-     * @return NoCaptcha
+     * @return self
      */
     public function setRequestClient(RequestInterface $request)
     {
@@ -184,9 +183,9 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Set noCaptcha Attributes
      *
-     * @param  AttributesInterface $attributes
+     * @param  AttributesInterface  $attributes
      *
-     * @return NoCaptcha
+     * @return self
      */
     public function setAttributes(AttributesInterface $attributes)
     {
@@ -202,7 +201,7 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Display Captcha
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
@@ -216,7 +215,7 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Display image Captcha
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
@@ -231,7 +230,7 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Display audio Captcha
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
@@ -246,8 +245,8 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Verify Response
      *
-     * @param  string $response
-     * @param  string $clientIp
+     * @param  string  $response
+     * @param  string  $clientIp
      *
      * @return bool
      */
@@ -270,7 +269,7 @@ class NoCaptcha implements NoCaptchaInterface
      * Calls the reCAPTCHA siteverify API to verify whether the user passes CAPTCHA
      * test using a PSR-7 ServerRequest object.
      *
-     * @param ServerRequestInterface $request
+     * @param  ServerRequestInterface  $request
      *
      * @return bool
      */
@@ -293,7 +292,7 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Get script tag
      *
-     * @param  string|null $callbackName
+     * @param  string|null  $callbackName
      *
      * @return string
      */
@@ -312,8 +311,8 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Get script tag with a callback function
      *
-     * @param  array  $captchas
-     * @param  string $callbackName
+     * @param  array   $captchas
+     * @param  string  $callbackName
      *
      * @return string
      */
@@ -337,7 +336,7 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Rendering captchas with callback function
      *
-     * @param  array $captchas
+     * @param  array  $captchas
      *
      * @return string
      */
@@ -365,7 +364,7 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Check if callback is not empty
      *
-     * @param  string|null $callbackName
+     * @param  string|null  $callbackName
      *
      * @return bool
      */
@@ -377,8 +376,8 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Check key
      *
-     * @param  string $name
-     * @param  string $value
+     * @param  string  $name
+     * @param  string  $value
      *
      * @throws ApiException
      */
@@ -394,8 +393,8 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Check if the value is a string value
      *
-     * @param  string $name
-     * @param  string $value
+     * @param  string  $name
+     * @param  string  $value
      *
      * @throws ApiException
      */
@@ -411,8 +410,8 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Check if the value is not empty
      *
-     * @param string $name
-     * @param string $value
+     * @param string  $name
+     * @param string  $value
      *
      * @throws ApiException
      */
@@ -430,7 +429,7 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Send verify request to API and get response
      *
-     * @param  array $query
+     * @param  array  $query
      *
      * @return array
      */

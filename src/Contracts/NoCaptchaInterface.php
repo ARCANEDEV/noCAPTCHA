@@ -18,18 +18,18 @@ interface NoCaptchaInterface
     /**
      * Set HTTP Request Client
      *
-     * @param  RequestInterface $request
+     * @param  RequestInterface  $request
      *
-     * @return NoCaptchaInterface
+     * @return self
      */
     public function setRequestClient(RequestInterface $request);
 
     /**
      * Set noCaptcha Attributes
      *
-     * @param  AttributesInterface $attributes
+     * @param  AttributesInterface  $attributes
      *
-     * @return NoCaptchaInterface
+     * @return self
      */
     public function setAttributes(AttributesInterface $attributes);
 
@@ -40,7 +40,7 @@ interface NoCaptchaInterface
     /**
      * Display Captcha
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
@@ -49,7 +49,7 @@ interface NoCaptchaInterface
     /**
      * Display image Captcha
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
@@ -58,7 +58,7 @@ interface NoCaptchaInterface
     /**
      * Display audio Captcha
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
@@ -67,8 +67,8 @@ interface NoCaptchaInterface
     /**
      * Verify Response
      *
-     * @param  string $response
-     * @param  string $clientIp
+     * @param  string  $response
+     * @param  string  $clientIp
      *
      * @return bool
      */
