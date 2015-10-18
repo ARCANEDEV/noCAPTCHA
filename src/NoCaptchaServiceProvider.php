@@ -74,7 +74,10 @@ class NoCaptchaServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['arcanedev.no-captcha'];
+        return [
+            'arcanedev.no-captcha',
+            \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class
+        ];
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -96,6 +99,11 @@ class NoCaptchaServiceProvider extends ServiceProvider
                 $config->get('no-captcha.lang')
             );
         });
+
+        $this->app->bind(
+            \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class,
+            'arcanedev.no-captcha'
+        );
     }
 
     /**

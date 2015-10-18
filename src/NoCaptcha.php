@@ -1,8 +1,5 @@
 <?php namespace Arcanedev\NoCaptcha;
 
-use Arcanedev\NoCaptcha\Contracts\NoCaptchaInterface;
-use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
-use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 use Arcanedev\NoCaptcha\Exceptions\ApiException;
 use Arcanedev\NoCaptcha\Utilities\Attributes;
 use Arcanedev\NoCaptcha\Utilities\Request;
@@ -14,7 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @package  Arcanedev\NoCaptcha
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class NoCaptcha implements NoCaptchaInterface
+class NoCaptcha implements Contracts\NoCaptcha
 {
     /* ------------------------------------------------------------------------------------------------
      |  Constants
@@ -59,14 +56,14 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * HTTP Request Client
      *
-     * @var RequestInterface
+     * @var \Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface
      */
     protected $request;
 
     /**
      * noCaptcha Attributes
      *
-     * @var AttributesInterface
+     * @var \Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface
      */
     protected $attributes;
 
@@ -169,12 +166,13 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Set HTTP Request Client
      *
-     * @param  RequestInterface  $request
+     * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface  $request
      *
      * @return self
      */
-    public function setRequestClient(RequestInterface $request)
-    {
+    public function setRequestClient(
+        Contracts\Utilities\RequestInterface $request
+    ) {
         $this->request = $request;
 
         return $this;
@@ -183,12 +181,13 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Set noCaptcha Attributes
      *
-     * @param  AttributesInterface  $attributes
+     * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface  $attributes
      *
      * @return self
      */
-    public function setAttributes(AttributesInterface $attributes)
-    {
+    public function setAttributes(
+        Contracts\Utilities\AttributesInterface $attributes
+    ) {
         $this->attributes = $attributes;
 
         return $this;

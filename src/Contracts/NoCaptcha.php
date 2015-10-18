@@ -4,12 +4,12 @@ use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
 use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 
 /**
- * Interface  NoCaptchaInterface
+ * Interface  NoCaptcha
  *
  * @package   Arcanedev\NoCaptcha\Contracts
  * @author    ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-interface NoCaptchaInterface
+interface NoCaptcha
 {
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
