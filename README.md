@@ -1,11 +1,29 @@
-noCAPTCHA (new reCAPTCHA) [![Packagist License](http://img.shields.io/packagist/l/arcanedev/no-captcha.svg?style=flat-square)](https://github.com/ARCANEDEV/noCAPTCHA/blob/master/LICENSE)
-==============
-[![Travis Status](http://img.shields.io/travis/ARCANEDEV/noCAPTCHA.svg?style=flat-square)](https://travis-ci.org/ARCANEDEV/noCAPTCHA)
-[![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/ARCANEDEV/noCaptcha.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master)
-[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/ARCANEDEV/noCaptcha.svg?style=flat-square)](https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master)
-[![Github Issues](http://img.shields.io/github/issues/ARCANEDEV/noCAPTCHA.svg?style=flat-square)](https://github.com/ARCANEDEV/noCAPTCHA/issues)
-[![Packagist Release](https://img.shields.io/packagist/v/arcanedev/no-captcha.svg?style=flat-square)](https://packagist.org/packages/arcanedev/no-captcha)
-[![Packagist Downloads](https://img.shields.io/packagist/dt/arcanedev/no-captcha.svg?style=flat-square)](https://packagist.org/packages/arcanedev/no-captcha)
+# noCAPTCHA (new reCAPTCHA) [![Packagist License][badge_license]](LICENSE.md) [![For PHP][badge_php]](https://github.com/ARCANEDEV/noCAPTCHA)
+
+[![Travis Status][badge_build]](https://travis-ci.org/ARCANEDEV/noCAPTCHA)
+[![HHVM Status][badge_hhvm]](http://hhvm.h4cc.de/package/arcanedev/no-captcha)
+[![Coverage Status][badge_coverage]](https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master)
+[![Scrutinizer Code Quality][badge_quality]](https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master)
+[![SensioLabs Insight][badge_insight]](https://insight.sensiolabs.com/projects/ae37b4c0-5478-4afb-9a71-1fe5534d8ef5)
+[![Github Issues][badge_issues]](https://github.com/ARCANEDEV/noCAPTCHA/issues)
+
+[![Packagist][badge_package]](https://packagist.org/packages/arcanedev/no-captcha)
+[![Packagist Release][badge_release]](https://packagist.org/packages/arcanedev/no-captcha)
+[![Packagist Downloads][badge_downloads]](https://packagist.org/packages/arcanedev/no-captcha)
+
+[badge_php]:       https://img.shields.io/badge/PHP-Framework%20agnostic-4F5B93.svg?style=flat-square
+[badge_license]:   https://img.shields.io/packagist/l/arcanedev/no-captcha.svg?style=flat-square
+
+[badge_build]:     https://img.shields.io/travis/ARCANEDEV/noCAPTCHA.svg?style=flat-square
+[badge_hhvm]:      https://img.shields.io/hhvm/arcanedev/no-captcha.svg?style=flat-square
+[badge_coverage]:  https://img.shields.io/scrutinizer/coverage/g/ARCANEDEV/noCAPTCHA.svg?style=flat-square
+[badge_quality]:   https://img.shields.io/scrutinizer/g/ARCANEDEV/noCAPTCHA.svg?style=flat-square
+[badge_insight]:   https://img.shields.io/sensiolabs/i/ae37b4c0-5478-4afb-9a71-1fe5534d8ef5.svg?style=flat-square
+[badge_issues]:    https://img.shields.io/github/issues/ARCANEDEV/noCAPTCHA.svg?style=flat-square
+
+[badge_package]:   https://img.shields.io/badge/package-arcanedev/no--captcha-blue.svg?style=flat-square
+[badge_release]:   https://img.shields.io/packagist/v/arcanedev/no-captcha.svg?style=flat-square
+[badge_downloads]: https://img.shields.io/packagist/dt/arcanedev/no-captcha.svg?style=flat-square
 
 *By [ARCANEDEV&copy;](http://www.arcanedev.net/)*
 
@@ -16,16 +34,6 @@ reCAPTCHA comes in the form of a widget that you can easily add to your blog, fo
 > - [Google RECAPTCHA](https://developers.google.com/recaptcha/)
 
 ![New Google reCAPTCHA](https://developers.google.com/recaptcha/images/newCaptchaAnchor.gif)
-
-## Features
-* Implements Google's New "NoCaptcha ReCaptcha Field"
-* Framework agnostic package
-* Well Tested & Super-high test coverage
-* IDE Friendly and Well documented
-* Multiple Captchas Rendering
-* Customizable Captcha (type [image or audio], theme [light or dark], language and even the size)
-* [Wiki](https://github.com/ARCANEDEV/noCAPTCHA/wiki), [Examples](https://github.com/ARCANEDEV/noCAPTCHA/tree/master/examples).
-* And more...
 
 ## Table of contents
 1. [Requirements](https://github.com/ARCANEDEV/noCAPTCHA/wiki/1.-Requirements)
@@ -40,12 +48,17 @@ reCAPTCHA comes in the form of a widget that you can easily add to your blog, fo
 
 Any ideas are welcome. Feel free to submit any issues or pull requests.
 
-## TODOS:
+## TODOS
+
+  - [ ] Laravel Support (v5.2)
+  - [ ] Proxy support
+
+## DONE
 
   - [x] Documentation
   - [x] Examples
   - [x] More tests and code coverage
   - [x] PSR-7 Support (ServerRequest verification)
-  - [x] Laravel Support (v4.2)
-  - [x] Laravel Support (v5.0)
   - [x] Laravel Support (v5.1)
+  - [x] Laravel Support (v5.0)
+  - [x] Laravel Support (v4.2)
