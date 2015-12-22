@@ -1,13 +1,13 @@
 {
-    "name": "arcanedev/no-captcha",
+    "name":        "arcanedev/no-captcha",
     "description": "No CAPTCHA (new Google reCAPTCHA) with Laravel support",
-    "keywords": ["arcanedev", "recaptcha", "no-captcha", "captcha", "google", "laravel"],
-    "homepage": "https://github.com/ARCANEDEV/noCAPTCHA",
+    "keywords":    ["arcanedev", "recaptcha", "no-captcha", "captcha", "google", "laravel"],
+    "homepage":    "https://github.com/ARCANEDEV/noCAPTCHA",
     "authors": [
         {
             "name":     "ARCANEDEV",
             "email":    "arcanedev.maroc@gmail.com",
-            "homepage": "https://github.com/ARCANEDEV",
+            "homepage": "https://github.com/arcanedev-maroc",
             "role":     "Developer"
         }
     ],
@@ -38,7 +38,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "2.2-dev"
         }
     }
 }
