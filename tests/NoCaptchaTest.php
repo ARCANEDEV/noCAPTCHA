@@ -33,9 +33,9 @@ class NoCaptchaTest extends TestCase
 
     public function tearDown()
     {
-        parent::tearDown();
-
         unset($this->noCaptcha);
+
+        parent::tearDown();
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -138,13 +138,13 @@ class NoCaptchaTest extends TestCase
     {
         $captchas = ['captcha-1', 'captcha-2'];
         $script   =
-            '<script src="' . NoCaptcha::CLIENT_URL . '?onload=captchaRenderCallback&render=explicit" async defer></script>
-            <script>
+            '<script>
                 var captchaRenderCallback = function() {
                     grecaptcha.render(\'captcha-1\', {\'sitekey\' : \'site-key\'});
                     grecaptcha.render(\'captcha-2\', {\'sitekey\' : \'site-key\'});
                 };
-            </script>';
+            </script>
+            <script src="' . NoCaptcha::CLIENT_URL . '?onload=captchaRenderCallback&render=explicit" async defer></script>';
 
         $this->assertEquals(
             array_map('trim', preg_split('/\r\n|\r|\n/', $script)),
@@ -312,8 +312,8 @@ class NoCaptchaTest extends TestCase
     public function it_can_verify_psr7_request()
     {
         /**
-         * @var ServerRequestInterface  $request
-         * @var Request                 $requestClient
+         * @var  ServerRequestInterface  $request
+         * @var  Request                 $requestClient
          */
         $requestClient = $this->prophesize(Request::class);
         $requestClient->send(Argument::type('string'))
@@ -362,9 +362,9 @@ class NoCaptchaTest extends TestCase
     /**
      * Create Captcha for testing
      *
-     * @param  string|null $lang
+     * @param  string|null  $lang
      *
-     * @return NoCaptcha
+     * @return \Arcanedev\NoCaptcha\NoCaptcha
      */
     private function createCaptcha($lang = null)
     {

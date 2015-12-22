@@ -72,7 +72,7 @@ class NoCaptcha implements Contracts\NoCaptcha
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Constructor
+     * NoCaptcha constructor.
      *
      * @param  string       $secret
      * @param  string       $siteKey
@@ -93,7 +93,7 @@ class NoCaptcha implements Contracts\NoCaptcha
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Set the secret key
+     * Set the secret key.
      *
      * @param  string  $secret
      *
@@ -109,7 +109,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Set Site key
+     * Set Site key.
      *
      * @param  string  $siteKey
      *
@@ -125,7 +125,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Set language code
+     * Set language code.
      *
      * @param  string  $lang
      *
@@ -139,7 +139,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Get script source link
+     * Get script source link.
      *
      * @param  string|null  $callbackName
      *
@@ -164,7 +164,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Set HTTP Request Client
+     * Set HTTP Request Client.
      *
      * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface  $request
      *
@@ -179,7 +179,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Set noCaptcha Attributes
+     * Set noCaptcha Attributes.
      *
      * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface  $attributes
      *
@@ -198,13 +198,13 @@ class NoCaptcha implements Contracts\NoCaptcha
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Display Captcha
+     * Display Captcha.
      *
      * @param  array  $attributes
      *
      * @return string
      */
-    public function display($attributes = [])
+    public function display(array $attributes = [])
     {
         $output = $this->attributes->build($this->siteKey, $attributes);
 
@@ -212,13 +212,13 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Display image Captcha
+     * Display image Captcha.
      *
      * @param  array  $attributes
      *
      * @return string
      */
-    public function image($attributes = [])
+    public function image(array $attributes = [])
     {
         return $this->display(array_merge(
             $attributes,
@@ -227,13 +227,13 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Display audio Captcha
+     * Display audio Captcha.
      *
      * @param  array  $attributes
      *
      * @return string
      */
-    public function audio($attributes = [])
+    public function audio(array $attributes = [])
     {
         return $this->display(array_merge(
             $attributes,
@@ -242,7 +242,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Verify Response
+     * Verify Response.
      *
      * @param  string  $response
      * @param  string  $clientIp
@@ -268,7 +268,7 @@ class NoCaptcha implements Contracts\NoCaptcha
      * Calls the reCAPTCHA siteverify API to verify whether the user passes CAPTCHA
      * test using a PSR-7 ServerRequest object.
      *
-     * @param  ServerRequestInterface  $request
+     * @param  \Psr\Http\Message\ServerRequestInterface  $request
      *
      * @return bool
      */
@@ -289,7 +289,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Get script tag
+     * Get script tag.
      *
      * @param  string|null  $callbackName
      *
@@ -308,7 +308,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Get script tag with a callback function
+     * Get script tag with a callback function.
      *
      * @param  array   $captchas
      * @param  string  $callbackName
@@ -323,17 +323,17 @@ class NoCaptcha implements Contracts\NoCaptcha
             return $script;
         }
 
-        return implode(PHP_EOL, [$script, implode(PHP_EOL, [
+        return implode(PHP_EOL, [implode(PHP_EOL, [
             '<script>',
-            "var $callbackName = function() {",
-            $this->renderCaptchas($captchas),
-            '};',
+                "var $callbackName = function() {",
+                    $this->renderCaptchas($captchas),
+                '};',
             '</script>'
-        ])]);
+        ]), $script]);
     }
 
     /**
-     * Rendering captchas with callback function
+     * Rendering captchas with callback function.
      *
      * @param  array  $captchas
      *
@@ -351,7 +351,7 @@ class NoCaptcha implements Contracts\NoCaptcha
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Check if has lang
+     * Check if has lang.
      *
      * @return bool
      */
@@ -361,7 +361,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Check if callback is not empty
+     * Check if callback is not empty.
      *
      * @param  string|null  $callbackName
      *
@@ -373,12 +373,12 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Check key
+     * Check key.
      *
      * @param  string  $name
      * @param  string  $value
      *
-     * @throws ApiException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
      */
     private function checkKey($name, &$value)
     {
@@ -390,12 +390,12 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Check if the value is a string value
+     * Check if the value is a string value.
      *
      * @param  string  $name
      * @param  string  $value
      *
-     * @throws ApiException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
      */
     private function checkIsString($name, $value)
     {
@@ -407,12 +407,12 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
-     * Check if the value is not empty
+     * Check if the value is not empty.
      *
      * @param string  $name
      * @param string  $value
      *
-     * @throws ApiException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
      */
     private function checkIsNotEmpty($name, $value)
     {
@@ -426,7 +426,7 @@ class NoCaptcha implements Contracts\NoCaptcha
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Send verify request to API and get response
+     * Send verify request to API and get response.
      *
      * @param  array  $query
      *
