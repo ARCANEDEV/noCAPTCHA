@@ -4,8 +4,10 @@ use Arcanedev\NoCaptcha\Tests\TestCase;
 use Arcanedev\NoCaptcha\Utilities\Attributes;
 
 /**
- * Class AttributesTest
- * @package Arcanedev\NoCaptcha\Tests\Utilities
+ * Class     AttributesTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests\Utilities
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class AttributesTest extends TestCase
 {
@@ -35,9 +37,9 @@ class AttributesTest extends TestCase
 
     public function tearDown()
     {
-        parent::tearDown();
-
         unset($this->attributes);
+
+        parent::tearDown();
     }
 
     /* ------------------------------------------------------------------------------------------------

@@ -4,8 +4,10 @@ use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 use Mockery as m;
 
 /**
- * Class ValidatorRuleTest
- * @package Arcanedev\NoCaptcha\Tests\Laravel
+ * Class     ValidatorRuleTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ValidatorRuleTest extends LaravelTestCase
 {
@@ -13,9 +15,7 @@ class ValidatorRuleTest extends LaravelTestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @var \Illuminate\Validation\Factory
-     */
+    /** @var \Illuminate\Validation\Factory */
     private $validator;
 
     /* ------------------------------------------------------------------------------------------------
@@ -31,9 +31,9 @@ class ValidatorRuleTest extends LaravelTestCase
 
     public function tearDown()
     {
-        parent::tearDown();
-
         unset($this->validator);
+
+        parent::tearDown();
     }
 
     /* ------------------------------------------------------------------------------------------------

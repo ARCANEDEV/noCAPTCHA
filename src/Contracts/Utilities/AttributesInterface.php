@@ -1,8 +1,10 @@
 <?php namespace Arcanedev\NoCaptcha\Contracts\Utilities;
 
 /**
- * Interface AttributesInterface
- * @package Arcanedev\NoCaptcha\Contracts\Utilities
+ * Interface  AttributesInterface
+ *
+ * @package   Arcanedev\NoCaptcha\Contracts\Utilities
+ * @author    ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 interface AttributesInterface
 {
@@ -18,14 +20,14 @@ interface AttributesInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Get Image Attribute
+     * Get Image Attribute.
      *
      * @return array
      */
     public function getImageAttribute();
 
     /**
-     * Get audio type attribute
+     * Get audio type attribute.
      *
      * @return array
      */
@@ -36,10 +38,10 @@ interface AttributesInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Build attributes
+     * Build attributes.
      *
-     * @param  string $siteKey
-     * @param  array  $items
+     * @param  string  $siteKey
+     * @param  array   $items
      *
      * @return string
      */

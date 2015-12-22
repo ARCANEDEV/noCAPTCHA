@@ -3,25 +3,13 @@
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
 /**
- * Class FormMacroTest
- * @package Arcanedev\NoCaptcha\Tests\Laravel
+ * Class     FormMacroTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class FormMacroTest extends LaravelTestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Test Functions
      | ------------------------------------------------------------------------------------------------

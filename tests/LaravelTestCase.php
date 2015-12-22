@@ -1,25 +1,13 @@
 <?php namespace Arcanedev\NoCaptcha\Tests;
 
 /**
- * Class LaravelTestCase
- * @package Arcanedev\NoCaptcha\Tests
+ * Class     LaravelTestCase
+ *
+ * @package  Arcanedev\NoCaptcha\Tests
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
@@ -52,9 +40,9 @@ abstract class LaravelTestCase extends \Orchestra\Testbench\TestCase
      * Define environment setup.
      *
      * @param  \Illuminate\Foundation\Application  $app
-     * @return void
      */
     protected function getEnvironmentSetUp($app)
     {
+        //
     }
 }

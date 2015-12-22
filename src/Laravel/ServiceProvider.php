@@ -4,8 +4,10 @@ use Arcanedev\NoCaptcha\NoCaptcha;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 /**
- * Class ServiceProvider
- * @package Arcanedev\NoCaptcha\Laravel
+ * Class     ServiceProvider
+ *
+ * @package  Arcanedev\NoCaptcha\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ServiceProvider extends IlluminateServiceProvider
 {
@@ -25,9 +27,7 @@ class ServiceProvider extends IlluminateServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Bootstrap the application events.
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function boot()
     {
@@ -45,11 +45,12 @@ class ServiceProvider extends IlluminateServiceProvider
     }
 
     /**
-     * Register the service provider.
-     *
-     * @return void
+     * {@inheritdoc}
      */
-    public function register() {}
+    public function register()
+    {
+        //
+    }
 
     /**
      * Get the services provided by the provider.
@@ -58,9 +59,7 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     public function provides()
     {
-        return [
-            'arcanedev.no-captcha'
-        ];
+        return ['arcanedev.no-captcha'];
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -68,7 +67,7 @@ class ServiceProvider extends IlluminateServiceProvider
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Register Services
+     * Register Services.
      */
     private function registerServices()
     {
@@ -80,7 +79,7 @@ class ServiceProvider extends IlluminateServiceProvider
     }
 
     /**
-     * Register Validator rules
+     * Register Validator rules.
      */
     private function registerValidatorRules()
     {
@@ -92,7 +91,7 @@ class ServiceProvider extends IlluminateServiceProvider
     }
 
     /**
-     * Register Form Macros
+     * Register Form Macros.
      */
     private function registerFormMacros()
     {

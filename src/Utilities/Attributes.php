@@ -3,8 +3,10 @@
 use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
 
 /**
- * Class Attributes
- * @package Arcanedev\NoCaptcha\Utilities
+ * Class     Attributes
+ *
+ * @package  Arcanedev\NoCaptcha\Utilities
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class Attributes implements AttributesInterface
 {
@@ -20,9 +22,9 @@ class Attributes implements AttributesInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Get all items
+     * Get all items.
      *
-     * @param  string $siteKey
+     * @param  string  $siteKey
      *
      * @return array
      */
@@ -35,9 +37,9 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Get Default attributes
+     * Get Default attributes.
      *
-     * @param  string $siteKey
+     * @param  string  $siteKey
      *
      * @return array
      */
@@ -50,13 +52,13 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Set items
+     * Set items.
      *
-     * @param  array $items
+     * @param  array  $items
      *
-     * @return Attributes
+     * @return self
      */
-    private function setItems($items)
+    private function setItems(array $items)
     {
         $this->items = $items;
 
@@ -66,9 +68,9 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Get an item value by name
+     * Get an item value by name.
      *
-     * @param  string $name
+     * @param  string  $name
      *
      * @return string
      */
@@ -82,12 +84,12 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Set an item
+     * Set an item.
      *
-     * @param  string $name
-     * @param  string $value
+     * @param  string  $name
+     * @param  string  $value
      *
-     * @return Attributes
+     * @return self
      */
     private function setItem($name, $value)
     {
@@ -97,7 +99,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Get Image Attribute
+     * Get Image Attribute.
      *
      * @return array
      */
@@ -107,7 +109,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Get audio type attribute
+     * Get audio type attribute.
      *
      * @return array
      */
@@ -121,10 +123,10 @@ class Attributes implements AttributesInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Build attributes
+     * Build attributes.
      *
-     * @param  string $siteKey
-     * @param  array  $items
+     * @param  string  $siteKey
+     * @param  array   $items
      *
      * @return string
      */
@@ -146,7 +148,7 @@ class Attributes implements AttributesInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Check attributes
+     * Check attributes.
      */
     private function checkAttributes()
     {
@@ -155,7 +157,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Check type attribute
+     * Check type attribute.
      */
     private function checkTypeAttribute()
     {
@@ -163,7 +165,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Check theme attribute
+     * Check theme attribute.
      */
     private function checkThemeAttribute()
     {
@@ -171,11 +173,11 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Check data Attribute
+     * Check data Attribute.
      *
-     * @param string $name
-     * @param string $default
-     * @param array  $available
+     * @param  string  $name
+     * @param  string  $default
+     * @param  array   $available
      */
     private function checkDataAttribute($name, $default, array $available)
     {
@@ -191,9 +193,9 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Check if has an item
+     * Check if has an item.
      *
-     * @param  string $name
+     * @param  string  $name
      *
      * @return bool
      */

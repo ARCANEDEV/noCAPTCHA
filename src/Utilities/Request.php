@@ -6,8 +6,10 @@ use Arcanedev\NoCaptcha\Exceptions\InvalidTypeException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
 
 /**
- * Class Request
- * @package Arcanedev\NoCaptcha\Utilities
+ * Class     Request
+ *
+ * @package  Arcanedev\NoCaptcha\Utilities
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class Request implements RequestInterface
 {
@@ -16,7 +18,7 @@ class Request implements RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * URL to request
+     * URL to request.
      *
      * @var string
      */
@@ -27,9 +29,9 @@ class Request implements RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Set URL
+     * Set URL.
      *
-     * @param  string $url
+     * @param  string  $url
      *
      * @return $this
      */
@@ -47,7 +49,7 @@ class Request implements RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Create an api request using curl
+     * Create an api request using curl.
      *
      * @return string
      */
@@ -66,7 +68,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Create a simple api request using file_get_contents
+     * Create a simple api request using file_get_contents.
      *
      * @return string
      */
@@ -78,10 +80,10 @@ class Request implements RequestInterface
     }
 
     /**
-     * Run the request and get response
+     * Run the request and get response.
      *
-     * @param  string $url
-     * @param  bool   $curled
+     * @param  string  $url
+     * @param  bool    $curled
      *
      * @return array
      */
@@ -89,7 +91,7 @@ class Request implements RequestInterface
     {
         $this->setUrl($url);
 
-        $result = ($this->isCurlExists() and $curled === true)
+        $result = ($this->isCurlExists() && $curled === true)
             ? $this->curl()
             : $this->simple();
 
@@ -101,13 +103,13 @@ class Request implements RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Check URL
+     * Check URL.
      *
-     * @param  string $url
+     * @param  string  $url
      *
-     * @throws ApiException
-     * @throws InvalidTypeException
-     * @throws InvalidUrlException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
      */
     private function checkUrl(&$url)
     {
@@ -129,7 +131,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Check if curl exists
+     * Check if curl exists.
      *
      * @return bool
      */
@@ -139,15 +141,15 @@ class Request implements RequestInterface
     }
 
     /**
-     * Check Result
+     * Check Result.
      *
-     * @param string $result
+     * @param  string  $result
      *
      * @return bool
      */
     private function checkResult($result)
     {
-        return is_string($result) and ! empty($result);
+        return is_string($result) && ! empty($result);
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -155,9 +157,9 @@ class Request implements RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Convert the json response to array
+     * Convert the json response to array.
      *
-     * @param  string $result
+     * @param  string  $result
      *
      * @return array
      */
