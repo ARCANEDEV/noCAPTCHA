@@ -31,9 +31,9 @@ class AttributesTest extends TestCase
 
     public function tearDown()
     {
-        parent::tearDown();
-
         unset($this->attributes);
+
+        parent::tearDown();
     }
 
     /* ------------------------------------------------------------------------------------------------

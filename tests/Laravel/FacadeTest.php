@@ -32,9 +32,9 @@ class FacadeTest extends LaravelTestCase
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Get script tag for testing
+     * Get script tag for testing.
      *
-     * @param  string $lang
+     * @param  string  $lang
      *
      * @return string
      */

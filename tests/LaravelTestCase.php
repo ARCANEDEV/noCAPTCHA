@@ -15,7 +15,7 @@ abstract class LaravelTestCase extends BaseTestCase
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Register Service Providers
+     * Register Service Providers.
      *
      * @param  \Illuminate\Foundation\Application  $app
      *

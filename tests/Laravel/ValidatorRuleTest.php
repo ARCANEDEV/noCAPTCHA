@@ -16,9 +16,7 @@ class ValidatorRuleTest extends LaravelTestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @var \Illuminate\Validation\Factory
-     */
+    /** @var \Illuminate\Validation\Factory */
     private $validator;
 
     /* ------------------------------------------------------------------------------------------------
@@ -34,9 +32,9 @@ class ValidatorRuleTest extends LaravelTestCase
 
     public function tearDown()
     {
-        parent::tearDown();
-
         unset($this->validator);
+
+        parent::tearDown();
     }
 
     /* ------------------------------------------------------------------------------------------------

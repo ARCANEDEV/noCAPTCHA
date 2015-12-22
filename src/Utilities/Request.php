@@ -1,7 +1,6 @@
 <?php namespace Arcanedev\NoCaptcha\Utilities;
 
 use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
-use Arcanedev\NoCaptcha\Exceptions\ApiException;
 use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
 
 /**
@@ -17,7 +16,7 @@ class Request implements RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * URL to request
+     * URL to request.
      *
      * @var string
      */
@@ -28,7 +27,7 @@ class Request implements RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Set URL
+     * Set URL.
      *
      * @param  string  $url
      *
@@ -48,7 +47,7 @@ class Request implements RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Create an api request using curl
+     * Create an api request using curl.
      *
      * @return string
      */
@@ -67,7 +66,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Create a simple api request using file_get_contents
+     * Create a simple api request using file_get_contents.
      *
      * @return string
      */
@@ -79,7 +78,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Run the request and get response
+     * Run the request and get response.
      *
      * @param  string  $url
      * @param  bool    $curled
@@ -102,12 +101,11 @@ class Request implements RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Check URL
+     * Check URL.
      *
      * @param  string  $url
      *
-     * @throws ApiException
-     * @throws InvalidUrlException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
      */
     private function checkUrl(&$url)
     {
@@ -129,7 +127,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Check if curl exists
+     * Check if curl exists.
      *
      * @return bool
      */
@@ -139,7 +137,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * Check Result
+     * Check Result.
      *
      * @param  string  $result
      *
@@ -155,7 +153,7 @@ class Request implements RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Convert the json response to array
+     * Convert the json response to array.
      *
      * @param  string  $result
      *

@@ -32,9 +32,9 @@ class NoCaptchaServiceProviderTest extends LaravelTestCase
 
     public function tearDown()
     {
-        parent::tearDown();
-
         unset($this->provider);
+
+        parent::tearDown();
     }
 
     /* ------------------------------------------------------------------------------------------------

@@ -37,9 +37,9 @@ class RequestTest extends TestCase
 
     public function tearDown()
     {
-        parent::tearDown();
-
         unset($this->request);
+
+        parent::tearDown();
     }
 
     /* ------------------------------------------------------------------------------------------------

@@ -26,7 +26,7 @@ class Attributes implements AttributesInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Get all items
+     * Get all items.
      *
      * @param  string  $siteKey
      *
@@ -41,7 +41,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Get Default attributes
+     * Get Default attributes.
      *
      * @param  string  $siteKey
      *
@@ -56,13 +56,13 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Set items
+     * Set items.
      *
      * @param  array  $items
      *
      * @return self
      */
-    private function setItems($items)
+    private function setItems(array $items)
     {
         $this->items = $items;
 
@@ -72,7 +72,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Get an item value by name
+     * Get an item value by name.
      *
      * @param  string  $name
      *
@@ -88,7 +88,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Set an item
+     * Set an item.
      *
      * @param  string  $name
      * @param  string  $value
@@ -103,7 +103,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Get Image Attribute
+     * Get Image Attribute.
      *
      * @return array
      */
@@ -113,7 +113,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Get audio type attribute
+     * Get audio type attribute.
      *
      * @return array
      */
@@ -127,7 +127,7 @@ class Attributes implements AttributesInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Build attributes
+     * Build attributes.
      *
      * @param  string  $siteKey
      * @param  array   $items
@@ -152,7 +152,7 @@ class Attributes implements AttributesInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Check attributes
+     * Check attributes.
      */
     private function checkAttributes()
     {
@@ -161,7 +161,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Check type attribute
+     * Check type attribute.
      */
     private function checkTypeAttribute()
     {
@@ -169,7 +169,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Check theme attribute
+     * Check theme attribute.
      */
     private function checkThemeAttribute()
     {
@@ -177,7 +177,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Check data Attribute
+     * Check data Attribute.
      *
      * @param  string  $name
      * @param  string  $default
@@ -197,7 +197,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Check if has an item
+     * Check if has an item.
      *
      * @param  string  $name
      *

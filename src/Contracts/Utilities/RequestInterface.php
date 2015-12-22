@@ -13,7 +13,7 @@ interface RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Run the request and get response
+     * Run the request and get response.
      *
      * @param  string  $url
      * @param  bool    $curled
