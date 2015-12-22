@@ -4,8 +4,10 @@ use Arcanedev\NoCaptcha\Laravel\ServiceProvider;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
 /**
- * Class ServiceProviderTest
- * @package Arcanedev\NoCaptcha\Tests\Laravel
+ * Class     ServiceProviderTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ServiceProviderTest extends LaravelTestCase
 {
@@ -26,14 +28,14 @@ class ServiceProviderTest extends LaravelTestCase
     {
         parent::setUp();
 
-        $this->serviceProvider = new ServiceProvider($this->app);
+        $this->serviceProvider = $this->app->getProvider('Arcanedev\NoCaptcha\Laravel\ServiceProvider');
     }
 
     public function tearDown()
     {
-        parent::tearDown();
-
         unset($this->serviceProvider);
+
+        parent::tearDown();
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -41,11 +43,10 @@ class ServiceProviderTest extends LaravelTestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function it_can_get_what_he_provides()
+    public function it_can_provides()
     {
-        // This is for 100% code converge
-        $this->assertEquals([
-            'arcanedev.no-captcha'
-        ], $this->serviceProvider->provides());
+        $expected = ['arcanedev.no-captcha'];
+
+        $this->assertEquals($expected, $this->serviceProvider->provides());
     }
 }

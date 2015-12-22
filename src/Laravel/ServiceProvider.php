@@ -4,8 +4,10 @@ use Arcanedev\NoCaptcha\NoCaptcha;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 /**
- * Class ServiceProvider
- * @package Arcanedev\NoCaptcha\Laravel
+ * Class     ServiceProvider
+ *
+ * @package  Arcanedev\NoCaptcha\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ServiceProvider extends IlluminateServiceProvider
 {
@@ -49,8 +51,8 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     public function register()
     {
-        $this->app->bind('arcanedev.no-captcha', function() {
-            $config = config('no-captcha');
+        $this->app->bind('arcanedev.no-captcha', function($app) {
+            $config = $app['config']->get('no-captcha');
 
             return new NoCaptcha($config['secret'], $config['sitekey'], $config['lang']);
         });

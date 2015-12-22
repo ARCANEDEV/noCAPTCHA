@@ -5,25 +5,13 @@ use Arcanedev\NoCaptcha\Laravel\Facade as NoCaptcha;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
 /**
- * Class FacadeTest
- * @package Arcanedev\NoCaptcha\Tests\Laravel
+ * Class     FacadeTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests\Laravel
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class FacadeTest extends LaravelTestCase
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
-    public function tearDown()
-    {
-        parent::tearDown();
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Test Functions
      | ------------------------------------------------------------------------------------------------
@@ -45,9 +33,9 @@ class FacadeTest extends LaravelTestCase
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Get script tag for testing
+     * Get script tag for testing.
      *
-     * @param  string $lang
+     * @param  string  $lang
      *
      * @return string
      */

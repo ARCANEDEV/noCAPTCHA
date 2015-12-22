@@ -1,8 +1,10 @@
 <?php namespace Arcanedev\NoCaptcha\Contracts\Utilities;
 
 /**
- * Interface RequestInterface
- * @package Arcanedev\NoCaptcha\Contracts\Utilities
+ * Interface  RequestInterface
+ *
+ * @package   Arcanedev\NoCaptcha\Contracts\Utilities
+ * @author    ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 interface RequestInterface
 {
@@ -11,10 +13,10 @@ interface RequestInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Run the request and get response
+     * Run the request and get response.
      *
-     * @param  string $url
-     * @param  bool   $curled
+     * @param  string  $url
+     * @param  bool    $curled
      *
      * @return array
      */
