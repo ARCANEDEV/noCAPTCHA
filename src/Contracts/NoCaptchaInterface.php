@@ -4,8 +4,10 @@ use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
 use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
 
 /**
- * Interface NoCaptchaInterface
- * @package Arcanedev\NoCaptcha\Contracts
+ * Interface  NoCaptchaInterface
+ *
+ * @package   Arcanedev\NoCaptcha\Contracts
+ * @author    ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 interface NoCaptchaInterface
 {
@@ -14,20 +16,20 @@ interface NoCaptchaInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Set HTTP Request Client
+     * Set HTTP Request Client.
      *
-     * @param  RequestInterface $request
+     * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface  $request
      *
-     * @return NoCaptchaInterface
+     * @return self
      */
     public function setRequestClient(RequestInterface $request);
 
     /**
-     * Set noCaptcha Attributes
+     * Set noCaptcha Attributes.
      *
-     * @param  AttributesInterface $attributes
+     * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface  $attributes
      *
-     * @return NoCaptchaInterface
+     * @return self
      */
     public function setAttributes(AttributesInterface $attributes);
 
@@ -36,46 +38,55 @@ interface NoCaptchaInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Display Captcha
+     * Display Captcha.
      *
-     * @param  array $attributes
-     *
-     * @return string
-     */
-    public function display($attributes = []);
-
-    /**
-     * Display image Captcha
-     *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
-    public function image($attributes = []);
+    public function display(array $attributes = []);
 
     /**
-     * Display audio Captcha
+     * Display image Captcha.
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
-    public function audio($attributes = []);
+    public function image(array $attributes = []);
 
     /**
-     * Verify Response
+     * Display audio Captcha.
      *
-     * @param  string $response
-     * @param  string $clientIp
+     * @param  array  $attributes
+     *
+     * @return string
+     */
+    public function audio(array $attributes = []);
+
+    /**
+     * Verify Response.
+     *
+     * @param  string  $response
+     * @param  string  $clientIp
      *
      * @return bool
      */
     public function verify($response, $clientIp = null);
 
     /**
-     * Get script tag
+     * Get script tag.
      *
      * @return string
      */
     public function script();
+
+    /**
+     * Get script tag with callback function.
+     *
+     * @param  array  $captchas
+     *
+     * @return string
+     */
+    public function scriptWithCallback(array $captchas);
 }
