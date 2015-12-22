@@ -10,8 +10,10 @@ use Arcanedev\NoCaptcha\Utilities\Request;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class NoCaptcha
- * @package Arcanedev\NoCaptcha
+ * Class     NoCaptcha
+ *
+ * @package  Arcanedev\NoCaptcha
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class NoCaptcha implements NoCaptchaInterface
 {
@@ -27,14 +29,14 @@ class NoCaptcha implements NoCaptchaInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * The shared key between your site and ReCAPTCHA
+     * The shared key between your site and ReCAPTCHA.
      *
      * @var string
      */
     private $secret;
 
     /**
-     * Your site key
+     * Your site key.
      *
      * @var string
      */
@@ -56,16 +58,16 @@ class NoCaptcha implements NoCaptchaInterface
     protected $scriptLoaded = false;
 
     /**
-     * HTTP Request Client
+     * HTTP Request Client.
      *
-     * @var RequestInterface
+     * @var \Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface
      */
     protected $request;
 
     /**
-     * noCaptcha Attributes
+     * noCaptcha Attributes.
      *
-     * @var AttributesInterface
+     * @var \Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface
      */
     protected $attributes;
 
@@ -74,11 +76,11 @@ class NoCaptcha implements NoCaptchaInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Constructor
+     * NoCaptcha constructor.
      *
-     * @param string      $secret
-     * @param string      $siteKey
-     * @param string|null $lang
+     * @param  string       $secret
+     * @param  string       $siteKey
+     * @param  string|null  $lang
      */
     public function __construct($secret, $siteKey, $lang = null)
     {
@@ -95,11 +97,11 @@ class NoCaptcha implements NoCaptchaInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Set the secret key
+     * Set the secret key.
      *
-     * @param  string $secret
+     * @param  string  $secret
      *
-     * @return NoCaptcha
+     * @return self
      */
     protected function setSecret($secret)
     {
@@ -111,11 +113,11 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Set Site key
+     * Set Site key.
      *
-     * @param  string $siteKey
+     * @param  string  $siteKey
      *
-     * @return NoCaptcha
+     * @return self
      */
     protected function setSiteKey($siteKey)
     {
@@ -127,12 +129,11 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Set language code
-     * @todo: Adding locale check OR not ?
+     * Set language code.
      *
-     * @param  string $lang
+     * @param  string  $lang
      *
-     * @return NoCaptcha
+     * @return self
      */
     public function setLang($lang)
     {
@@ -142,9 +143,9 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Get script source link
+     * Get script source link.
      *
-     * @param  string|null $callbackName
+     * @param  string|null  $callbackName
      *
      * @return string
      */
@@ -169,9 +170,9 @@ class NoCaptcha implements NoCaptchaInterface
     /**
      * Set HTTP Request Client
      *
-     * @param  RequestInterface $request
+     * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface  $request
      *
-     * @return NoCaptcha
+     * @return self
      */
     public function setRequestClient(RequestInterface $request)
     {
@@ -181,11 +182,11 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Set noCaptcha Attributes
+     * Set noCaptcha Attributes.
      *
-     * @param  AttributesInterface $attributes
+     * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface  $attributes
      *
-     * @return NoCaptcha
+     * @return self
      */
     public function setAttributes(AttributesInterface $attributes)
     {
@@ -199,13 +200,13 @@ class NoCaptcha implements NoCaptchaInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Display Captcha
+     * Display Captcha.
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
-    public function display($attributes = [])
+    public function display(array $attributes = [])
     {
         $output = $this->attributes->build($this->siteKey, $attributes);
 
@@ -213,13 +214,13 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Display image Captcha
+     * Display image Captcha.
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
-    public function image($attributes = [])
+    public function image(array $attributes = [])
     {
         return $this->display(array_merge(
             $attributes,
@@ -228,13 +229,13 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Display audio Captcha
+     * Display audio Captcha.
      *
-     * @param  array $attributes
+     * @param  array  $attributes
      *
      * @return string
      */
-    public function audio($attributes = [])
+    public function audio(array $attributes = [])
     {
         return $this->display(array_merge(
             $attributes,
@@ -243,10 +244,10 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Verify Response
+     * Verify Response.
      *
-     * @param  string $response
-     * @param  string $clientIp
+     * @param  string  $response
+     * @param  string  $clientIp
      *
      * @return bool
      */
@@ -270,7 +271,7 @@ class NoCaptcha implements NoCaptchaInterface
      * Calls the reCAPTCHA siteverify API to verify whether the user passes CAPTCHA
      * test using a PSR-7 ServerRequest object.
      *
-     * @param  ServerRequestInterface $request
+     * @param  \Psr\Http\Message\ServerRequestInterface  $request
      *
      * @return bool
      */
@@ -291,9 +292,9 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Get script tag
+     * Get script tag.
      *
-     * @param  string|null $callbackName
+     * @param  string|null  $callbackName
      *
      * @return string
      */
@@ -310,10 +311,10 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Get script tag with a callback function
+     * Get script tag with a callback function.
      *
-     * @param  array  $captchas
-     * @param  string $callbackName
+     * @param  array   $captchas
+     * @param  string  $callbackName
      *
      * @return string
      */
@@ -325,19 +326,19 @@ class NoCaptcha implements NoCaptchaInterface
             return $script;
         }
 
-        return implode(PHP_EOL, [$script, implode(PHP_EOL, [
+        return implode(PHP_EOL, [implode(PHP_EOL, [
             '<script>',
                 "var $callbackName = function() {",
                     $this->renderCaptchas($captchas),
                 '};',
             '</script>'
-        ])]);
+        ]), $script]);
     }
 
     /**
-     * Rendering captchas with callback function
+     * Rendering captchas with callback function.
      *
-     * @param  array $captchas
+     * @param  array  $captchas
      *
      * @return string
      */
@@ -353,7 +354,7 @@ class NoCaptcha implements NoCaptchaInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Check if has lang
+     * Check if has lang.
      *
      * @return bool
      */
@@ -363,9 +364,9 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Check if callback is not empty
+     * Check if callback is not empty.
      *
-     * @param  string|null $callbackName
+     * @param  string|null  $callbackName
      *
      * @return bool
      */
@@ -375,13 +376,13 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Check key
+     * Check key.
      *
-     * @param  string $name
-     * @param  string $value
+     * @param  string  $name
+     * @param  string  $value
      *
-     * @throws ApiException
-     * @throws InvalidTypeException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
      */
     private function checkKey($name, &$value)
     {
@@ -393,12 +394,12 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Check if the value is a string value
+     * Check if the value is a string value.
      *
-     * @param  string $name
-     * @param  string $value
+     * @param  string  $name
+     * @param  string  $value
      *
-     * @throws InvalidTypeException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
      */
     private function checkIsString($name, $value)
     {
@@ -410,12 +411,12 @@ class NoCaptcha implements NoCaptchaInterface
     }
 
     /**
-     * Check if the value is not empty
+     * Check if the value is not empty.
      *
-     * @param string $name
-     * @param string $value
+     * @param  string  $name
+     * @param  string  $value
      *
-     * @throws ApiException
+     * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
      */
     private function checkIsNotEmpty($name, $value)
     {
@@ -429,9 +430,9 @@ class NoCaptcha implements NoCaptchaInterface
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Send verify request to API and get response
+     * Send verify request to API and get response.
      *
-     * @param  array $query
+     * @param  array  $query
      *
      * @return array
      */

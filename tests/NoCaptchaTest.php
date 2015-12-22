@@ -4,8 +4,10 @@ use Arcanedev\NoCaptcha\NoCaptcha;
 use Mockery as m;
 
 /**
- * Class NoCaptchaTest
- * @package Arcanedev\NoCaptcha\Tests
+ * Class     NoCaptchaTest
+ *
+ * @package  Arcanedev\NoCaptcha\Tests
+ * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class NoCaptchaTest extends TestCase
 {
@@ -35,9 +37,9 @@ class NoCaptchaTest extends TestCase
 
     public function tearDown()
     {
-        parent::tearDown();
-
         unset($this->noCaptcha);
+
+        parent::tearDown();
     }
 
     /* ------------------------------------------------------------------------------------------------
@@ -57,8 +59,8 @@ class NoCaptchaTest extends TestCase
     /**
      * @test
      *
-     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
-     * @expectedExceptionMessage The secret key must be a string value, NULL given
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
+     * @expectedExceptionMessage  The secret key must be a string value, NULL given
      */
     public function it_must_throw_invalid_type_exception_on_secret_key()
     {
@@ -68,8 +70,8 @@ class NoCaptchaTest extends TestCase
     /**
      * @test
      *
-     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage The secret key must not be empty
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
+     * @expectedExceptionMessage  The secret key must not be empty
      */
     public function it_must_throw_api_exception_on_empty_secret_key()
     {
@@ -79,8 +81,8 @@ class NoCaptchaTest extends TestCase
     /**
      * @test
      *
-     * @expectedException \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
-     * @expectedExceptionMessage The site key must be a string value, NULL given
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidTypeException
+     * @expectedExceptionMessage  The site key must be a string value, NULL given
      */
     public function it_must_throw_invalid_type_exception_on_site_key()
     {
@@ -90,8 +92,8 @@ class NoCaptchaTest extends TestCase
     /**
      * @test
      *
-     * @expectedException        \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage The site key must not be empty
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
+     * @expectedExceptionMessage  The site key must not be empty
      */
     public function it_must_throw_api_exception_on_empty_site_key()
     {
@@ -141,13 +143,13 @@ class NoCaptchaTest extends TestCase
     {
         $captchas = ['captcha-1', 'captcha-2'];
         $script   =
-            '<script src="' . NoCaptcha::CLIENT_URL . '?onload=captchaRenderCallback&render=explicit" async defer></script>
-            <script>
+            '<script>
                 var captchaRenderCallback = function() {
                     grecaptcha.render(\'captcha-1\', {\'sitekey\' : \'site-key\'});
                     grecaptcha.render(\'captcha-2\', {\'sitekey\' : \'site-key\'});
                 };
-            </script>';
+            </script>
+            <script src="' . NoCaptcha::CLIENT_URL . '?onload=captchaRenderCallback&render=explicit" async defer></script>';
 
         $this->assertEquals(
             array_map('trim', preg_split('/\r\n|\r|\n/', $script)),
@@ -304,7 +306,7 @@ class NoCaptchaTest extends TestCase
             'success' => true
         ]);
 
-        /** @var \Arcanedev\NoCaptcha\Utilities\Request $requestClient */
+        /** @var  \Arcanedev\NoCaptcha\Utilities\Request  $requestClient */
         $passes = $this->noCaptcha
             ->setRequestClient($requestClient)
             ->verify('re-captcha-response');
@@ -329,8 +331,8 @@ class NoCaptchaTest extends TestCase
         ]);
 
         /**
-         * @var \Psr\Http\Message\ServerRequestInterface $request
-         * @var \Arcanedev\NoCaptcha\Utilities\Request   $requestClient
+         * @var  \Psr\Http\Message\ServerRequestInterface  $request
+         * @var  \Arcanedev\NoCaptcha\Utilities\Request    $requestClient
          */
         $passes = $this->noCaptcha
             ->setRequestClient($requestClient)
@@ -366,9 +368,9 @@ class NoCaptchaTest extends TestCase
     /**
      * Create Captcha for testing
      *
-     * @param  string|null $lang
+     * @param  string|null  $lang
      *
-     * @return NoCaptcha
+     * @return \Arcanedev\NoCaptcha\NoCaptcha
      */
     private function createCaptcha($lang = null)
     {
