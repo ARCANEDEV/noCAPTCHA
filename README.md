@@ -50,8 +50,7 @@ Any ideas are welcome. Feel free to submit any issues or pull requests.
 
 ## TODOS
 
-  - [ ] Laravel Support (v5.2)
-  - [ ] Proxy support
+  - [ ] What else ?
 
 ## DONE
 
@@ -59,6 +58,7 @@ Any ideas are welcome. Feel free to submit any issues or pull requests.
   - [x] Examples
   - [x] More tests and code coverage
   - [x] PSR-7 Support (ServerRequest verification)
-  - [x] Laravel Support (v5.1)
-  - [x] Laravel Support (v5.0)
-  - [x] Laravel Support (v4.2)
+  - [x] Laravel Supported (v5.2)
+  - [x] Laravel Supported (v5.1)
+  - [x] Laravel Supported (v5.0)
+  - [x] Laravel Supported (v4.2)
