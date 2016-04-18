@@ -22,13 +22,13 @@ reCAPTCHA comes in the form of a widget that you can easily add to your blog, fo
 ![New Google reCAPTCHA](https://developers.google.com/recaptcha/images/newCaptchaAnchor.gif)
 
 ## Table of contents
-1. [Requirements](https://github.com/ARCANEDEV/noCAPTCHA/wiki/1.-Requirements)
-2. [Version Compatibility](https://github.com/ARCANEDEV/noCAPTCHA/wiki/2.-Version-Compatibility)
-3. [Installation and Setup](https://github.com/ARCANEDEV/noCAPTCHA/wiki/3.-Installation-and-Setup)
-4. [Configuration](https://github.com/ARCANEDEV/noCAPTCHA/wiki/4.-Configuration)
-5. [Usage](https://github.com/ARCANEDEV/noCAPTCHA/wiki/5.-Usage)
-6. [Extras](https://github.com/ARCANEDEV/noCAPTCHA/wiki/6.-Extras)
-7. [FAQ](https://github.com/ARCANEDEV/noCAPTCHA/wiki/7.-FAQ)
+1. [Requirements](_docs/1-Requirements.md)
+2. [Version Compatibility](_docs/2-Version-Compatibility.md)
+3. [Installation and Setup](_docs/3-Installation-and-Setup.md)
+4. [Configuration](_docs/4-Configuration.md)
+5. [Usage](_docs/5-Usage.md)
+6. [Extras](_docs/6-Extras.md)
+7. [FAQ](_docs/7-FAQ.md)
 
 ## DONE
 
