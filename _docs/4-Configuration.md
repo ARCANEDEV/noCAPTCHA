@@ -30,6 +30,8 @@ return [
     'secret'  => getenv('NOCAPTCHA_SECRET')  ?: 'no-captcha-secret',
     'sitekey' => getenv('NOCAPTCHA_SITEKEY') ?: 'no-captcha-sitekey',
     'lang'    => app()->getLocale(),
+
+    // ...
 ];
 ```
 
@@ -42,5 +44,29 @@ return [
     'secret'  => 'your-secret-key',
     'sitekey' => 'your-site-key',
     'lang'    => 'en',              // Optional
+
+    // ...
+];
+```
+
+## Additional configs
+
+You can customize your captchas by setting-up a global `attributes` in your config file.
+
+```
+<?php
+
+return [
+    // ...
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Attributes
+     | ------------------------------------------------------------------------------------------------
+     */
+    'attributes' => [
+        'data-theme' => null, // 'light', 'dark'
+        'data-type'  => null, // 'image', 'audio'
+        'data-size'  => null, // 'normal', 'compact'
+    ],
 ];
 ```
