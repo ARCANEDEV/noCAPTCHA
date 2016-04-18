@@ -103,7 +103,7 @@ class Attributes implements AttributesInterface
     }
 
     /**
-     * Get Image Attribute.
+     * Get image type attribute.
      *
      * @return array
      */
@@ -158,6 +158,7 @@ class Attributes implements AttributesInterface
     {
         $this->checkTypeAttribute();
         $this->checkThemeAttribute();
+        $this->checkSizeAttribute();
     }
 
     /**
@@ -174,6 +175,14 @@ class Attributes implements AttributesInterface
     private function checkThemeAttribute()
     {
         $this->checkDataAttribute(self::ATTR_THEME, 'light', ['light', 'dark']);
+    }
+
+    /**
+     * Check size attribute.
+     */
+    private function checkSizeAttribute()
+    {
+        $this->checkDataAttribute(self::ATTR_SIZE, 'normal', ['normal', 'compact']);
     }
 
     /**
