@@ -54,6 +54,55 @@ class AttributesTest extends TestCase
     }
 
     /** @test */
+    public function it_can_be_instantiated_with_defaults()
+    {
+        $this->attributes = new Attributes([
+            'theme' => null,
+            'type'  => null,
+            'size'  => null,
+        ]);
+
+        $this->assertInstanceOf(Attributes::class, $this->attributes);
+        $this->assertEquals(
+            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '"',
+            $this->attributes->build($this->siteKey)
+        );
+
+        $this->attributes = new Attributes(['data-theme' => 'light']);
+
+        $this->assertInstanceOf(Attributes::class, $this->attributes);
+        $this->assertEquals(
+            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-theme="light"',
+            $this->attributes->build($this->siteKey)
+        );
+
+        $this->attributes = new Attributes(['data-type' => 'image']);
+
+        $this->assertInstanceOf(Attributes::class, $this->attributes);
+        $this->assertEquals(
+            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-type="image"',
+            $this->attributes->build($this->siteKey)
+        );
+
+        $this->attributes = new Attributes(['data-size' => 'normal']);
+
+        $this->assertInstanceOf(Attributes::class, $this->attributes);
+        $this->assertEquals(
+            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-size="normal"',
+            $this->attributes->build($this->siteKey)
+        );
+
+        // Invalid
+        $this->attributes = new Attributes(['data-size' => 'huge']);
+
+        $this->assertInstanceOf(Attributes::class, $this->attributes);
+        $this->assertEquals(
+            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-size="normal"',
+            $this->attributes->build($this->siteKey)
+        );
+    }
+
+    /** @test */
     public function it_can_build_type_attribute()
     {
         $attributes = 'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-type="image"';

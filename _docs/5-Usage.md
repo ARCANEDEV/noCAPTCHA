@@ -44,6 +44,15 @@ echo $captcha->script();
 ?>
 ```
 
+**Note:** The `NoCaptcha` constructor accepts four arguments:
+
+| Argument    | Required | Description                                            |
+|-------------|----------|--------------------------------------------------------|
+| $secret     | Yes      | Your secret key.                                       |
+| $siteKey    | Yes      | Your site key.                                         |
+| $lang       | No       | You can specify your language.                         |
+| $attributes | No       | You can specify a global attributes for your captchas. |
+
 Check the [examples folder](https://github.com/ARCANEDEV/noCAPTCHA/tree/master/examples) for more usage details.
 
 ### Laravel

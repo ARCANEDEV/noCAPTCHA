@@ -77,15 +77,16 @@ class NoCaptcha implements Contracts\NoCaptcha
      * @param  string       $secret
      * @param  string       $siteKey
      * @param  string|null  $lang
+     * @param  array        $attributes
      */
-    public function __construct($secret, $siteKey, $lang = null)
+    public function __construct($secret, $siteKey, $lang = null, array $attributes = [])
     {
         $this->setSecret($secret);
         $this->setSiteKey($siteKey);
         $this->setLang($lang);
 
         $this->setRequestClient(new Request);
-        $this->setAttributes(new Attributes);
+        $this->setAttributes(new Attributes($attributes));
     }
 
     /* ------------------------------------------------------------------------------------------------

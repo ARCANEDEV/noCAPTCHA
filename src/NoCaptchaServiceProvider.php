@@ -96,7 +96,8 @@ class NoCaptchaServiceProvider extends ServiceProvider
             return new NoCaptcha(
                 $config->get('no-captcha.secret'),
                 $config->get('no-captcha.sitekey'),
-                $config->get('no-captcha.lang')
+                $config->get('no-captcha.lang'),
+                $config->get('no-captcha.attributes', [])
             );
         });
 

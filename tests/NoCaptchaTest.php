@@ -52,6 +52,58 @@ class NoCaptchaTest extends TestCase
         );
     }
 
+    /** @test */
+    public function it_can_be_instantiated_with_attributes()
+    {
+        $this->noCaptcha = $this->createCaptcha(null, [
+            'data-theme' => null,
+            'data-type'  => null,
+            'data-size'  => null
+        ]);
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key"></div>',
+            $this->noCaptcha->display()
+        );
+
+        $expectations = [
+            [
+                'attributes' => ['data-theme' => 'light'],
+                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light"></div>',
+            ],[
+                'attributes' => ['data-theme' => 'dark'],
+                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-theme="dark"></div>',
+            ],[
+                'attributes' => ['data-theme' => 'transparent'], // Invalid
+                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light"></div>',
+            ],[
+                'attributes' => ['data-type' => 'image'],
+                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-type="image"></div>',
+            ],[
+                'attributes' => ['data-type' => 'audio'],
+                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio"></div>',
+            ],[
+                'attributes' => ['data-type' => 'video'], // Invalid
+                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-type="image"></div>',
+            ],[
+                'attributes' => ['data-size' => 'normal'],
+                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-size="normal"></div>',
+            ],[
+                'attributes' => ['data-size' => 'compact'],
+                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-size="compact"></div>',
+            ],[
+                'attributes' => ['data-size' => 'huge'], // Invalid
+                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-size="normal"></div>',
+            ],
+        ];
+
+        foreach ($expectations as $data) {
+            $this->assertEquals(
+                $data['expected'], $this->createCaptcha(null, $data['attributes'])->display()
+            );
+        }
+    }
+
     /**
      * @test
      *
@@ -363,11 +415,12 @@ class NoCaptchaTest extends TestCase
      * Create Captcha for testing
      *
      * @param  string|null  $lang
+     * @param  array        $attributes
      *
      * @return \Arcanedev\NoCaptcha\NoCaptcha
      */
-    private function createCaptcha($lang = null)
+    private function createCaptcha($lang = null, array $attributes = [])
     {
-        return new NoCaptcha('secret-key', 'site-key', $lang);
+        return new NoCaptcha('secret-key', 'site-key', $lang, $attributes);
     }
 }
