@@ -342,7 +342,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     private function renderCaptchas(array $captchas)
     {
         return implode(PHP_EOL, array_map(function($captcha) {
-            return "if(document.getElementById('".$captcha."')){ grecaptcha.render('{$captcha}', {'sitekey' : '{$this->siteKey}'}) };";
+            return "if(document.getElementById('".$captcha."')){ window.recaptcha_widget_{$captcha} = grecaptcha.render('{$captcha}', {'sitekey' : '{$this->siteKey}'}) };";
         }, $captchas));
     }
 
