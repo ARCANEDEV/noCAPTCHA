@@ -63,8 +63,8 @@ class NoCaptchaServiceProvider extends ServiceProvider
         parent::boot();
 
         $this->publishConfig();
-        $this->registerValidatorRules();
-        $this->registerFormMacros();
+        $this->registerValidatorRules($this->app);
+        $this->registerFormMacros($this->app);
     }
 
     /**
@@ -91,7 +91,7 @@ class NoCaptchaServiceProvider extends ServiceProvider
     {
         $this->app->bind('arcanedev.no-captcha', function($app) {
             /** @var  \Illuminate\Config\Repository  $config */
-            $config  = $app['config'];
+            $config = $app['config'];
 
             return new NoCaptcha(
                 $config->get('no-captcha.secret'),
@@ -107,23 +107,13 @@ class NoCaptchaServiceProvider extends ServiceProvider
     }
 
     /**
-     * Publish config file.
-     */
-    protected function publishConfig()
-    {
-        $this->publishes([
-            $this->getConfigFile() => config_path("{$this->package}.php")
-        ], 'config');
-    }
-
-    /**
      * Register Validator rules.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
      */
-    private function registerValidatorRules()
+    private function registerValidatorRules($app)
     {
-        $app = $this->app;
-
-        $this->app['validator']->extend('captcha', function($attribute, $value) use ($app) {
+        $app['validator']->extend('captcha', function($attribute, $value) use ($app) {
             unset($attribute);
             $ip = $app['request']->getClientIp();
 
@@ -133,12 +123,14 @@ class NoCaptchaServiceProvider extends ServiceProvider
 
     /**
      * Register Form Macros.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
      */
-    private function registerFormMacros()
+    private function registerFormMacros($app)
     {
-        if ($this->app->bound('form')) {
-            $this->app['form']->macro('captcha', function($attributes = []) {
-                return app('arcanedev.no-captcha')->display($attributes);
+        if ($app->bound('form')) {
+            $app['form']->macro('captcha', function(array $attributes = []) use ($app) {
+                return $app['arcanedev.no-captcha']->display($attributes);
             });
         }
     }
