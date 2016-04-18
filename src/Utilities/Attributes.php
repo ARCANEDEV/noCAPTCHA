@@ -19,7 +19,28 @@ class Attributes implements AttributesInterface
      *
      * @var array
      */
-    protected $items = [];
+    protected $items    = [];
+
+    /**
+     * Defaults attributes.
+     *
+     * @var array
+     */
+    protected $defaults = [];
+
+    /* ------------------------------------------------------------------------------------------------
+     |  Constructor
+     | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * Attributes constructor.
+     *
+     * @param  array  $defaults
+     */
+    public function __construct(array $defaults = [])
+    {
+        $this->defaults = array_filter($defaults);
+    }
 
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
@@ -64,7 +85,7 @@ class Attributes implements AttributesInterface
      */
     private function setItems(array $items)
     {
-        $this->items = $items;
+        $this->items = array_merge($this->defaults, $items);
 
         $this->checkAttributes();
 
