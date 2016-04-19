@@ -187,13 +187,13 @@ class NoCaptchaTest extends TestCase
 
     /** @test */
     public function it_can_render_script_with_callback()
-    {
+    {	
         $captchas = ['captcha-1', 'captcha-2'];
         $script   =
             '<script>
                 var captchaRenderCallback = function() {
-                    grecaptcha.render(\'captcha-1\', {\'sitekey\' : \'site-key\'});
-                    grecaptcha.render(\'captcha-2\', {\'sitekey\' : \'site-key\'});
+                    if(document.getElementById(\'captcha-1\')){ window.recaptcha_widget_captcha-1 = grecaptcha.render(\'captcha-1\', {\'sitekey\' : \'site-key\'}) };
+                    if(document.getElementById(\'captcha-2\')){ window.recaptcha_widget_captcha-2 = grecaptcha.render(\'captcha-2\', {\'sitekey\' : \'site-key\'}) };
                 };
             </script>
             <script src="' . NoCaptcha::CLIENT_URL . '?onload=captchaRenderCallback&render=explicit" async defer></script>';
