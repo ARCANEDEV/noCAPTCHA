@@ -18,10 +18,10 @@ class FormMacroTest extends LaravelTestCase
     public function it_can_render_captcha()
     {
         if ($this->app->bound('form')) {
-            $captcha = $this->app['form']->captcha();
+            $captcha = $this->app['form']->captcha('captcha');
 
             $this->assertEquals(
-                '<div class="g-recaptcha" data-sitekey="no-captcha-sitekey"></div>',
+                '<div class="g-recaptcha" data-sitekey="no-captcha-sitekey" id="captcha" name="captcha"></div>',
                 $captcha
             );
         }

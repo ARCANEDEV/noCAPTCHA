@@ -40,29 +40,32 @@ interface NoCaptcha
     /**
      * Display Captcha.
      *
-     * @param  array  $attributes
+     * @param  string  $name
+     * @param  array   $attributes
      *
      * @return string
      */
-    public function display(array $attributes = []);
+    public function display($name, array $attributes = []);
 
     /**
      * Display image Captcha.
      *
-     * @param  array  $attributes
+     * @param  string  $name
+     * @param  array   $attributes
      *
      * @return string
      */
-    public function image(array $attributes = []);
+    public function image($name, array $attributes = []);
 
     /**
      * Display audio Captcha.
      *
-     * @param  array  $attributes
+     * @param  string  $name
+     * @param  array   $attributes
      *
      * @return string
      */
-    public function audio(array $attributes = []);
+    public function audio($name, array $attributes = []);
 
     /**
      * Verify Response.
