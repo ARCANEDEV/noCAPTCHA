@@ -20,8 +20,8 @@ if ( ! empty($_POST)) {
 
 <form method="POST">
     <?php
-        echo $captcha->image(['data-theme' => 'dark']);
-        // Or : $captcha->display(['data-theme' => 'light']);
+        echo $captcha->image('captcha', ['data-theme' => 'dark']);
+        // Or : $captcha->display('captcha', ['data-theme' => 'light']);
     ?>
     <button type="submit">Submit</button>
 </form>

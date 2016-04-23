@@ -21,7 +21,7 @@ if ( ! empty($_POST)) {
 ?>
 
 <form method="POST">
-    <?php echo $captcha->display(); ?>
+    <?php echo $captcha->display('captcha'); ?>
     <button type="submit">Submit</button>
 </form>
 

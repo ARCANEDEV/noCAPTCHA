@@ -19,7 +19,8 @@ if ( ! empty($_POST)) {
 ?>
 
 <form method="POST">
-    <?php echo $captcha->display(['data-size' => 'compact']); ?>
+    <?php echo $captcha->display('captcha', ['data-size' => 'compact']); ?>
+
     <button type="submit">Submit</button>
 </form>
 
