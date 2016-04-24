@@ -130,8 +130,8 @@ class NoCaptchaServiceProvider extends ServiceProvider
     private function registerFormMacros($app)
     {
         if ($app->bound('form')) {
-            $app['form']->macro('captcha', function(array $attributes = []) use ($app) {
-                return $app['arcanedev.no-captcha']->display($attributes);
+            $app['form']->macro('captcha', function($name, array $attributes = []) use ($app) {
+                return $app['arcanedev.no-captcha']->display($name, $attributes);
             });
         }
     }

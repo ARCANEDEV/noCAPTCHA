@@ -20,8 +20,8 @@ if ( ! empty($_POST)) {
 
 <form method="POST">
     <?php
-        echo $captcha->audio();
-        // Or : $captcha->display(['data-type' => 'audio']);
+        echo $captcha->audio('captcha');
+        // Or : $captcha->display('captcha', ['data-type' => 'audio']);
     ?>
     <button type="submit">Submit</button>
 </form>

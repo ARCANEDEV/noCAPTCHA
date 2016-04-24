@@ -20,8 +20,8 @@ if ( ! empty($_POST)) {
 
 <form method="POST">
     <?php
-        echo $captcha->image();
-        // Or : $captcha->display(['data-type' => 'image']);
+        echo $captcha->image('captcha');
+        // Or : $captcha->display('captcha', ['data-type' => 'image']);
     ?>
     <button type="submit">Submit</button>
 </form>

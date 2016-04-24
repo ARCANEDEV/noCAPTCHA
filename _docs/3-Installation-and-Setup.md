@@ -2,14 +2,14 @@
 
 ## Composer
 
-You can install this package via [Composer](http://getcomposer.org/) by running this command `composer require "arcanedev/no-captcha:~2.3"`.
+You can install this package via [Composer](http://getcomposer.org/) by running this command `composer require arcanedev/no-captcha`.
 
 Or by adding the package to your `composer.json`
 
 ```json
 {
     "require": {
-        "arcanedev/no-captcha": "~2.3"
+        "arcanedev/no-captcha": "~3.0"
     }
 }
 ```

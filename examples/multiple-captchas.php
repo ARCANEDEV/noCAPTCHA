@@ -19,13 +19,13 @@ if ( ! empty($_POST)) {
 ?>
 
 <form method="POST">
-    <?php echo $captcha->display(['id' => 'captcha1']); ?>
+    <?php echo $captcha->display('captcha_1'); ?>
     <button type="submit">Submit</button>
 </form>
 
 <form method="POST">
-    <?php echo $captcha->display(['id' => 'captcha2']); ?>
+    <?php echo $captcha->display('captcha_2'); ?>
     <button type="submit">Submit</button>
 </form>
 
-<?php echo $captcha->scriptWithCallback(['captcha1', 'captcha2']); ?>
+<?php echo $captcha->scriptWithCallback(['captcha_1', 'captcha_2']); ?>

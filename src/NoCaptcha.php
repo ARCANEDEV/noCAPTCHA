@@ -194,6 +194,18 @@ class NoCaptcha implements Contracts\NoCaptcha
         return $this;
     }
 
+    /**
+     * Get attribute name + id.
+     *
+     * @param  string  $name
+     *
+     * @return array
+     */
+    protected function getNameAttribute($name)
+    {
+        return array_combine(['id', 'name'], [$name, $name]);
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
@@ -201,13 +213,16 @@ class NoCaptcha implements Contracts\NoCaptcha
     /**
      * Display Captcha.
      *
-     * @param  array  $attributes
+     * @param  string  $name
+     * @param  array   $attributes
      *
      * @return string
      */
-    public function display(array $attributes = [])
+    public function display($name, array $attributes = [])
     {
-        $output = $this->attributes->build($this->siteKey, $attributes);
+        $output = $this->attributes->build(
+            $this->siteKey, array_merge($this->getNameAttribute($name), $attributes)
+        );
 
         return '<div ' . $output . '></div>';
     }
@@ -215,31 +230,31 @@ class NoCaptcha implements Contracts\NoCaptcha
     /**
      * Display image Captcha.
      *
-     * @param  array  $attributes
+     * @param  string  $name
+     * @param  array   $attributes
      *
      * @return string
      */
-    public function image(array $attributes = [])
+    public function image($name, array $attributes = [])
     {
-        return $this->display(array_merge(
-            $attributes,
-            $this->attributes->getImageAttribute()
-        ));
+        return $this->display(
+            $name, array_merge($attributes, $this->attributes->getImageAttribute())
+        );
     }
 
     /**
      * Display audio Captcha.
      *
-     * @param  array  $attributes
+     * @param  string  $name
+     * @param  array   $attributes
      *
      * @return string
      */
-    public function audio(array $attributes = [])
+    public function audio($name, array $attributes = [])
     {
-        return $this->display(array_merge(
-            $attributes,
-            $this->attributes->getAudioAttribute()
-        ));
+        return $this->display(
+            $name, array_merge($attributes, $this->attributes->getAudioAttribute())
+        );
     }
 
     /**
@@ -252,9 +267,7 @@ class NoCaptcha implements Contracts\NoCaptcha
      */
     public function verify($response, $clientIp = null)
     {
-        if (empty($response)) {
-            return false;
-        }
+        if (empty($response)) return false;
 
         $response = $this->sendVerifyRequest([
             'secret'   => $this->secret,
