@@ -9,7 +9,7 @@ $sitekey = 'your-site-key';
 $captcha = new NoCaptcha($secret, $sitekey);
 
 if ( ! empty($_POST)) {
-    $response = $_POST['g-recaptcha-response'];
+    $response = $_POST[NoCaptcha::CAPTCHA_NAME];
     $result   = $captcha->verify($response);
 
     echo $result === true ? 'Yay ! You are a human.' : 'No ! You are a robot.';
