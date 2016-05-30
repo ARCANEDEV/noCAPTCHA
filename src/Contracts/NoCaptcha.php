@@ -40,8 +40,8 @@ interface NoCaptcha
     /**
      * Display Captcha.
      *
-     * @param  string  $name
-     * @param  array   $attributes
+     * @param  string|null  $name
+     * @param  array        $attributes
      *
      * @return string
      */
@@ -50,8 +50,8 @@ interface NoCaptcha
     /**
      * Display image Captcha.
      *
-     * @param  string  $name
-     * @param  array   $attributes
+     * @param  string|null  $name
+     * @param  array        $attributes
      *
      * @return string
      */
@@ -60,8 +60,8 @@ interface NoCaptcha
     /**
      * Display audio Captcha.
      *
-     * @param  string  $name
-     * @param  array   $attributes
+     * @param  string|null  $name
+     * @param  array        $attributes
      *
      * @return string
      */

@@ -10,7 +10,7 @@ $lang    = 'fr';
 $captcha = new NoCaptcha($secret, $sitekey, $lang);
 
 if ( ! empty($_POST)) {
-    $response = $_POST['g-recaptcha-response'];
+    $response = $_POST[NoCaptcha::CAPTCHA_NAME];
     $result   = $captcha->verify($response);
 
     echo $result === true
@@ -22,7 +22,7 @@ if ( ! empty($_POST)) {
 ?>
 
 <form method="POST">
-    <?php echo $captcha->display('captcha'); ?>
+    <?php echo $captcha->display(); ?>
     <button type="submit">Envoyer</button>
 </form>
 

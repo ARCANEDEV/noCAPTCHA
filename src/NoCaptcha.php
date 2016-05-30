@@ -17,8 +17,9 @@ class NoCaptcha implements Contracts\NoCaptcha
      |  Constants
      | ------------------------------------------------------------------------------------------------
      */
-    const CLIENT_URL = 'https://www.google.com/recaptcha/api.js';
-    const VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify';
+    const CLIENT_URL   = 'https://www.google.com/recaptcha/api.js';
+    const VERIFY_URL   = 'https://www.google.com/recaptcha/api/siteverify';
+    const CAPTCHA_NAME = 'g-recaptcha-response';
 
     /* ------------------------------------------------------------------------------------------------
      |  Properties
@@ -197,12 +198,22 @@ class NoCaptcha implements Contracts\NoCaptcha
     /**
      * Get attribute name + id.
      *
-     * @param  string  $name
+     * @param  string|null $name
+     *
+     * @throws \Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException
      *
      * @return array
      */
     protected function getNameAttribute($name)
     {
+        if (is_null($name)) return [];
+
+        if ($name === self::CAPTCHA_NAME) {
+            throw new Exceptions\InvalidArgumentException(
+                'The captcha name must be different from "' . self::CAPTCHA_NAME . '".'
+            );
+        }
+
         return array_combine(['id', 'name'], [$name, $name]);
     }
 
@@ -213,12 +224,12 @@ class NoCaptcha implements Contracts\NoCaptcha
     /**
      * Display Captcha.
      *
-     * @param  string  $name
-     * @param  array   $attributes
+     * @param  string|null  $name
+     * @param  array        $attributes
      *
      * @return string
      */
-    public function display($name, array $attributes = [])
+    public function display($name = null, array $attributes = [])
     {
         $output = $this->attributes->build(
             $this->siteKey, array_merge($this->getNameAttribute($name), $attributes)
@@ -230,12 +241,12 @@ class NoCaptcha implements Contracts\NoCaptcha
     /**
      * Display image Captcha.
      *
-     * @param  string  $name
-     * @param  array   $attributes
+     * @param  string|null  $name
+     * @param  array        $attributes
      *
      * @return string
      */
-    public function image($name, array $attributes = [])
+    public function image($name = null, array $attributes = [])
     {
         return $this->display(
             $name, array_merge($attributes, $this->attributes->getImageAttribute())
@@ -245,12 +256,12 @@ class NoCaptcha implements Contracts\NoCaptcha
     /**
      * Display audio Captcha.
      *
-     * @param  string  $name
-     * @param  array   $attributes
+     * @param  string|null  $name
+     * @param  array        $attributes
      *
      * @return string
      */
-    public function audio($name, array $attributes = [])
+    public function audio($name = null, array $attributes = [])
     {
         return $this->display(
             $name, array_merge($attributes, $this->attributes->getAudioAttribute())
@@ -291,8 +302,8 @@ class NoCaptcha implements Contracts\NoCaptcha
         $body   = $request->getParsedBody();
         $server = $request->getServerParams();
 
-        $response = isset($body['g-recaptcha-response'])
-            ? $body['g-recaptcha-response']
+        $response = isset($body[self::CAPTCHA_NAME])
+            ? $body[self::CAPTCHA_NAME]
             : '';
 
         $remoteIp = isset($server['REMOTE_ADDR'])

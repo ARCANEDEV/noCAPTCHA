@@ -34,7 +34,7 @@ if ( ! empty($_POST)) {
 ?>
 
 <form action="?" method="POST">
-    <?php echo $captcha->display('captcha'); ?>
+    <?php echo $captcha->display(); ?>
     <button type="submit">Submit</button>
 </form>
 
@@ -66,7 +66,7 @@ Insert reCAPTCHA inside your form using one of this examples:
 ```php
 {!! Form::open([...]) !!}
     // Other inputs...
-    {!! Form::captcha('captcha') !!}  OR  {!! Captcha::display('captcha') !!}
+    {!! Form::captcha() !!}  OR  {!! Captcha::display() !!}
     {!! Form::submit('Submit') !!}
 {!! Form::close() !!}
 
@@ -83,7 +83,7 @@ Insert reCAPTCHA inside your form using one of this examples:
 
 echo Form::open([...]);
     // Other inputs...
-    echo Form::captcha('captcha');
+    echo Form::captcha();
     echo Form::submit('Submit');
 echo Form::close();
 
