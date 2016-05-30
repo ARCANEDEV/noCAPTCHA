@@ -389,6 +389,58 @@ class NoCaptchaTest extends TestCase
         $this->assertFalse($passes);
     }
 
+    /** @test */
+    public function it_can_render_captcha_with_optional_name()
+    {
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key"></div>',
+            $this->noCaptcha->display()
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="image"></div>',
+            $this->noCaptcha->image()
+        );
+
+        $this->assertEquals(
+            '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio"></div>',
+            $this->noCaptcha->audio()
+        );
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage  The captcha name must be different from "g-recaptcha-response".
+     */
+    public function it_must_throw_an_invalid_argument_exception_when_the_generic_captcha_name_is_same_as_captcha_response_name()
+    {
+        $this->noCaptcha->display(NoCaptcha::CAPTCHA_NAME);
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage  The captcha name must be different from "g-recaptcha-response".
+     */
+    public function it_must_throw_an_invalid_argument_exception_when_the_image_captcha_name_is_same_as_captcha_response_name()
+    {
+        $this->noCaptcha->image(NoCaptcha::CAPTCHA_NAME);
+    }
+
+    /**
+     * @test
+     *
+     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage  The captcha name must be different from "g-recaptcha-response".
+     */
+    public function it_must_throw_an_invalid_argument_exception_when_the_audio_captcha_name_is_same_as_captcha_response_name()
+    {
+        $this->noCaptcha->audio(NoCaptcha::CAPTCHA_NAME);
+    }
+
     /* ------------------------------------------------------------------------------------------------
      |  Other functions
      | ------------------------------------------------------------------------------------------------

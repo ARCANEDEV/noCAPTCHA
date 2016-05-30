@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
 
+use Arcanedev\NoCaptcha\NoCaptcha;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 use Arcanedev\NoCaptcha\Utilities\Request;
 use Prophecy\Argument;
@@ -49,9 +50,9 @@ class ValidatorRuleTest extends LaravelTestCase
         ]);
 
         $validator = $this->validator->make([
-            'g-recaptcha-response' => 'google-recaptcha-response',
+            NoCaptcha::CAPTCHA_NAME => 'google-recaptcha-response',
         ], [
-            'g-recaptcha-response' => 'required|captcha',
+            NoCaptcha::CAPTCHA_NAME => 'required|captcha',
         ]);
 
         $this->assertTrue($validator->passes());
@@ -66,25 +67,21 @@ class ValidatorRuleTest extends LaravelTestCase
             'error-codes' => 'invalid-input-response'
         ]);
 
-        $data     = [
-            'g-recaptcha-response'         => 'google-recaptcha-response',
-        ];
-
-        $rules    = [
-            'g-recaptcha-response'         => 'required|captcha',
-        ];
-
-        $validator = $this->validator->make($data, $rules);
+        $validator = $this->validator->make([
+            NoCaptcha::CAPTCHA_NAME => 'google-recaptcha-response',
+        ],[
+            NoCaptcha::CAPTCHA_NAME => 'required|captcha',
+        ]);
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
 
         $errors = $validator->messages();
 
-        $this->assertTrue($errors->has('g-recaptcha-response'));
+        $this->assertTrue($errors->has(NoCaptcha::CAPTCHA_NAME));
         $this->assertEquals(
             'validation.captcha',
-            $errors->first('g-recaptcha-response')
+            $errors->first(NoCaptcha::CAPTCHA_NAME)
         );
     }
 
@@ -96,27 +93,23 @@ class ValidatorRuleTest extends LaravelTestCase
             'error-codes' => 'invalid-input-response'
         ]);
 
-        $data     = [
-            'g-recaptcha-response'         => 'google-recaptcha-response',
-        ];
-        $rules    = [
-            'g-recaptcha-response'         => 'required|captcha',
-        ];
-        $messages = [
+        $validator = $this->validator->make([
+            NoCaptcha::CAPTCHA_NAME => 'google-recaptcha-response',
+        ],[
+            NoCaptcha::CAPTCHA_NAME => 'required|captcha',
+        ],[
             'g-recaptcha-response.captcha' => 'Your captcha error message',
-        ];
-
-        $validator = $this->validator->make($data, $rules, $messages);
+        ]);
 
         $this->assertFalse($validator->passes());
         $this->assertTrue($validator->fails());
 
         $errors = $validator->messages();
 
-        $this->assertTrue($errors->has('g-recaptcha-response'));
+        $this->assertTrue($errors->has(NoCaptcha::CAPTCHA_NAME));
         $this->assertEquals(
             'Your captcha error message',
-            $errors->first('g-recaptcha-response')
+            $errors->first(NoCaptcha::CAPTCHA_NAME)
         );
     }
 
@@ -124,7 +117,7 @@ class ValidatorRuleTest extends LaravelTestCase
      |  Other Functions
      | ------------------------------------------------------------------------------------------------
      */
-    private function mockRequest($returns)
+    private function mockRequest(array $returns)
     {
         $request = $this->prophesize(Request::class);
         $request->send(Argument::type('string'))
