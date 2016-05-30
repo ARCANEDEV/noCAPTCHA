@@ -47,4 +47,13 @@ interface AttributesInterface
      * @return string
      */
     public function build($siteKey, array $items = []);
+
+    /**
+     * Prepare the name and id attributes.
+     *
+     * @param  string|null  $name
+     *
+     * @return array
+     */
+    public function prepareNameAttribute($name);
 }

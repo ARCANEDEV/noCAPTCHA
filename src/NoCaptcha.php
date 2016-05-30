@@ -1,6 +1,5 @@
 <?php namespace Arcanedev\NoCaptcha;
 
-use Arcanedev\NoCaptcha\Exceptions\ApiException;
 use Arcanedev\NoCaptcha\Utilities\Attributes;
 use Arcanedev\NoCaptcha\Utilities\Request;
 use Psr\Http\Message\ServerRequestInterface;
@@ -152,17 +151,15 @@ class NoCaptcha implements Contracts\NoCaptcha
         $queries = [];
 
         if ($this->hasLang()) {
-            $queries['hl'] = $this->lang;
+            array_set($queries, 'hl', $this->lang);
         }
 
         if ($this->hasCallbackName($callbackName)) {
-            $queries['onload'] = $callbackName;
-            $queries['render'] = 'explicit';
+            array_set($queries, 'onload', $callbackName);
+            array_set($queries, 'render', 'explicit');
         }
 
-        $queries = count($queries) ? '?' . http_build_query($queries) : '';
-
-        return static::CLIENT_URL . $queries;
+        return static::CLIENT_URL . (count($queries) ? '?' . http_build_query($queries) : '');
     }
 
     /**
@@ -195,28 +192,6 @@ class NoCaptcha implements Contracts\NoCaptcha
         return $this;
     }
 
-    /**
-     * Get attribute name + id.
-     *
-     * @param  string|null $name
-     *
-     * @throws \Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException
-     *
-     * @return array
-     */
-    protected function getNameAttribute($name)
-    {
-        if (is_null($name)) return [];
-
-        if ($name === self::CAPTCHA_NAME) {
-            throw new Exceptions\InvalidArgumentException(
-                'The captcha name must be different from "' . self::CAPTCHA_NAME . '".'
-            );
-        }
-
-        return array_combine(['id', 'name'], [$name, $name]);
-    }
-
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
@@ -231,9 +206,10 @@ class NoCaptcha implements Contracts\NoCaptcha
      */
     public function display($name = null, array $attributes = [])
     {
-        $output = $this->attributes->build(
-            $this->siteKey, array_merge($this->getNameAttribute($name), $attributes)
-        );
+        $output = $this->attributes->build($this->siteKey, array_merge(
+            $this->attributes->prepareNameAttribute($name),
+            $attributes
+        ));
 
         return '<div ' . $output . '></div>';
     }
@@ -425,7 +401,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     private function checkIsString($name, $value)
     {
         if ( ! is_string($value)) {
-            throw new ApiException(
+            throw new Exceptions\ApiException(
                 'The ' . $name . ' must be a string value, ' . gettype($value) . ' given'
             );
         }
@@ -442,7 +418,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     private function checkIsNotEmpty($name, $value)
     {
         if (empty($value)) {
-            throw new ApiException('The ' . $name . ' must not be empty');
+            throw new Exceptions\ApiException('The ' . $name . ' must not be empty');
         }
     }
 

@@ -1,6 +1,8 @@
 <?php namespace Arcanedev\NoCaptcha\Utilities;
 
 use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
+use Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException;
+use Arcanedev\NoCaptcha\NoCaptcha;
 
 /**
  * Class     Attributes
@@ -166,6 +168,28 @@ class Attributes implements AttributesInterface
         }
 
         return implode(' ', $output);
+    }
+
+    /**
+     * Prepare the name and id attributes.
+     *
+     * @param  string|null  $name
+     *
+     * @return array
+     *
+     * @throws \Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException
+     */
+    public function prepareNameAttribute($name)
+    {
+        if (is_null($name)) return [];
+
+        if ($name === NoCaptcha::CAPTCHA_NAME) {
+            throw new InvalidArgumentException(
+                'The captcha name must be different from "' . NoCaptcha::CAPTCHA_NAME . '".'
+            );
+        }
+
+        return array_combine(['id', 'name'], [$name, $name]);
     }
 
     /* ------------------------------------------------------------------------------------------------
