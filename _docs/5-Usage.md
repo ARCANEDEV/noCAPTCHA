@@ -138,6 +138,16 @@ return [
 ];
 ```
 
+For the `required` rule, you can customize it by adding your messages to `custom` array in the `resources/lang/xx/validation.php`:
+
+```php
+'custom' => [
+    'g-recaptcha-response' => [
+        'required' => 'Your custom validation message for captchas.',
+    ],
+],
+```
+
 > For Laravel 4.2, the lang folder is located in `app/lang`
 
 ```php
