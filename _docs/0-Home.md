@@ -15,7 +15,7 @@ reCAPTCHA comes in the form of a widget that you can easily add to your blog, fo
   * Well documented &amp; IDE Friendly.
   * Well tested with maximum code quality.
   * Laravel `4.2 | 5.0 | 5.1 | 5.2 | 5.3` are supported.
-  * [x] PSR-7 Support (ServerRequest verification).
+  * PSR-7 Support (ServerRequest verification).
   * Made with :heart: &amp; :coffee:.
   
 ## Table of contents
