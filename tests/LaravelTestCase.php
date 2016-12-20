@@ -19,7 +19,7 @@ abstract class LaravelTestCase extends BaseTestCase
      *
      * @return void
      */
-    protected function setUp()
+    public function setUp()
     {
         parent::setUp();
 
