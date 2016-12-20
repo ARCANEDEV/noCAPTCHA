@@ -1,7 +1,6 @@
 # noCAPTCHA (new reCAPTCHA) [![Packagist License][badge_license]](LICENSE.md) [![For PHP][badge_php]][link-github-repo]
 
 [![Travis Status][badge_build]][link-travis]
-[![HHVM Status][badge_hhvm]][link-hhvm]
 [![Coverage Status][badge_coverage]][link-scrutinizer]
 [![Scrutinizer Code Quality][badge_quality]][link-scrutinizer]
 [![SensioLabs Insight][badge_insight]][link-insight]
@@ -58,7 +57,6 @@ If you discover any security related issues, please email arcanedev.maroc@gmail.
 [badge_php]:          https://img.shields.io/badge/PHP-Framework%20agnostic-4F5B93.svg?style=flat-square
 [badge_license]:      https://img.shields.io/packagist/l/arcanedev/no-captcha.svg?style=flat-square
 [badge_build]:        https://img.shields.io/travis/ARCANEDEV/noCAPTCHA.svg?style=flat-square
-[badge_hhvm]:         https://img.shields.io/hhvm/arcanedev/no-captcha.svg?style=flat-square
 [badge_coverage]:     https://img.shields.io/scrutinizer/coverage/g/ARCANEDEV/noCAPTCHA.svg?style=flat-square
 [badge_quality]:      https://img.shields.io/scrutinizer/g/ARCANEDEV/noCAPTCHA.svg?style=flat-square
 [badge_insight]:      https://img.shields.io/sensiolabs/i/ae37b4c0-5478-4afb-9a71-1fe5534d8ef5.svg?style=flat-square
@@ -73,6 +71,5 @@ If you discover any security related issues, please email arcanedev.maroc@gmail.
 [link-contributors]:  https://github.com/ARCANEDEV/noCAPTCHA/graphs/contributors
 [link-packagist]:     https://packagist.org/packages/arcanedev/no-captcha
 [link-travis]:        https://travis-ci.org/ARCANEDEV/noCAPTCHA
-[link-hhvm]:          http://hhvm.h4cc.de/package/arcanedev/no-captcha
 [link-scrutinizer]:   https://scrutinizer-ci.com/g/ARCANEDEV/noCAPTCHA/?branch=master
 [link-insight]:       https://insight.sensiolabs.com/projects/ae37b4c0-5478-4afb-9a71-1fe5534d8ef5
