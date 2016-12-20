@@ -21,6 +21,13 @@ class NoCaptchaServiceProvider extends ServiceProvider
      */
     protected $package = 'no-captcha';
 
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
+
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
@@ -68,8 +75,8 @@ class NoCaptchaServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
+            Contracts\NoCaptcha::class,
             'arcanedev.no-captcha',
-            \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class
         ];
     }
 
@@ -82,7 +89,7 @@ class NoCaptchaServiceProvider extends ServiceProvider
      */
     private function registerNoCaptcha()
     {
-        $this->app->bind('arcanedev.no-captcha', function($app) {
+        $this->singleton(Contracts\NoCaptcha::class, function($app) {
             /** @var  \Illuminate\Config\Repository  $config */
             $config = $app['config'];
 
@@ -94,10 +101,7 @@ class NoCaptchaServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(
-            \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class,
-            'arcanedev.no-captcha'
-        );
+        $this->singleton('arcanedev.no-captcha', Contracts\NoCaptcha::class);
     }
 
     /**
@@ -111,7 +115,7 @@ class NoCaptchaServiceProvider extends ServiceProvider
             unset($attribute);
             $ip = $app['request']->getClientIp();
 
-            return $app['arcanedev.no-captcha']->verify($value, $ip);
+            return $app[Contracts\NoCaptcha::class]->verify($value, $ip);
         });
     }
 
@@ -124,7 +128,7 @@ class NoCaptchaServiceProvider extends ServiceProvider
     {
         if ($app->bound('form')) {
             $app['form']->macro('captcha', function($name = null, array $attributes = []) use ($app) {
-                return $app['arcanedev.no-captcha']->display($name, $attributes);
+                return $app[Contracts\NoCaptcha::class]->display($name, $attributes);
             });
         }
     }

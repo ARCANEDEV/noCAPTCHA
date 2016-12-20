@@ -11,9 +11,21 @@ use Orchestra\Testbench\TestCase as BaseTestCase;
 abstract class LaravelTestCase extends BaseTestCase
 {
     /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
+     |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * Setup the test environment.
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->app->loadDeferredProviders();
+    }
+
     /**
      * Register Service Providers.
      *
