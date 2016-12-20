@@ -14,9 +14,7 @@ class NoCaptchaServiceProviderTest extends LaravelTestCase
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
-    /**
-     * @var NoCaptchaServiceProvider
-     */
+    /** @var \Arcanedev\NoCaptcha\NoCaptchaServiceProvider */
     private $provider;
 
     /* ------------------------------------------------------------------------------------------------
@@ -42,11 +40,26 @@ class NoCaptchaServiceProviderTest extends LaravelTestCase
      | ------------------------------------------------------------------------------------------------
      */
     /** @test */
-    public function it_can_get_what_he_provides()
+    public function it_can_be_instantiated()
+    {
+        $expectations = [
+            \Illuminate\Support\ServiceProvider::class,
+            \Arcanedev\Support\ServiceProvider::class,
+            \Arcanedev\Support\PackageServiceProvider::class,
+            \Arcanedev\NoCaptcha\NoCaptchaServiceProvider::class,
+        ];
+
+        foreach ($expectations as $expected) {
+            $this->assertInstanceOf($expected, $this->provider);
+        }
+    }
+
+    /** @test */
+    public function it_can_provides()
     {
         $expected = [
+            \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class,
             'arcanedev.no-captcha',
-            \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class
         ];
 
         $this->assertEquals($expected, $this->provider->provides());

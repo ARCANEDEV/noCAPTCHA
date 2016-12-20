@@ -15,5 +15,8 @@ class NoCaptcha extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor() { return 'arcanedev.no-captcha'; }
+    protected static function getFacadeAccessor()
+    {
+        return \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class;
+    }
 }
