@@ -21,13 +21,6 @@ class NoCaptchaServiceProvider extends ServiceProvider
      */
     protected $package = 'no-captcha';
 
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
      | ------------------------------------------------------------------------------------------------
