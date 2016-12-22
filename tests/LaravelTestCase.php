@@ -15,18 +15,6 @@ abstract class LaravelTestCase extends BaseTestCase
      | ------------------------------------------------------------------------------------------------
      */
     /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->app->loadDeferredProviders();
-    }
-
-    /**
      * Register Service Providers.
      *
      * @param  \Illuminate\Foundation\Application  $app
@@ -36,7 +24,6 @@ abstract class LaravelTestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Arcanedev\LaravelHtml\HtmlServiceProvider::class,
             \Arcanedev\NoCaptcha\NoCaptchaServiceProvider::class,
         ];
     }
