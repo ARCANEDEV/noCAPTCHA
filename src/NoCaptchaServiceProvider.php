@@ -22,20 +22,6 @@ class NoCaptchaServiceProvider extends ServiceProvider
     protected $package = 'no-captcha';
 
     /* ------------------------------------------------------------------------------------------------
-     |  Getters & Setters
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Get the base path of the package.
-     *
-     * @return string
-     */
-    public function getBasePath()
-    {
-        return dirname(__DIR__);
-    }
-
-    /* ------------------------------------------------------------------------------------------------
      |  Main Functions
      | ------------------------------------------------------------------------------------------------
      */
@@ -44,6 +30,8 @@ class NoCaptchaServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        parent::register();
+
         $this->registerConfig();
         $this->registerNoCaptcha();
     }
@@ -69,7 +57,6 @@ class NoCaptchaServiceProvider extends ServiceProvider
     {
         return [
             Contracts\NoCaptcha::class,
-            'arcanedev.no-captcha',
         ];
     }
 
@@ -83,7 +70,7 @@ class NoCaptchaServiceProvider extends ServiceProvider
     private function registerNoCaptcha()
     {
         $this->singleton(Contracts\NoCaptcha::class, function($app) {
-            /** @var  \Illuminate\Config\Repository  $config */
+            /** @var  \Illuminate\Contracts\Config\Repository  $config */
             $config = $app['config'];
 
             return new NoCaptcha(
@@ -93,8 +80,6 @@ class NoCaptchaServiceProvider extends ServiceProvider
                 $config->get('no-captcha.attributes', [])
             );
         });
-
-        $this->singleton('arcanedev.no-captcha', Contracts\NoCaptcha::class);
     }
 
     /**

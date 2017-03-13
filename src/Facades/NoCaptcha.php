@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\NoCaptcha\Facades;
 
+use Arcanedev\NoCaptcha\Contracts\NoCaptcha as NoCaptchaContract;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -15,8 +16,5 @@ class NoCaptcha extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
-    {
-        return \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class;
-    }
+    protected static function getFacadeAccessor() { return NoCaptchaContract::class; }
 }

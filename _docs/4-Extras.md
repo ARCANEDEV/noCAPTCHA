@@ -1,4 +1,12 @@
-# 6. Extras
+# 4. Extras
+
+## Table of contents
+
+  1. [Installation and Setup](1-Installation-and-Setup.md)
+  2. [Configuration](2-Configuration.md)
+  3. [Usage](3-Usage.md)
+  4. [Extras](4-Extras.md)
+  5. [FAQ](5-FAQ.md)
 
 ## g-recaptcha tag attributes
 
