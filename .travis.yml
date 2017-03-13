@@ -17,7 +17,6 @@ env:
   - TESTBENCH_VERSION=3.1.*
   - TESTBENCH_VERSION=3.2.*
   - TESTBENCH_VERSION=3.3.*
-  - TESTBENCH_VERSION=3.4.*
 
 before_script:
   - travis_retry composer self-update
@@ -26,7 +25,7 @@ before_script:
 script:
   - composer validate
   - mkdir -p build/logs
-  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
 after_script:
   - if [ "$TRAVIS_PHP_VERSION" != "nightly" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi
