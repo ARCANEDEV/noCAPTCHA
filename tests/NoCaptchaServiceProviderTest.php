@@ -59,7 +59,6 @@ class NoCaptchaServiceProviderTest extends LaravelTestCase
     {
         $expected = [
             \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class,
-            'arcanedev.no-captcha',
         ];
 
         $this->assertEquals($expected, $this->provider->provides());

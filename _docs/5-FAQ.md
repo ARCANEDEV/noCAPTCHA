@@ -1,4 +1,12 @@
-# 7. FAQ
+# 5. FAQ
+
+## Table of contents
+
+  1. [Installation and Setup](1-Installation-and-Setup.md)
+  2. [Configuration](2-Configuration.md)
+  3. [Usage](3-Usage.md)
+  4. [Extras](4-Extras.md)
+  5. [FAQ](5-FAQ.md)
 
 * **Q:** I have a question, what to do ?
 * **A:** Make sure to check our [GitHub issues][github_questions] for answers.

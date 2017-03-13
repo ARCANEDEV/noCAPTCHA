@@ -1,4 +1,12 @@
-# 4. Configuration
+# 2. Configuration
+
+## Table of contents
+
+  1. [Installation and Setup](1-Installation-and-Setup.md)
+  2. [Configuration](2-Configuration.md)
+  3. [Usage](3-Usage.md)
+  4. [Extras](4-Extras.md)
+  5. [FAQ](5-FAQ.md)
 
 There is not really a need to publish the configuration file. Both the `secret` and `sitekey` should be set in your environment file so it won't be available in your versioning system.
 

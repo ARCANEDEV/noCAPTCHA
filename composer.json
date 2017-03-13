@@ -23,7 +23,8 @@
     "require-dev": {
         "arcanedev/laravel-html": "~5.0",
         "phpunit/phpcov":         "~3.0",
-        "phpunit/phpunit":        "~5.0"
+        "phpunit/phpunit":        "~5.0",
+        "orchestra/testbench": "~3.0"
     },
     "autoload": {
         "psr-4": {

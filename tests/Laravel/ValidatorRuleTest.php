@@ -123,9 +123,9 @@ class ValidatorRuleTest extends LaravelTestCase
         $request->send(Argument::type('string'))
             ->willReturn($returns);
 
-        $captcha = $this->app['arcanedev.no-captcha']
+        $captcha = $this->app->make(\Arcanedev\NoCaptcha\Contracts\NoCaptcha::class)
             ->setRequestClient($request->reveal());
 
-        $this->app['arcanedev.no-captcha'] = $captcha;
+        $this->app[\Arcanedev\NoCaptcha\Contracts\NoCaptcha::class] = $captcha;
     }
 }
