@@ -60,6 +60,44 @@ echo $captcha->script();
 
 Check the [examples folder](https://github.com/ARCANEDEV/noCAPTCHA/tree/master/examples) for more usage details.
 
+#### Invisible Captcha
+
+The code below explains how to enable and customize the invisible reCAPTCHA on your webpage.
+
+```php
+require_once(__DIR__ . '/../vendor/autoload.php');
+
+use Arcanedev\NoCaptcha\NoCaptcha;
+
+$secret  = 'your-secret-key';
+$sitekey = 'your-site-key';
+$captcha = new NoCaptcha($secret, $sitekey);
+
+if ( ! empty($_POST)) {
+    $response = $_POST[NoCaptcha::CAPTCHA_NAME];
+    $result   = $captcha->verify($response);
+
+    echo $result === true ? 'Yay ! You are a human.' : 'No ! You are a robot.';
+
+    exit();
+}
+?>
+
+<form method="POST" id="demo-form">
+    <?php echo $captcha->button('Send', ['data-badge' => 'inline']); ?>
+</form>
+
+<?php echo $captcha->script(); ?>
+
+<script>
+    function onSubmit(token) {
+        document.getElementById("demo-form").submit();
+    }
+</script>
+```
+
+**NOTE :** You need to specify the invisible version in your captcha admin page. Check this page for more details: https://developers.google.com/recaptcha/docs/versions
+
 ### Laravel
 
 #### Views
@@ -169,3 +207,5 @@ if ($validator->fails()) {
     // Redirect back or throw an error
 }
 ```
+
+> For more advanced usage, check the [official recaptcha documentation](https://developers.google.com/recaptcha/intro).

@@ -336,6 +336,11 @@ class NoCaptchaTest extends TestCase
         );
 
         $this->assertSame(
+            '<button class="g-recaptcha" data-sitekey="site-key" data-callback="submitForm">Post the form</button>',
+            $this->noCaptcha->button('Post the form', ['data-callback' => 'submitForm'])
+        );
+
+        $this->assertSame(
             '<button class="g-recaptcha" data-sitekey="site-key" data-callback="onSubmit" data-size="invisible">Send</button>',
             $this->noCaptcha->button('Send', ['data-size' => 'invisible'])
         );
