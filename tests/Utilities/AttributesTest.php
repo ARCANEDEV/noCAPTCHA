@@ -47,8 +47,8 @@ class AttributesTest extends TestCase
     public function it_can_be_instantiated()
     {
         $this->assertInstanceOf(Attributes::class, $this->attributes);
-        $this->assertEquals(
-            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '"',
+        $this->assertSame(
+            'class="g-recaptcha" data-sitekey="'.$this->siteKey.'"',
             $this->attributes->build($this->siteKey)
         );
     }
@@ -63,32 +63,32 @@ class AttributesTest extends TestCase
         ]);
 
         $this->assertInstanceOf(Attributes::class, $this->attributes);
-        $this->assertEquals(
-            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '"',
+        $this->assertSame(
+            'class="g-recaptcha" data-sitekey="'.$this->siteKey.'"',
             $this->attributes->build($this->siteKey)
         );
 
         $this->attributes = new Attributes(['data-theme' => 'light']);
 
         $this->assertInstanceOf(Attributes::class, $this->attributes);
-        $this->assertEquals(
-            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-theme="light"',
+        $this->assertSame(
+            'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-theme="light"',
             $this->attributes->build($this->siteKey)
         );
 
         $this->attributes = new Attributes(['data-type' => 'image']);
 
         $this->assertInstanceOf(Attributes::class, $this->attributes);
-        $this->assertEquals(
-            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-type="image"',
+        $this->assertSame(
+            'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-type="image"',
             $this->attributes->build($this->siteKey)
         );
 
         $this->attributes = new Attributes(['data-size' => 'normal']);
 
         $this->assertInstanceOf(Attributes::class, $this->attributes);
-        $this->assertEquals(
-            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-size="normal"',
+        $this->assertSame(
+            'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-size="normal"',
             $this->attributes->build($this->siteKey)
         );
 
@@ -96,8 +96,8 @@ class AttributesTest extends TestCase
         $this->attributes = new Attributes(['data-size' => 'huge']);
 
         $this->assertInstanceOf(Attributes::class, $this->attributes);
-        $this->assertEquals(
-            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-size="normal"',
+        $this->assertSame(
+            'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-size="normal"',
             $this->attributes->build($this->siteKey)
         );
     }
@@ -105,19 +105,19 @@ class AttributesTest extends TestCase
     /** @test */
     public function it_can_build_type_attribute()
     {
-        $attributes = 'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-type="image"';
+        $attributes = 'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-type="image"';
 
-        $this->assertEquals(
+        $this->assertSame(
             $attributes,
             $this->attributes->build($this->siteKey, ['data-type' => 'image'])
         );
-        $this->assertEquals(
+        $this->assertSame(
             $attributes,
             $this->attributes->build($this->siteKey, ['data-type' => 'video'])
         );
 
-        $this->assertEquals(
-            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-type="audio"',
+        $this->assertSame(
+            'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-type="audio"',
             $this->attributes->build($this->siteKey, ['data-type' => 'audio'])
         );
     }
@@ -125,20 +125,20 @@ class AttributesTest extends TestCase
     /** @test */
     public function it_can_build_theme_attribute()
     {
-        $attributes = 'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-theme="light"';
+        $attributes = 'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-theme="light"';
 
-        $this->assertEquals(
+        $this->assertSame(
             $attributes,
             $this->attributes->build($this->siteKey, ['data-theme' => 'light'])
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $attributes,
             $this->attributes->build($this->siteKey, ['data-theme' => 'not-light-and-not-dark'])
         );
 
-        $this->assertEquals(
-            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-theme="dark"',
+        $this->assertSame(
+            'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-theme="dark"',
             $this->attributes->build($this->siteKey, ['data-theme' => 'dark'])
         );
     }
@@ -146,20 +146,20 @@ class AttributesTest extends TestCase
     /** @test */
     public function it_can_build_size_attribute()
     {
-        $attributes = 'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-size="normal"';
+        $attributes = 'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-size="normal"';
 
-        $this->assertEquals(
+        $this->assertSame(
             $attributes,
             $this->attributes->build($this->siteKey, ['data-size' => 'normal'])
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $attributes,
             $this->attributes->build($this->siteKey, ['data-size' => 'humongous'])
         );
 
-        $this->assertEquals(
-            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-size="compact"',
+        $this->assertSame(
+            'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-size="compact"',
             $this->attributes->build($this->siteKey, ['data-size' => 'compact'])
         );
     }
@@ -167,8 +167,8 @@ class AttributesTest extends TestCase
     /** @test */
     public function it_can_build_with_custom_attributes()
     {
-        $this->assertEquals(
-            'class="g-recaptcha" data-sitekey="' . $this->siteKey . '" data-name="super-captcha"',
+        $this->assertSame(
+            'class="g-recaptcha" data-sitekey="'.$this->siteKey.'" data-name="super-captcha"',
             $this->attributes->build($this->siteKey, ['data-name' => 'super-captcha'])
         );
     }

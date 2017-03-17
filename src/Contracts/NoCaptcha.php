@@ -68,6 +68,16 @@ interface NoCaptcha
     public function audio($name, array $attributes = []);
 
     /**
+     * Display an invisible Captcha (bind the challenge to a button).
+     *
+     * @param  string  $value
+     * @param  array   $attributes
+     *
+     * @return string
+     */
+    public function button($value, array $attributes = []);
+
+    /**
      * Verify Response.
      *
      * @param  string  $response

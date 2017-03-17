@@ -45,8 +45,6 @@ For more details, check the [official documentation](https://developers.google.c
 
 You can install this package via [Composer](http://getcomposer.org/) by running this command `composer require arcanedev/no-captcha`.
 
-> For Laravel users, please check the [Version Compatibility](2-Version-Compatibility.md) section.
-
 ## Laravel
 
 ### Setup
