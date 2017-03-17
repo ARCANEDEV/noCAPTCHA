@@ -24,6 +24,7 @@ abstract class LaravelTestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
+            \Arcanedev\LaravelHtml\HtmlServiceProvider::class,
             \Arcanedev\NoCaptcha\NoCaptchaServiceProvider::class,
         ];
     }

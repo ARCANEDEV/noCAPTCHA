@@ -59,7 +59,7 @@ class RequestTest extends TestCase
 
         $this->assertInternalType('array', $response);
         $this->assertTrue(isset($response['url']));
-        $this->assertEquals(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
+        $this->assertSame(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
     }
 
     /** @test */
@@ -69,7 +69,7 @@ class RequestTest extends TestCase
 
         $this->assertInternalType('array', $response);
         $this->assertTrue(isset($response['url']));
-        $this->assertEquals(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
+        $this->assertSame(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
     }
 
     /**
