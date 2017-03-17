@@ -206,12 +206,12 @@ class NoCaptcha implements Contracts\NoCaptcha
      */
     public function display($name = null, array $attributes = [])
     {
-        $output = $this->attributes->build($this->siteKey, array_merge(
+        $attributes = $this->attributes->build($this->siteKey, array_merge(
             $this->attributes->prepareNameAttribute($name),
             $attributes
         ));
 
-        return '<div ' . $output . '></div>';
+        return '<div '.$attributes.'></div>';
     }
 
     /**
@@ -242,6 +242,23 @@ class NoCaptcha implements Contracts\NoCaptcha
         return $this->display(
             $name, array_merge($attributes, $this->attributes->getAudioAttribute())
         );
+    }
+
+    /**
+     * Display an invisible Captcha (bind the challenge to a button).
+     *
+     * @param  string  $value
+     * @param  array   $attributes
+     *
+     * @return string
+     */
+    public function button($value, array $attributes = [])
+    {
+        $attributes = $this->attributes->build($this->siteKey, array_merge([
+            'data-callback' => 'onSubmit',
+        ], $attributes));
+
+        return '<button '.$attributes.'>'.$value.'</button>';
     }
 
     /**
@@ -301,7 +318,7 @@ class NoCaptcha implements Contracts\NoCaptcha
         $script = '';
 
         if ( ! $this->scriptLoaded) {
-            $script = '<script src="' . $this->getScriptSrc($callbackName) . '" async defer></script>';
+            $script = '<script src="'.$this->getScriptSrc($callbackName).'" async defer></script>';
             $this->scriptLoaded = true;
         }
 
@@ -402,7 +419,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     {
         if ( ! is_string($value)) {
             throw new Exceptions\ApiException(
-                'The ' . $name . ' must be a string value, ' . gettype($value) . ' given'
+                "The {$name} must be a string value, ".gettype($value).' given.'
             );
         }
     }
@@ -418,7 +435,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     private function checkIsNotEmpty($name, $value)
     {
         if (empty($value)) {
-            throw new Exceptions\ApiException('The ' . $name . ' must not be empty');
+            throw new Exceptions\ApiException("The {$name} must not be empty");
         }
     }
 

@@ -204,6 +204,7 @@ class Attributes implements AttributesInterface
         $this->checkTypeAttribute();
         $this->checkThemeAttribute();
         $this->checkSizeAttribute();
+        $this->checkBadgeAttribute();
     }
 
     /**
@@ -227,7 +228,15 @@ class Attributes implements AttributesInterface
      */
     private function checkSizeAttribute()
     {
-        $this->checkDataAttribute(self::ATTR_SIZE, 'normal', ['normal', 'compact']);
+        $this->checkDataAttribute(self::ATTR_SIZE, 'normal', ['normal', 'compact', 'invisible']);
+    }
+
+    /**
+     * Check badge attribute.
+     */
+    private function checkBadgeAttribute()
+    {
+        $this->checkDataAttribute(self::ATTR_BADGE, 'bottomright', ['bottomright', 'bottomleft', 'inline']);
     }
 
     /**

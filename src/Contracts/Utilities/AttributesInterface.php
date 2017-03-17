@@ -15,6 +15,7 @@ interface AttributesInterface
     const ATTR_TYPE  = 'data-type';
     const ATTR_THEME = 'data-theme';
     const ATTR_SIZE  = 'data-size';
+    const ATTR_BADGE = 'data-badge';
 
     /* ------------------------------------------------------------------------------------------------
      |  Getters & Setters
