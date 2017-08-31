@@ -24,7 +24,7 @@ class FacadeTest extends LaravelTestCase
         );
 
         // Echo out only once
-        $this->assertEmpty(NoCaptcha::script());
+        $this->assertEmpty(NoCaptcha::script()->toHtml());
     }
 
     /* ------------------------------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\NoCaptcha;
 
+use Arcanedev\LaravelHtml\Contracts\FormBuilder;
 use Arcanedev\Support\PackageServiceProvider as ServiceProvider;
 
 /**
@@ -10,10 +11,11 @@ use Arcanedev\Support\PackageServiceProvider as ServiceProvider;
  */
 class NoCaptchaServiceProvider extends ServiceProvider
 {
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Properties
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * Package name.
      *
@@ -21,10 +23,11 @@ class NoCaptchaServiceProvider extends ServiceProvider
      */
     protected $package = 'no-captcha';
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * Register the service provider.
      */
@@ -44,7 +47,6 @@ class NoCaptchaServiceProvider extends ServiceProvider
         parent::boot();
 
         $this->publishConfig();
-        $this->registerValidatorRules($this->app);
         $this->registerFormMacros($this->app);
     }
 
@@ -60,10 +62,11 @@ class NoCaptchaServiceProvider extends ServiceProvider
         ];
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * Register NoCaptcha service.
      */
@@ -83,29 +86,14 @@ class NoCaptchaServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register Validator rules.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     */
-    private function registerValidatorRules($app)
-    {
-        $app['validator']->extend('captcha', function($attribute, $value) use ($app) {
-            unset($attribute);
-            $ip = $app['request']->getClientIp();
-
-            return $app[Contracts\NoCaptcha::class]->verify($value, $ip);
-        });
-    }
-
-    /**
      * Register Form Macros.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Contracts\Foundation\Application  $app
      */
     private function registerFormMacros($app)
     {
-        if ($app->bound('form')) {
-            $app['form']->macro('captcha', function($name = null, array $attributes = []) use ($app) {
+        if ($app->bound(FormBuilder::class)) {
+            $app[FormBuilder::class]->macro('captcha', function($name = null, array $attributes = []) use ($app) {
                 return $app[Contracts\NoCaptcha::class]->display($name, $attributes);
             });
         }

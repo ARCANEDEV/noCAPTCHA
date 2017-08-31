@@ -43,7 +43,7 @@ interface NoCaptcha
      * @param  string|null  $name
      * @param  array        $attributes
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function display($name, array $attributes = []);
 
@@ -53,7 +53,7 @@ interface NoCaptcha
      * @param  string|null  $name
      * @param  array        $attributes
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function image($name, array $attributes = []);
 
@@ -63,7 +63,7 @@ interface NoCaptcha
      * @param  string|null  $name
      * @param  array        $attributes
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function audio($name, array $attributes = []);
 
@@ -73,7 +73,7 @@ interface NoCaptcha
      * @param  string  $value
      * @param  array   $attributes
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function button($value, array $attributes = []);
 
@@ -90,7 +90,7 @@ interface NoCaptcha
     /**
      * Get script tag.
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function script();
 
@@ -100,7 +100,7 @@ interface NoCaptcha
      * @param  array   $captchas
      * @param  string  $callbackName
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function scriptWithCallback(array $captchas, $callbackName = 'captchaRenderCallback');
 }

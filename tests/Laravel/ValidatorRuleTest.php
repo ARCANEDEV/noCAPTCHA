@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
 
 use Arcanedev\NoCaptcha\NoCaptcha;
+use Arcanedev\NoCaptcha\Rules\CaptchaRule;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 use Arcanedev\NoCaptcha\Utilities\Request;
 use Prophecy\Argument;
@@ -13,17 +14,19 @@ use Prophecy\Argument;
  */
 class ValidatorRuleTest extends LaravelTestCase
 {
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Properties
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /** @var \Illuminate\Validation\Factory */
     private $validator;
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     public function setUp()
     {
         parent::setUp();
@@ -38,10 +41,11 @@ class ValidatorRuleTest extends LaravelTestCase
         parent::tearDown();
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Test Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Tests
+     | -----------------------------------------------------------------
      */
+
     /** @test */
     public function it_can_passes_captcha_rule()
     {
@@ -52,7 +56,7 @@ class ValidatorRuleTest extends LaravelTestCase
         $validator = $this->validator->make([
             NoCaptcha::CAPTCHA_NAME => 'google-recaptcha-response',
         ], [
-            NoCaptcha::CAPTCHA_NAME => 'required|captcha',
+            NoCaptcha::CAPTCHA_NAME => ['required', new CaptchaRule],
         ]);
 
         $this->assertTrue($validator->passes());
@@ -70,7 +74,7 @@ class ValidatorRuleTest extends LaravelTestCase
         $validator = $this->validator->make([
             NoCaptcha::CAPTCHA_NAME => 'google-recaptcha-response',
         ],[
-            NoCaptcha::CAPTCHA_NAME => 'required|captcha',
+            NoCaptcha::CAPTCHA_NAME => ['required', new CaptchaRule],
         ]);
 
         $this->assertFalse($validator->passes());
@@ -85,38 +89,11 @@ class ValidatorRuleTest extends LaravelTestCase
         );
     }
 
-    /** @test */
-    public function it_can_fail_captcha_rule_with_messages()
-    {
-        $this->mockRequest([
-            'success'     => false,
-            'error-codes' => 'invalid-input-response'
-        ]);
-
-        $validator = $this->validator->make([
-            NoCaptcha::CAPTCHA_NAME => 'google-recaptcha-response',
-        ],[
-            NoCaptcha::CAPTCHA_NAME => 'required|captcha',
-        ],[
-            'g-recaptcha-response.captcha' => 'Your captcha error message',
-        ]);
-
-        $this->assertFalse($validator->passes());
-        $this->assertTrue($validator->fails());
-
-        $errors = $validator->messages();
-
-        $this->assertTrue($errors->has(NoCaptcha::CAPTCHA_NAME));
-        $this->assertEquals(
-            'Your captcha error message',
-            $errors->first(NoCaptcha::CAPTCHA_NAME)
-        );
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
      */
+
     private function mockRequest(array $returns)
     {
         $request = $this->prophesize(Request::class);

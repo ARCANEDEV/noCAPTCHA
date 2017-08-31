@@ -10,7 +10,7 @@
 
 ## Requirements
 
-    - PHP >= 5.6
+    - PHP >= 7.0
     - ext-curl: *
     - ext-json: *
 
@@ -27,6 +27,7 @@ For more details, check the [official documentation](https://developers.google.c
 | ![noCaptcha v1.x][no_captcha_1_x] | ![Laravel v4.2][laravel_4_2]                                                                                        |
 | ![noCaptcha v3.x][no_captcha_3_x] | ![Laravel v5.0][laravel_5_0] ![Laravel v5.1][laravel_5_1] ![Laravel v5.2][laravel_5_2] ![Laravel v5.3][laravel_5_3] |
 | ![noCaptcha v4.x][no_captcha_4_x] | ![Laravel v5.4][laravel_5_4]                                                                                        |
+| ![noCaptcha v5.x][no_captcha_5_x] | ![Laravel v5.5][laravel_5_5]                                                                                        |
 
 > **Note :** This is a framework-agnostic package, so you can use any version of this package in your PHP project.
 
@@ -36,10 +37,12 @@ For more details, check the [official documentation](https://developers.google.c
 [laravel_5_2]:    https://img.shields.io/badge/v5.2-supported-brightgreen.svg?style=flat-square "Laravel v5.2"
 [laravel_5_3]:    https://img.shields.io/badge/v5.3-supported-brightgreen.svg?style=flat-square "Laravel v5.3"
 [laravel_5_4]:    https://img.shields.io/badge/v5.4-supported-brightgreen.svg?style=flat-square "Laravel v5.4"
+[laravel_5_5]:    https://img.shields.io/badge/v5.5-supported-brightgreen.svg?style=flat-square "Laravel v5.5"
 
 [no_captcha_1_x]: https://img.shields.io/badge/version-1.*-blue.svg?style=flat-square "noCaptcha v1.*"
 [no_captcha_3_x]: https://img.shields.io/badge/version-3.*-blue.svg?style=flat-square "noCaptcha v3.*"
 [no_captcha_4_x]: https://img.shields.io/badge/version-4.*-blue.svg?style=flat-square "noCaptcha v4.*"
+[no_captcha_5_x]: https://img.shields.io/badge/version-5.*-blue.svg?style=flat-square "noCaptcha v5.*"
 
 ## Composer
 
@@ -48,6 +51,8 @@ You can install this package via [Composer](http://getcomposer.org/) by running 
 ## Laravel
 
 ### Setup
+
+> **NOTE :** The package will automatically register itself if you're using Laravel `>= v5.5`, so you can skip this section.
 
 Once the package is installed, you can register the service provider in `config/app.php` in the `providers` array:
 
