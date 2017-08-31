@@ -140,10 +140,12 @@ echo Form::close();
 To validate the response we get from Google, your can use the `captcha` rule in your validator:
 
 ```php
+use Arcanedev\NoCaptcha\Rules\CaptchaRule;
+
 $inputs   = Input::all();
 $rules    = [
     // Other validation rules...
-    'g-recaptcha-response' => 'required|captcha',
+    'g-recaptcha-response' => ['required', new CaptchaRule],
 ];
 $messages = [
     'g-recaptcha-response.required' => 'Your custom validation message.',
@@ -194,9 +196,11 @@ For the `required` rule, you can customize it by adding your messages to `custom
 > For Laravel 4.2, the lang folder is located in `app/lang`
 
 ```php
+use Arcanedev\NoCaptcha\Rules\CaptchaRule;
+
 $validator = Validator::make(Input::all(), [
     // Other validation rules...
-    'g-recaptcha-response' => 'required|captcha',
+    'g-recaptcha-response' => ['required', new CaptchaRule],
 ]);
 
 if ($validator->fails()) {

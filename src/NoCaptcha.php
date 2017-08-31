@@ -2,6 +2,7 @@
 
 use Arcanedev\NoCaptcha\Utilities\Attributes;
 use Arcanedev\NoCaptcha\Utilities\Request;
+use Illuminate\Support\HtmlString;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -12,18 +13,20 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class NoCaptcha implements Contracts\NoCaptcha
 {
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Constants
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     const CLIENT_URL   = 'https://www.google.com/recaptcha/api.js';
     const VERIFY_URL   = 'https://www.google.com/recaptcha/api/siteverify';
     const CAPTCHA_NAME = 'g-recaptcha-response';
 
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Properties
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * The shared key between your site and ReCAPTCHA
      *
@@ -67,10 +70,11 @@ class NoCaptcha implements Contracts\NoCaptcha
      */
     protected $attributes;
 
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Constructor
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * NoCaptcha constructor.
      *
@@ -89,10 +93,11 @@ class NoCaptcha implements Contracts\NoCaptcha
         $this->setAttributes(new Attributes($attributes));
     }
 
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Getters & Setters
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * Set the secret key.
      *
@@ -150,9 +155,8 @@ class NoCaptcha implements Contracts\NoCaptcha
     {
         $queries = [];
 
-        if ($this->hasLang()) {
+        if ($this->hasLang())
             array_set($queries, 'hl', $this->lang);
-        }
 
         if ($this->hasCallbackName($callbackName)) {
             array_set($queries, 'onload', $callbackName);
@@ -169,9 +173,8 @@ class NoCaptcha implements Contracts\NoCaptcha
      *
      * @return self
      */
-    public function setRequestClient(
-        Contracts\Utilities\RequestInterface $request
-    ) {
+    public function setRequestClient(Contracts\Utilities\RequestInterface $request)
+    {
         $this->request = $request;
 
         return $this;
@@ -184,25 +187,25 @@ class NoCaptcha implements Contracts\NoCaptcha
      *
      * @return self
      */
-    public function setAttributes(
-        Contracts\Utilities\AttributesInterface $attributes
-    ) {
+    public function setAttributes(Contracts\Utilities\AttributesInterface $attributes)
+    {
         $this->attributes = $attributes;
 
         return $this;
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Main Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Main Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * Display Captcha.
      *
      * @param  string|null  $name
      * @param  array        $attributes
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function display($name = null, array $attributes = [])
     {
@@ -211,7 +214,7 @@ class NoCaptcha implements Contracts\NoCaptcha
             $attributes
         ));
 
-        return '<div '.$attributes.'></div>';
+        return $this->toHtmlString('<div '.$attributes.'></div>');
     }
 
     /**
@@ -220,7 +223,7 @@ class NoCaptcha implements Contracts\NoCaptcha
      * @param  string|null  $name
      * @param  array        $attributes
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function image($name = null, array $attributes = [])
     {
@@ -235,7 +238,7 @@ class NoCaptcha implements Contracts\NoCaptcha
      * @param  string|null  $name
      * @param  array        $attributes
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function audio($name = null, array $attributes = [])
     {
@@ -250,7 +253,7 @@ class NoCaptcha implements Contracts\NoCaptcha
      * @param  string  $value
      * @param  array   $attributes
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function button($value, array $attributes = [])
     {
@@ -258,7 +261,9 @@ class NoCaptcha implements Contracts\NoCaptcha
             'data-callback' => 'onSubmit',
         ], $attributes));
 
-        return '<button '.$attributes.'>'.$value.'</button>';
+        return $this->toHtmlString(
+            '<button '.$attributes.'>'.$value.'</button>'
+        );
     }
 
     /**
@@ -295,15 +300,10 @@ class NoCaptcha implements Contracts\NoCaptcha
         $body   = $request->getParsedBody();
         $server = $request->getServerParams();
 
-        $response = isset($body[self::CAPTCHA_NAME])
-            ? $body[self::CAPTCHA_NAME]
-            : '';
-
-        $remoteIp = isset($server['REMOTE_ADDR'])
-            ? $server['REMOTE_ADDR']
-            : null;
-
-        return $this->verify($response, $remoteIp);
+        return $this->verify(
+            $body[self::CAPTCHA_NAME] ?? '',
+            $server['REMOTE_ADDR'] ?? null
+        );
     }
 
     /**
@@ -311,7 +311,7 @@ class NoCaptcha implements Contracts\NoCaptcha
      *
      * @param  string|null  $callbackName
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function script($callbackName = null)
     {
@@ -322,7 +322,7 @@ class NoCaptcha implements Contracts\NoCaptcha
             $this->scriptLoaded = true;
         }
 
-        return $script;
+        return $this->toHtmlString($script);
     }
 
     /**
@@ -331,23 +331,23 @@ class NoCaptcha implements Contracts\NoCaptcha
      * @param  array   $captchas
      * @param  string  $callbackName
      *
-     * @return string
+     * @return \Illuminate\Support\HtmlString
      */
     public function scriptWithCallback(array $captchas, $callbackName = 'captchaRenderCallback')
     {
-        $script = $this->script($callbackName);
+        $script = $this->script($callbackName)->toHtml();
 
-        if (empty($script) || empty($captchas)) {
-            return $script;
+        if ( ! empty($script) && ! empty($captchas)) {
+            $script = implode(PHP_EOL, [implode(PHP_EOL, [
+                '<script>',
+                    "var $callbackName = function() {",
+                        $this->renderCaptchas($captchas),
+                    '};',
+                '</script>'
+            ]), $script]);
         }
 
-        return implode(PHP_EOL, [implode(PHP_EOL, [
-            '<script>',
-                "var $callbackName = function() {",
-                    $this->renderCaptchas($captchas),
-                '};',
-            '</script>'
-        ]), $script]);
+        return $this->toHtmlString($script);
     }
 
     /**
@@ -364,10 +364,11 @@ class NoCaptcha implements Contracts\NoCaptcha
         }, $captchas));
     }
 
-    /* ------------------------------------------------------------------------------------------------
-     |  Check Functions
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Check Methods
+     | -----------------------------------------------------------------
      */
+
     /**
      * Check if has lang.
      *
@@ -440,9 +441,10 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /* ------------------------------------------------------------------------------------------------
-     |  Other functions
+     |  Other Methods
      | ------------------------------------------------------------------------------------------------
      */
+
     /**
      * Send verify request to API and get response.
      *
@@ -457,5 +459,17 @@ class NoCaptcha implements Contracts\NoCaptcha
         $response = $this->request->send($url);
 
         return $response;
+    }
+
+    /**
+     * Transform the string to an Html serializable object
+     *
+     * @param  string  $html
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    protected function toHtmlString($html)
+    {
+        return new HtmlString($html);
     }
 }
