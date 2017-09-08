@@ -92,10 +92,12 @@ class NoCaptchaServiceProvider extends ServiceProvider
      */
     private function registerFormMacros($app)
     {
-        if ($app->bound(FormBuilder::class)) {
-            $app[FormBuilder::class]->macro('captcha', function($name = null, array $attributes = []) use ($app) {
-                return $app[Contracts\NoCaptcha::class]->display($name, $attributes);
-            });
+        foreach ([FormBuilder::class, 'form'] as $alias) {
+            if ($app->bound($alias)) {
+                $app[$alias]->macro('captcha', function($name = null, array $attributes = []) use ($app) {
+                    return $app[Contracts\NoCaptcha::class]->display($name, $attributes);
+                });
+            }
         }
     }
 }

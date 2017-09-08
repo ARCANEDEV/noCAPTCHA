@@ -19,9 +19,13 @@ class FormMacroTest extends LaravelTestCase
     /** @test */
     public function it_can_render_captcha_with_laravel_html_package()
     {
-        $this->assertEquals(
-            '<div class="g-recaptcha" data-sitekey="no-captcha-sitekey" id="captcha" name="captcha"></div>',
-            $this->app[FormBuilder::class]->captcha('captcha')
-        );
+        $this->app->singleton('form', FormBuilder::class); // This is for BC
+
+        foreach ([FormBuilder::class, 'form'] as $alias) {
+            $this->assertEquals(
+                '<div class="g-recaptcha" data-sitekey="no-captcha-sitekey" id="captcha" name="captcha"></div>',
+                $this->app[$alias]->captcha('captcha')
+            );
+        }
     }
 }
