@@ -5,8 +5,8 @@
   1. [Installation and Setup](1-Installation-and-Setup.md)
   2. [Configuration](2-Configuration.md)
   3. [Usage](3-Usage.md)
-    * [Hard Coded (Any PHP Project)](#hard-coded-any-php-project)
-    * [Laravel](#laravel)
+     * [Hard Coded (Any PHP Project)](#hard-coded-any-php-project)
+     * [Laravel](#laravel)
   4. [Extras](4-Extras.md)
   5. [FAQ](5-FAQ.md)
 
