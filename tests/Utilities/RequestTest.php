@@ -53,7 +53,7 @@ class RequestTest extends TestCase
     /** @test */
     public function it_can_be_instantiated()
     {
-        $this->assertInstanceOf(Request::class, $this->request);
+        static::assertInstanceOf(Request::class, $this->request);
     }
 
     /** @test */
@@ -61,9 +61,9 @@ class RequestTest extends TestCase
     {
         $response = $this->request->send(self::URL_TO_CURL_OR_WHATEVER);
 
-        $this->assertInternalType('array', $response);
-        $this->assertTrue(isset($response['url']));
-        $this->assertSame(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
+        static::assertInternalType('array', $response);
+        static::assertTrue(isset($response['url']));
+        static::assertSame(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
     }
 
     /** @test */
@@ -71,9 +71,9 @@ class RequestTest extends TestCase
     {
         $response = $this->request->send(self::URL_TO_CURL_OR_WHATEVER, false);
 
-        $this->assertInternalType('array', $response);
-        $this->assertTrue(isset($response['url']));
-        $this->assertSame(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
+        static::assertInternalType('array', $response);
+        static::assertTrue(isset($response['url']));
+        static::assertSame(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
     }
 
     /**

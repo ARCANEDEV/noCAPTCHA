@@ -5,18 +5,16 @@ sudo: false
 php:
   - 7.0
   - 7.1
+  - 7.2
   - nightly
 
 matrix:
   allow_failures:
     - php: nightly
 
-env:
-  - TESTBENCH_VERSION=3.5.*
-
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer require --prefer-source --no-interaction --dev "orchestra/testbench:${TESTBENCH_VERSION}"
+  - travis_retry composer install --prefer-source --no-interaction
 
 script:
   - composer validate

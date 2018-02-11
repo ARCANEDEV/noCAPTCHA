@@ -59,8 +59,8 @@ class ValidatorRuleTest extends LaravelTestCase
             NoCaptcha::CAPTCHA_NAME => ['required', new CaptchaRule],
         ]);
 
-        $this->assertTrue($validator->passes());
-        $this->assertFalse($validator->fails());
+        static::assertTrue($validator->passes());
+        static::assertFalse($validator->fails());
     }
 
     /** @test */
@@ -77,13 +77,13 @@ class ValidatorRuleTest extends LaravelTestCase
             NoCaptcha::CAPTCHA_NAME => ['required', new CaptchaRule],
         ]);
 
-        $this->assertFalse($validator->passes());
-        $this->assertTrue($validator->fails());
+        static::assertFalse($validator->passes());
+        static::assertTrue($validator->fails());
 
         $errors = $validator->messages();
 
-        $this->assertTrue($errors->has(NoCaptcha::CAPTCHA_NAME));
-        $this->assertEquals(
+        static::assertTrue($errors->has(NoCaptcha::CAPTCHA_NAME));
+        static::assertEquals(
             'validation.captcha',
             $errors->first(NoCaptcha::CAPTCHA_NAME)
         );

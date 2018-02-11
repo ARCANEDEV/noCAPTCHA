@@ -19,13 +19,13 @@ class FacadeTest extends LaravelTestCase
     /** @test */
     public function it_can_render_script_tag()
     {
-        $this->assertEquals(
+        static::assertEquals(
             $this->getScriptTag(),
             NoCaptcha::script()
         );
 
         // Echo out only once
-        $this->assertEmpty(NoCaptcha::script()->toHtml());
+        static::assertEmpty(NoCaptcha::script()->toHtml());
     }
 
     /* -----------------------------------------------------------------
