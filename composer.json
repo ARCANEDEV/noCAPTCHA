@@ -17,11 +17,12 @@
         "php":               ">=7.0",
         "ext-curl":          "*",
         "ext-json":          "*",
-        "arcanedev/support": "~4.0",
+        "arcanedev/support": "~4.2.0",
         "psr/http-message":  "~1.0"
     },
     "require-dev": {
         "arcanedev/laravel-html": "~5.0",
+        "orchestra/testbench":    "~3.5.0",
         "phpunit/phpunit":        "~6.0",
         "phpunit/phpcov":         "~4.0"
     },
@@ -34,9 +35,6 @@
         "psr-4": {
             "Arcanedev\\NoCaptcha\\Tests\\": "tests/"
         }
-    },
-    "scripts": {
-        "testbench": "composer require --dev \"orchestra/testbench=~3.0\""
     },
     "extra": {
         "laravel": {
