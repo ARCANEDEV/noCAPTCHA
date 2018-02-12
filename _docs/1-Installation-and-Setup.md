@@ -28,6 +28,7 @@ For more details, check the [official documentation](https://developers.google.c
 | ![noCaptcha v3.x][no_captcha_3_x] | ![Laravel v5.0][laravel_5_0] ![Laravel v5.1][laravel_5_1] ![Laravel v5.2][laravel_5_2] ![Laravel v5.3][laravel_5_3] |
 | ![noCaptcha v4.x][no_captcha_4_x] | ![Laravel v5.4][laravel_5_4]                                                                                        |
 | ![noCaptcha v5.x][no_captcha_5_x] | ![Laravel v5.5][laravel_5_5]                                                                                        |
+| ![noCaptcha v6.x][no_captcha_6_x] | ![Laravel v5.6][laravel_5_6]                                                                                        |
 
 > **Note :** This is a framework-agnostic package, so you can use any version of this package in your PHP project.
 
@@ -38,11 +39,13 @@ For more details, check the [official documentation](https://developers.google.c
 [laravel_5_3]:    https://img.shields.io/badge/v5.3-supported-brightgreen.svg?style=flat-square "Laravel v5.3"
 [laravel_5_4]:    https://img.shields.io/badge/v5.4-supported-brightgreen.svg?style=flat-square "Laravel v5.4"
 [laravel_5_5]:    https://img.shields.io/badge/v5.5-supported-brightgreen.svg?style=flat-square "Laravel v5.5"
+[laravel_5_6]:    https://img.shields.io/badge/v5.6-supported-brightgreen.svg?style=flat-square "Laravel v5.6"
 
 [no_captcha_1_x]: https://img.shields.io/badge/version-1.*-blue.svg?style=flat-square "noCaptcha v1.*"
 [no_captcha_3_x]: https://img.shields.io/badge/version-3.*-blue.svg?style=flat-square "noCaptcha v3.*"
 [no_captcha_4_x]: https://img.shields.io/badge/version-4.*-blue.svg?style=flat-square "noCaptcha v4.*"
 [no_captcha_5_x]: https://img.shields.io/badge/version-5.*-blue.svg?style=flat-square "noCaptcha v5.*"
+[no_captcha_6_x]: https://img.shields.io/badge/version-6.*-blue.svg?style=flat-square "noCaptcha v6.*"
 
 ## Composer
 
@@ -63,7 +66,7 @@ Once the package is installed, you can register the service provider in `config/
 ],
 ```
 
-And the facade in the `aliases` array:
+**Optional:** And the facade in the `aliases` array:
 
 ```php
 'aliases' => [
