@@ -18,7 +18,7 @@ class NoCaptchaTest extends TestCase
      | -----------------------------------------------------------------
      */
 
-    /** @var NoCaptcha */
+    /** @var  \Arcanedev\NoCaptcha\NoCaptcha */
     private $noCaptcha;
 
     /* -----------------------------------------------------------------
@@ -48,63 +48,83 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_be_instantiated()
     {
-        $this->assertInstanceOf(NoCaptcha::class, $this->noCaptcha);
-        $this->assertSame(
-            '<script src="' . NoCaptcha::CLIENT_URL . '" async defer></script>',
+        static::assertInstanceOf(NoCaptcha::class, $this->noCaptcha);
+        static::assertSame(
+            '<script src="'.NoCaptcha::CLIENT_URL.'" async defer></script>',
             $this->noCaptcha->script()->toHtml()
         );
     }
 
     /** @test */
-    public function it_can_be_instantiated_with_attributes()
+    public function it_can_be_instantiated_with_nullable_attributes()
     {
         $this->noCaptcha = $this->createCaptcha(null, [
             'data-theme' => null,
-            'data-type'  => null,
-            'data-size'  => null
+            'data-type' => null,
+            'data-size' => null
         ]);
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha"></div>',
             $this->noCaptcha->display('captcha')->toHtml()
         );
+    }
 
-        $expectations = [
+    /**
+     * @test
+     *
+     * @dataProvider provideNoCaptchaAttributes
+     */
+    public function it_can_be_instantiated_with_attributes($attributes, $expected)
+    {
+        static::assertSame(
+            $expected, $this->createCaptcha(null, $attributes)->display('captcha')->toHtml()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function provideNoCaptchaAttributes()
+    {
+        return [
             [
-                'attributes' => ['data-theme' => 'light'],
-                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light" id="captcha" name="captcha"></div>',
-            ],[
-                'attributes' => ['data-theme' => 'dark'],
-                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-theme="dark" id="captcha" name="captcha"></div>',
-            ],[
-                'attributes' => ['data-theme' => 'transparent'], // Invalid
-                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light" id="captcha" name="captcha"></div>',
-            ],[
-                'attributes' => ['data-type' => 'image'],
-                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" id="captcha" name="captcha"></div>',
-            ],[
-                'attributes' => ['data-type' => 'audio'],
-                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio" id="captcha" name="captcha"></div>',
-            ],[
-                'attributes' => ['data-type' => 'video'], // Invalid
-                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" id="captcha" name="captcha"></div>',
-            ],[
-                'attributes' => ['data-size' => 'normal'],
-                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-size="normal" id="captcha" name="captcha"></div>',
-            ],[
-                'attributes' => ['data-size' => 'compact'],
-                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-size="compact" id="captcha" name="captcha"></div>',
-            ],[
-                'attributes' => ['data-size' => 'huge'], // Invalid
-                'expected'   => '<div class="g-recaptcha" data-sitekey="site-key" data-size="normal" id="captcha" name="captcha"></div>',
+                ['data-theme' => 'light'],
+                '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light" id="captcha" name="captcha"></div>',
+            ],
+            [
+                ['data-theme' => 'dark'],
+                '<div class="g-recaptcha" data-sitekey="site-key" data-theme="dark" id="captcha" name="captcha"></div>',
+            ],
+            [
+                ['data-theme' => 'transparent'], // Invalid
+                '<div class="g-recaptcha" data-sitekey="site-key" data-theme="light" id="captcha" name="captcha"></div>',
+            ],
+            [
+                ['data-type' => 'image'],
+                '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" id="captcha" name="captcha"></div>',
+            ],
+            [
+                ['data-type' => 'audio'],
+                '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio" id="captcha" name="captcha"></div>',
+            ],
+            [
+                ['data-type' => 'video'], // Invalid
+                '<div class="g-recaptcha" data-sitekey="site-key" data-type="image" id="captcha" name="captcha"></div>',
+            ],
+            [
+                ['data-size' => 'normal'],
+                '<div class="g-recaptcha" data-sitekey="site-key" data-size="normal" id="captcha" name="captcha"></div>',
+            ],
+            [
+                ['data-size' => 'compact'],
+                '<div class="g-recaptcha" data-sitekey="site-key" data-size="compact" id="captcha" name="captcha"></div>',
+            ],
+            [
+                ['data-size' => 'huge'], // Invalid
+                '<div class="g-recaptcha" data-sitekey="site-key" data-size="normal" id="captcha" name="captcha"></div>',
             ],
         ];
-
-        foreach ($expectations as $data) {
-            $this->assertSame(
-                $data['expected'], $this->createCaptcha(null, $data['attributes'])->display('captcha')->toHtml()
-            );
-        }
     }
 
     /**
@@ -156,9 +176,9 @@ class NoCaptchaTest extends TestCase
     {
         $locale = 'fr';
         $this->noCaptcha->setLang($locale);
-        $this->assertInstanceOf(NoCaptcha::class, $this->noCaptcha);
-        $this->assertSame(
-            '<script src="' . NoCaptcha::CLIENT_URL . '?hl=' . $locale . '" async defer></script>',
+        static::assertInstanceOf(NoCaptcha::class, $this->noCaptcha);
+        static::assertSame(
+            '<script src="'.NoCaptcha::CLIENT_URL.'?hl='.$locale.'" async defer></script>',
             $this->noCaptcha->script()->toHtml()
         );
     }
@@ -166,26 +186,26 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_render_script_tag()
     {
-        $tag = '<script src="' . NoCaptcha::CLIENT_URL . '" async defer></script>';
+        $tag = '<script src="'.NoCaptcha::CLIENT_URL.'" async defer></script>';
 
-        $this->assertSame($tag, $this->noCaptcha->script()->toHtml());
+        static::assertSame($tag, $this->noCaptcha->script()->toHtml());
 
         // Echo out only once
-        $this->assertEmpty($this->noCaptcha->script()->toHtml());
+        static::assertEmpty($this->noCaptcha->script()->toHtml());
     }
 
     /** @test */
     public function it_can_render_script_tag_with_lang()
     {
         $lang = 'fr';
-        $tag  = '<script src="' . NoCaptcha::CLIENT_URL . '?hl=' . $lang . '" async defer></script>';
+        $tag  = '<script src="'.NoCaptcha::CLIENT_URL.'?hl='.$lang.'" async defer></script>';
 
         $this->noCaptcha = $this->createCaptcha($lang);
 
-        $this->assertSame($tag, $this->noCaptcha->script()->toHtml());
+        static::assertSame($tag, $this->noCaptcha->script()->toHtml());
 
         // Not even twice
-        $this->assertEmpty($this->noCaptcha->script()->toHtml());
+        static::assertEmpty($this->noCaptcha->script()->toHtml());
     }
 
     /** @test */
@@ -199,32 +219,32 @@ class NoCaptchaTest extends TestCase
                     if (document.getElementById(\'captcha-2\')) { grecaptcha.render(\'captcha-2\', {\'sitekey\' : \'site-key\'}); }
                 };
             </script>
-            <script src="' . NoCaptcha::CLIENT_URL . '?onload=captchaRenderCallback&render=explicit" async defer></script>';
+            <script src="'.NoCaptcha::CLIENT_URL.'?onload=captchaRenderCallback&render=explicit" async defer></script>';
 
-        $this->assertSame(
+        static::assertSame(
             array_map('trim', preg_split('/\r\n|\r|\n/', $script)),
             array_map('trim', preg_split('/\r\n|\r|\n/', $this->noCaptcha->scriptWithCallback($captchas)->toHtml()))
         );
 
         // Not even twice
-        $this->assertEmpty($this->noCaptcha->script()->toHtml());
-        $this->assertEmpty($this->noCaptcha->scriptWithCallback($captchas)->toHtml());
+        static::assertEmpty($this->noCaptcha->script()->toHtml());
+        static::assertEmpty($this->noCaptcha->scriptWithCallback($captchas)->toHtml());
     }
 
     /** @test */
     public function it_can_display_captcha()
     {
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha"></div>',
             $this->noCaptcha->display('captcha')->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha_1" name="captcha"></div>',
             $this->noCaptcha->display('captcha', ['id' => 'captcha_1'])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-type="image" data-theme="light"></div>',
             $this->noCaptcha->display('captcha', [
                 'data-type'  => 'image',
@@ -232,7 +252,7 @@ class NoCaptchaTest extends TestCase
             ])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-type="audio" data-theme="dark"></div>',
             $this->noCaptcha->display('captcha', [
                 'data-type'  => 'audio',
@@ -244,22 +264,22 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_display_image_captcha()
     {
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-type="image"></div>',
             $this->noCaptcha->image('captcha')->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-theme="dark" data-type="image"></div>',
             $this->noCaptcha->image('captcha', ['data-theme' => 'dark'])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-theme="light" data-type="image"></div>',
             $this->noCaptcha->image('captcha', ['data-theme' => 'light'])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-theme="light" data-type="image"></div>',
             $this->noCaptcha->image('captcha', [
                 'data-theme' => 'light',
@@ -271,22 +291,22 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_display_audio_captcha()
     {
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-type="audio"></div>',
             $this->noCaptcha->audio('captcha')->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-theme="dark" data-type="audio"></div>',
             $this->noCaptcha->audio('captcha', ['data-theme' => 'dark'])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-theme="light" data-type="audio"></div>',
             $this->noCaptcha->audio('captcha', ['data-theme' => 'light'])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-theme="light" data-type="audio"></div>',
             $this->noCaptcha->audio('captcha', [
                 'data-theme' => 'light',
@@ -298,22 +318,22 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_display_captcha_with_defaults()
     {
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-type="image"></div>',
             $this->noCaptcha->display('captcha', ['data-type'  => 'video'])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-type="image"></div>',
             $this->noCaptcha->display('captcha', ['data-type'  => true])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-theme="light"></div>',
             $this->noCaptcha->display('captcha', ['data-theme' => 'blue'])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" data-theme="light"></div>',
             $this->noCaptcha->display('captcha', ['data-theme' => true])->toHtml()
         );
@@ -322,7 +342,7 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_display_captcha_with_style_attribute()
     {
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha" style="transform: scale(0.77); transform-origin: 0 0;"></div>',
             $this->noCaptcha->display('captcha', [
                 'style' => 'transform: scale(0.77); transform-origin: 0 0;'
@@ -333,27 +353,27 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_display_invisible_captcha()
     {
-        $this->assertSame(
+        static::assertSame(
             '<button class="g-recaptcha" data-sitekey="site-key" data-callback="onSubmit">Send</button>',
             $this->noCaptcha->button('Send')->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<button class="g-recaptcha" data-sitekey="site-key" data-callback="submitForm">Post the form</button>',
             $this->noCaptcha->button('Post the form', ['data-callback' => 'submitForm'])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<button class="g-recaptcha" data-sitekey="site-key" data-callback="onSubmit" data-size="invisible">Send</button>',
             $this->noCaptcha->button('Send', ['data-size' => 'invisible'])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<button class="g-recaptcha" data-sitekey="site-key" data-callback="onSubmit" data-badge="bottomright">Send</button>',
             $this->noCaptcha->button('Send', ['data-badge' => 'bottomright'])->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<button class="g-recaptcha" data-sitekey="site-key" data-callback="onSubmit" data-badge="bottomright">Send</button>',
             $this->noCaptcha->button('Send', ['data-badge' => 'topright'])->toHtml()
         );
@@ -371,7 +391,7 @@ class NoCaptchaTest extends TestCase
             ->setRequestClient($requestClient->reveal())
             ->verify('re-captcha-response');
 
-        $this->assertTrue($passes);
+        static::assertTrue($passes);
     }
 
     /** @test */
@@ -397,7 +417,7 @@ class NoCaptchaTest extends TestCase
             ->setRequestClient($requestClient->reveal())
             ->verifyRequest($request->reveal());
 
-        $this->assertTrue($passes);
+        static::assertTrue($passes);
     }
 
     /** @test */
@@ -405,7 +425,7 @@ class NoCaptchaTest extends TestCase
     {
         $passes  = $this->noCaptcha->verify('');
 
-        $this->assertFalse($passes);
+        static::assertFalse($passes);
 
         $requestClient = $this->prophesize(Request::class);
         $requestClient->send(Argument::type('string'))
@@ -418,23 +438,23 @@ class NoCaptchaTest extends TestCase
             ->setRequestClient($requestClient->reveal())
             ->verify('re-captcha-response');
 
-        $this->assertFalse($passes);
+        static::assertFalse($passes);
     }
 
     /** @test */
     public function it_can_render_captcha_with_optional_name()
     {
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key"></div>',
             $this->noCaptcha->display()->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" data-type="image"></div>',
             $this->noCaptcha->image()->toHtml()
         );
 
-        $this->assertSame(
+        static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio"></div>',
             $this->noCaptcha->audio()->toHtml()
         );

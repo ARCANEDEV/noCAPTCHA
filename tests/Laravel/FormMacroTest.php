@@ -22,7 +22,7 @@ class FormMacroTest extends LaravelTestCase
         $this->app->singleton('form', FormBuilder::class); // This is for BC
 
         foreach ([FormBuilder::class, 'form'] as $alias) {
-            $this->assertEquals(
+            static::assertEquals(
                 '<div class="g-recaptcha" data-sitekey="no-captcha-sitekey" id="captcha" name="captcha"></div>',
                 $this->app[$alias]->captcha('captcha')
             );

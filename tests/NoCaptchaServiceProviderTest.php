@@ -53,7 +53,7 @@ class NoCaptchaServiceProviderTest extends LaravelTestCase
         ];
 
         foreach ($expectations as $expected) {
-            $this->assertInstanceOf($expected, $this->provider);
+            static::assertInstanceOf($expected, $this->provider);
         }
     }
 
@@ -64,6 +64,6 @@ class NoCaptchaServiceProviderTest extends LaravelTestCase
             \Arcanedev\NoCaptcha\Contracts\NoCaptcha::class,
         ];
 
-        $this->assertSame($expected, $this->provider->provides());
+        static::assertSame($expected, $this->provider->provides());
     }
 }
