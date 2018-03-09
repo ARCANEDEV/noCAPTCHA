@@ -396,8 +396,6 @@ class NoCaptcha implements Contracts\NoCaptcha
      *
      * @param  string  $name
      * @param  string  $value
-     *
-     * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
      */
     private function checkKey($name, &$value)
     {
@@ -440,9 +438,9 @@ class NoCaptcha implements Contracts\NoCaptcha
         }
     }
 
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Other Methods
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
 
     /**
