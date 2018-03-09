@@ -83,6 +83,11 @@ class NoCaptchaServiceProvider extends ServiceProvider
                 $config->get('no-captcha.attributes', [])
             );
         });
+
+        $this->app->resolving(Contracts\NoCaptcha::class, function (Contracts\NoCaptcha $noCaptcha, $app) {
+            /** @var  \Illuminate\Foundation\Application  $app */
+            $noCaptcha->setLang($app->getLocale());
+        });
     }
 
     /**
