@@ -340,6 +340,7 @@ class NoCaptcha implements Contracts\NoCaptcha
         if ( ! empty($script) && ! empty($captchas)) {
             $script = implode(PHP_EOL, [implode(PHP_EOL, [
                 '<script>',
+                    "window.noCaptcha = {renderedCaptchas: []};",
                     "var $callbackName = function() {",
                         $this->renderCaptchas($captchas),
                     '};',
@@ -360,7 +361,12 @@ class NoCaptcha implements Contracts\NoCaptcha
     private function renderCaptchas(array $captchas)
     {
         return implode(PHP_EOL, array_map(function($captcha) {
-            return "if (document.getElementById('$captcha')) { grecaptcha.render('$captcha', {'sitekey' : '{$this->siteKey}'}); }";
+            return "if (document.getElementById('{$captcha}')) { ".
+                "window.noCaptcha.renderedCaptchas.push({".
+                    "id: grecaptcha.render('{$captcha}', {'sitekey' : '{$this->siteKey}'}), ".
+                    "name: '{$captcha}'".
+                "});".
+            " }";
         }, $captchas));
     }
 

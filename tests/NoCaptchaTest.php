@@ -214,9 +214,10 @@ class NoCaptchaTest extends TestCase
         $captchas = ['captcha-1', 'captcha-2'];
         $script   =
             '<script>
+                window.noCaptcha = {renderedCaptchas: []};
                 var captchaRenderCallback = function() {
-                    if (document.getElementById(\'captcha-1\')) { grecaptcha.render(\'captcha-1\', {\'sitekey\' : \'site-key\'}); }
-                    if (document.getElementById(\'captcha-2\')) { grecaptcha.render(\'captcha-2\', {\'sitekey\' : \'site-key\'}); }
+                    if (document.getElementById(\'captcha-1\')) { window.noCaptcha.renderedCaptchas.push({id: grecaptcha.render(\'captcha-1\', {\'sitekey\' : \'site-key\'}), name: \'captcha-1\'}); }
+                    if (document.getElementById(\'captcha-2\')) { window.noCaptcha.renderedCaptchas.push({id: grecaptcha.render(\'captcha-2\', {\'sitekey\' : \'site-key\'}), name: \'captcha-2\'}); }
                 };
             </script>
             <script src="'.NoCaptcha::CLIENT_URL.'?onload=captchaRenderCallback&render=explicit" async defer></script>';
