@@ -326,6 +326,54 @@ class NoCaptcha implements Contracts\NoCaptcha
     }
 
     /**
+     * Get the NoCaptcha API Script.
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function getApiScript()
+    {
+        return $this->toHtmlString(
+            "<script>
+                window.noCaptcha = {
+                    captchas: [],
+                    reset: function(name) {
+                        var captcha = window.noCaptcha.get(name);
+        
+                        if (captcha)
+                            window.noCaptcha.resetById(captcha.id);
+                    },
+                    resetById: function(id) {
+                        grecaptcha.reset(id);
+                    },
+                    get: function(name) {
+                        return window.noCaptcha.find(function (captcha) {
+                            return captcha.name === name;
+                        });
+                    },
+                    getId: function(id) {
+                        return window.noCaptcha.find(function (captcha) {
+                            return captcha.id === id;
+                        });
+                    },
+                    find: function(callback) {
+                        return window.noCaptcha.captchas.find(callback);
+                    }
+                    render: function(name, sitekey) {
+                        var captcha = {
+                            id: grecaptcha.render(name, {'sitekey' : sitekey}),
+                            name: name
+                        };
+                        
+                        window.noCaptcha.captchas.push(captcha);
+                        
+                        return captcha;
+                    }
+                }
+            </script>"
+        );
+    }
+
+    /**
      * Get script tag with a callback function.
      *
      * @param  array   $captchas
@@ -339,6 +387,7 @@ class NoCaptcha implements Contracts\NoCaptcha
 
         if ( ! empty($script) && ! empty($captchas)) {
             $script = implode(PHP_EOL, [implode(PHP_EOL, [
+                $this->getApiScript()->toHtml(),
                 '<script>',
                     "var $callbackName = function() {",
                         $this->renderCaptchas($captchas),
@@ -360,7 +409,9 @@ class NoCaptcha implements Contracts\NoCaptcha
     private function renderCaptchas(array $captchas)
     {
         return implode(PHP_EOL, array_map(function($captcha) {
-            return "if (document.getElementById('$captcha')) { grecaptcha.render('$captcha', {'sitekey' : '{$this->siteKey}'}); }";
+            return "if (document.getElementById('{$captcha}')) { ".
+                "window.noCaptcha.render('{$captcha}', '{$this->siteKey}');".
+            " }";
         }, $captchas));
     }
 
@@ -452,11 +503,9 @@ class NoCaptcha implements Contracts\NoCaptcha
      */
     private function sendVerifyRequest(array $query = [])
     {
-        $query    = array_filter($query);
-        $url      = static::VERIFY_URL . '?' . http_build_query($query);
-        $response = $this->request->send($url);
+        $url = static::VERIFY_URL.'?'.http_build_query(array_filter($query));
 
-        return $response;
+        return $this->request->send($url);
     }
 
     /**
