@@ -230,7 +230,7 @@ class NoCaptchaTest extends TestCase
                             return captcha.name === name;
                         });
                     },
-                    getId: function(id) {
+                    getById: function(id) {
                         return window.noCaptcha.find(function (captcha) {
                             return captcha.id === id;
                         });

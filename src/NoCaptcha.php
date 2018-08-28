@@ -350,7 +350,7 @@ class NoCaptcha implements Contracts\NoCaptcha
                             return captcha.name === name;
                         });
                     },
-                    getId: function(id) {
+                    getById: function(id) {
                         return window.noCaptcha.find(function (captcha) {
                             return captcha.id === id;
                         });
@@ -409,9 +409,7 @@ class NoCaptcha implements Contracts\NoCaptcha
     private function renderCaptchas(array $captchas)
     {
         return implode(PHP_EOL, array_map(function($captcha) {
-            return "if (document.getElementById('{$captcha}')) { ".
-                "window.noCaptcha.render('{$captcha}', '{$this->siteKey}');".
-            " }";
+            return "if (document.getElementById('{$captcha}')) { window.noCaptcha.render('{$captcha}', '{$this->siteKey}'); }";
         }, $captchas));
     }
 
