@@ -106,6 +106,13 @@ interface NoCaptcha
     public function script();
 
     /**
+     * Get the NoCaptcha API Script.
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function getApiScript();
+
+    /**
      * Get script tag with a callback function.
      *
      * @param  array   $captchas

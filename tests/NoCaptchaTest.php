@@ -214,10 +214,46 @@ class NoCaptchaTest extends TestCase
         $captchas = ['captcha-1', 'captcha-2'];
         $script   =
             '<script>
-                window.noCaptcha = {renderedCaptchas: []};
+                window.noCaptcha = {
+                    captchas: [],
+                    reset: function(name) {
+                        var captcha = window.noCaptcha.get(name);
+        
+                        if (captcha)
+                            window.noCaptcha.resetById(captcha.id);
+                    },
+                    resetById: function(id) {
+                        grecaptcha.reset(id);
+                    },
+                    get: function(name) {
+                        return window.noCaptcha.find(function (captcha) {
+                            return captcha.name === name;
+                        });
+                    },
+                    getId: function(id) {
+                        return window.noCaptcha.find(function (captcha) {
+                            return captcha.id === id;
+                        });
+                    },
+                    find: function(callback) {
+                        return window.noCaptcha.captchas.find(callback);
+                    }
+                    render: function(name, sitekey) {
+                        var captcha = {
+                            id: grecaptcha.render(name, {\'sitekey\' : sitekey}),
+                            name: name
+                        };
+                        
+                        window.noCaptcha.captchas.push(captcha);
+                        
+                        return captcha;
+                    }
+                }
+            </script>
+            <script>
                 var captchaRenderCallback = function() {
-                    if (document.getElementById(\'captcha-1\')) { window.noCaptcha.renderedCaptchas.push({id: grecaptcha.render(\'captcha-1\', {\'sitekey\' : \'site-key\'}), name: \'captcha-1\'}); }
-                    if (document.getElementById(\'captcha-2\')) { window.noCaptcha.renderedCaptchas.push({id: grecaptcha.render(\'captcha-2\', {\'sitekey\' : \'site-key\'}), name: \'captcha-2\'}); }
+                    if (document.getElementById(\'captcha-1\')) { window.noCaptcha.render(\'captcha-1\', \'site-key\'); }
+                    if (document.getElementById(\'captcha-2\')) { window.noCaptcha.render(\'captcha-2\', \'site-key\'); }
                 };
             </script>
             <script src="'.NoCaptcha::CLIENT_URL.'?onload=captchaRenderCallback&render=explicit" async defer></script>';
