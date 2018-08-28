@@ -237,7 +237,7 @@ class NoCaptchaTest extends TestCase
                     },
                     find: function(callback) {
                         return window.noCaptcha.captchas.find(callback);
-                    }
+                    },
                     render: function(name, sitekey) {
                         var captcha = {
                             id: grecaptcha.render(name, {\'sitekey\' : sitekey}),

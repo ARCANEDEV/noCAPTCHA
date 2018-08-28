@@ -357,7 +357,7 @@ class NoCaptcha implements Contracts\NoCaptcha
                     },
                     find: function(callback) {
                         return window.noCaptcha.captchas.find(callback);
-                    }
+                    },
                     render: function(name, sitekey) {
                         var captcha = {
                             id: grecaptcha.render(name, {'sitekey' : sitekey}),
