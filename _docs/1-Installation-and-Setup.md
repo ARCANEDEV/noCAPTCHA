@@ -10,7 +10,7 @@
 
 ## Requirements
 
-    - PHP >= 7.0
+    - PHP >= 7.1.3
     - ext-curl: *
     - ext-json: *
 
@@ -29,6 +29,7 @@ For more details, check the [official documentation](https://developers.google.c
 | ![noCaptcha v4.x][no_captcha_4_x] | ![Laravel v5.4][laravel_5_4]                                                                                        |
 | ![noCaptcha v5.x][no_captcha_5_x] | ![Laravel v5.5][laravel_5_5]                                                                                        |
 | ![noCaptcha v6.x][no_captcha_6_x] | ![Laravel v5.6][laravel_5_6]                                                                                        |
+| ![noCaptcha v7.x][no_captcha_7_x] | ![Laravel v5.7][laravel_5_7]                                                                                        |
 
 > **Note :** This is a framework-agnostic package, so you can use any version of this package in your PHP project.
 
@@ -40,12 +41,14 @@ For more details, check the [official documentation](https://developers.google.c
 [laravel_5_4]:    https://img.shields.io/badge/v5.4-supported-brightgreen.svg?style=flat-square "Laravel v5.4"
 [laravel_5_5]:    https://img.shields.io/badge/v5.5-supported-brightgreen.svg?style=flat-square "Laravel v5.5"
 [laravel_5_6]:    https://img.shields.io/badge/v5.6-supported-brightgreen.svg?style=flat-square "Laravel v5.6"
+[laravel_5_7]:    https://img.shields.io/badge/v5.7-supported-brightgreen.svg?style=flat-square "Laravel v5.7"
 
 [no_captcha_1_x]: https://img.shields.io/badge/version-1.*-blue.svg?style=flat-square "noCaptcha v1.*"
 [no_captcha_3_x]: https://img.shields.io/badge/version-3.*-blue.svg?style=flat-square "noCaptcha v3.*"
 [no_captcha_4_x]: https://img.shields.io/badge/version-4.*-blue.svg?style=flat-square "noCaptcha v4.*"
 [no_captcha_5_x]: https://img.shields.io/badge/version-5.*-blue.svg?style=flat-square "noCaptcha v5.*"
 [no_captcha_6_x]: https://img.shields.io/badge/version-6.*-blue.svg?style=flat-square "noCaptcha v6.*"
+[no_captcha_7_x]: https://img.shields.io/badge/version-7.*-blue.svg?style=flat-square "noCaptcha v7.*"
 
 ## Composer
 
