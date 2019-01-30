@@ -11,7 +11,7 @@ reCAPTCHA comes in the form of a widget that you can easily add to your blog, fo
 ### Features
 
   * Framework agnostic package.
-  * Invisible reCaptcha supported.
+  * `v2` (+ Invisible) & `v3` reCaptcha are supported.
   * Easy setup &amp; configuration.
   * Well documented &amp; IDE Friendly.
   * Well tested with maximum code quality.

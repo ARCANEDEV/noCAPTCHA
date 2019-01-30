@@ -1,21 +1,25 @@
 <?php namespace Arcanedev\NoCaptcha\Utilities;
 
-use Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface;
+use Arcanedev\NoCaptcha\AbstractNoCaptcha;
 use Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException;
-use Arcanedev\NoCaptcha\NoCaptcha;
 
-/**
- * Class     Attributes
- *
- * @package  Arcanedev\NoCaptcha\Utilities
- * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
- */
-class Attributes implements AttributesInterface
+class Attributes
 {
-    /* ------------------------------------------------------------------------------------------------
-     |  Properties
-     | ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
+     |  Constants
+     | -----------------------------------------------------------------
      */
+
+    const ATTR_TYPE  = 'data-type';
+    const ATTR_THEME = 'data-theme';
+    const ATTR_SIZE  = 'data-size';
+    const ATTR_BADGE = 'data-badge';
+
+    /* -----------------------------------------------------------------
+     |  Properties
+     | -----------------------------------------------------------------
+     */
+
     /**
      * Attribute collection.
      *
@@ -30,10 +34,11 @@ class Attributes implements AttributesInterface
      */
     protected $defaults = [];
 
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Constructor
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * Attributes constructor.
      *
@@ -44,10 +49,11 @@ class Attributes implements AttributesInterface
         $this->defaults = array_filter($defaults);
     }
 
-    /* ------------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------
      |  Getters & Setters
-     | ------------------------------------------------------------------------------------------------
+     | -----------------------------------------------------------------
      */
+
     /**
      * Get all items.
      *
@@ -88,7 +94,6 @@ class Attributes implements AttributesInterface
     private function setItems(array $items)
     {
         $this->items = array_merge($this->defaults, $items);
-
         $this->checkAttributes();
 
         return $this;
@@ -103,9 +108,8 @@ class Attributes implements AttributesInterface
      */
     private function getItem($name)
     {
-        if ( ! $this->hasItem($name)) {
+        if ( ! $this->hasItem($name))
             return null;
-        }
 
         return $this->items[$name];
     }
@@ -121,7 +125,6 @@ class Attributes implements AttributesInterface
     private function setItem($name, $value)
     {
         $this->items[$name] = $value;
-
         return $this;
     }
 
@@ -149,6 +152,7 @@ class Attributes implements AttributesInterface
      |  Main functions
      | ------------------------------------------------------------------------------------------------
      */
+
     /**
      * Build attributes.
      *
@@ -181,11 +185,12 @@ class Attributes implements AttributesInterface
      */
     public function prepareNameAttribute($name)
     {
-        if (is_null($name)) return [];
+        if (is_null($name))
+            return [];
 
-        if ($name === NoCaptcha::CAPTCHA_NAME) {
+        if ($name === AbstractNoCaptcha::CAPTCHA_NAME) {
             throw new InvalidArgumentException(
-                'The captcha name must be different from "' . NoCaptcha::CAPTCHA_NAME . '".'
+                'The captcha name must be different from "' . AbstractNoCaptcha::CAPTCHA_NAME . '".'
             );
         }
 
@@ -196,6 +201,7 @@ class Attributes implements AttributesInterface
      |  Check functions
      | ------------------------------------------------------------------------------------------------
      */
+
     /**
      * Check attributes.
      */
@@ -251,7 +257,7 @@ class Attributes implements AttributesInterface
         $item = $this->getItem($name);
 
         if ( ! is_null($item)) {
-            $item = (is_string($item) and in_array($item, $available))
+            $item = (is_string($item) && in_array($item, $available))
                 ? strtolower(trim($item))
                 : $default;
 

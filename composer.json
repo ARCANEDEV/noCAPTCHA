@@ -29,7 +29,8 @@
     "autoload": {
         "psr-4": {
             "Arcanedev\\NoCaptcha\\": "src/"
-        }
+        },
+        "files": ["helpers.php"]
     },
     "autoload-dev": {
         "psr-4": {

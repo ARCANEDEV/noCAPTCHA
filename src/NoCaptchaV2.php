@@ -1,53 +1,21 @@
 <?php namespace Arcanedev\NoCaptcha;
 
 use Arcanedev\NoCaptcha\Utilities\Attributes;
-use Arcanedev\NoCaptcha\Utilities\Request;
-use Illuminate\Support\HtmlString;
-use Psr\Http\Message\ServerRequestInterface;
+use Arcanedev\NoCaptcha\Utilities\ResponseV2;
+use Illuminate\Support\Arr;
 
 /**
- * Class     NoCaptcha
+ * Class     NoCaptchaV2
  *
  * @package  Arcanedev\NoCaptcha
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class NoCaptcha implements Contracts\NoCaptcha
+class NoCaptchaV2 extends AbstractNoCaptcha
 {
-    /* -----------------------------------------------------------------
-     |  Constants
-     | -----------------------------------------------------------------
-     */
-
-    const CLIENT_URL   = 'https://www.google.com/recaptcha/api.js';
-    const VERIFY_URL   = 'https://www.google.com/recaptcha/api/siteverify';
-    const CAPTCHA_NAME = 'g-recaptcha-response';
-
     /* -----------------------------------------------------------------
      |  Properties
      | -----------------------------------------------------------------
      */
-
-    /**
-     * The shared key between your site and ReCAPTCHA
-     *
-     * @var string
-     */
-    private $secret;
-
-    /**
-     * Your site key
-     *
-     * @var string
-     */
-    private $siteKey;
-
-    /**
-     * Forces the widget to render in a specific language.
-     * Auto-detects the user's language if unspecified.
-     *
-     * @var string
-     */
-    protected $lang;
 
     /**
      * Decides if we've already loaded the script file or not.
@@ -57,16 +25,9 @@ class NoCaptcha implements Contracts\NoCaptcha
     protected $scriptLoaded = false;
 
     /**
-     * HTTP Request Client
-     *
-     * @var \Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface
-     */
-    protected $request;
-
-    /**
      * noCaptcha Attributes
      *
-     * @var \Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface
+     * @var \Arcanedev\NoCaptcha\Utilities\Attributes
      */
     protected $attributes;
 
@@ -85,11 +46,8 @@ class NoCaptcha implements Contracts\NoCaptcha
      */
     public function __construct($secret, $siteKey, $lang = null, array $attributes = [])
     {
-        $this->setSecret($secret);
-        $this->setSiteKey($siteKey);
-        $this->setLang($lang);
+        parent::__construct($secret, $siteKey, $lang);
 
-        $this->setRequestClient(new Request);
         $this->setAttributes(new Attributes($attributes));
     }
 
@@ -97,52 +55,6 @@ class NoCaptcha implements Contracts\NoCaptcha
      |  Getters & Setters
      | -----------------------------------------------------------------
      */
-
-    /**
-     * Set the secret key.
-     *
-     * @param  string  $secret
-     *
-     * @return self
-     */
-    protected function setSecret($secret)
-    {
-        $this->checkKey('secret key', $secret);
-
-        $this->secret = $secret;
-
-        return $this;
-    }
-
-    /**
-     * Set Site key.
-     *
-     * @param  string  $siteKey
-     *
-     * @return self
-     */
-    protected function setSiteKey($siteKey)
-    {
-        $this->checkKey('site key', $siteKey);
-
-        $this->siteKey = $siteKey;
-
-        return $this;
-    }
-
-    /**
-     * Set language code.
-     *
-     * @param  string  $lang
-     *
-     * @return self
-     */
-    public function setLang($lang)
-    {
-        $this->lang = $lang;
-
-        return $this;
-    }
 
     /**
      * Get script source link.
@@ -156,38 +68,24 @@ class NoCaptcha implements Contracts\NoCaptcha
         $queries = [];
 
         if ($this->hasLang())
-            array_set($queries, 'hl', $this->lang);
+            Arr::set($queries, 'hl', $this->lang);
 
         if ($this->hasCallbackName($callbackName)) {
-            array_set($queries, 'onload', $callbackName);
-            array_set($queries, 'render', 'explicit');
+            Arr::set($queries, 'onload', $callbackName);
+            Arr::set($queries, 'render', 'explicit');
         }
 
         return static::CLIENT_URL . (count($queries) ? '?' . http_build_query($queries) : '');
     }
 
     /**
-     * Set HTTP Request Client.
-     *
-     * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface  $request
-     *
-     * @return self
-     */
-    public function setRequestClient(Contracts\Utilities\RequestInterface $request)
-    {
-        $this->request = $request;
-
-        return $this;
-    }
-
-    /**
      * Set noCaptcha Attributes.
      *
-     * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\AttributesInterface  $attributes
+     * @param  \Arcanedev\NoCaptcha\Utilities\Attributes  $attributes
      *
      * @return self
      */
-    public function setAttributes(Contracts\Utilities\AttributesInterface $attributes)
+    public function setAttributes(Attributes $attributes)
     {
         $this->attributes = $attributes;
 
@@ -214,7 +112,7 @@ class NoCaptcha implements Contracts\NoCaptcha
             $attributes
         ));
 
-        return $this->toHtmlString('<div '.$attributes.'></div>');
+        return $this->toHtmlString("<div {$attributes}></div>");
     }
 
     /**
@@ -246,7 +144,6 @@ class NoCaptcha implements Contracts\NoCaptcha
             $name, array_merge($attributes, $this->attributes->getAudioAttribute())
         );
     }
-
     /**
      * Display an invisible Captcha (bind the challenge to a button).
      *
@@ -262,47 +159,7 @@ class NoCaptcha implements Contracts\NoCaptcha
         ], $attributes));
 
         return $this->toHtmlString(
-            '<button '.$attributes.'>'.$value.'</button>'
-        );
-    }
-
-    /**
-     * Verify Response.
-     *
-     * @param  string  $response
-     * @param  string  $clientIp
-     *
-     * @return bool
-     */
-    public function verify($response, $clientIp = null)
-    {
-        if (empty($response)) return false;
-
-        $response = $this->sendVerifyRequest([
-            'secret'   => $this->secret,
-            'response' => $response,
-            'remoteip' => $clientIp
-        ]);
-
-        return isset($response['success']) && $response['success'] === true;
-    }
-
-    /**
-     * Calls the reCAPTCHA siteverify API to verify whether the user passes CAPTCHA
-     * test using a PSR-7 ServerRequest object.
-     *
-     * @param  \Psr\Http\Message\ServerRequestInterface  $request
-     *
-     * @return bool
-     */
-    public function verifyRequest(ServerRequestInterface $request)
-    {
-        $body   = $request->getParsedBody();
-        $server = $request->getServerParams();
-
-        return $this->verify(
-            $body[self::CAPTCHA_NAME] ?? '',
-            $server['REMOTE_ADDR'] ?? null
+            "<button {$attributes}>{$value}</button>"
         );
     }
 
@@ -419,16 +276,6 @@ class NoCaptcha implements Contracts\NoCaptcha
      */
 
     /**
-     * Check if has lang.
-     *
-     * @return bool
-     */
-    private function hasLang()
-    {
-        return ! empty($this->lang);
-    }
-
-    /**
      * Check if callback is not empty.
      *
      * @param  string|null  $callbackName
@@ -440,81 +287,20 @@ class NoCaptcha implements Contracts\NoCaptcha
         return ! (is_null($callbackName) || trim($callbackName) === '');
     }
 
-    /**
-     * Check key.
-     *
-     * @param  string  $name
-     * @param  string  $value
-     */
-    private function checkKey($name, &$value)
-    {
-        $this->checkIsString($name, $value);
-
-        $value = trim($value);
-
-        $this->checkIsNotEmpty($name, $value);
-    }
-
-    /**
-     * Check if the value is a string value.
-     *
-     * @param  string  $name
-     * @param  string  $value
-     *
-     * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
-     */
-    private function checkIsString($name, $value)
-    {
-        if ( ! is_string($value)) {
-            throw new Exceptions\ApiException(
-                "The {$name} must be a string value, ".gettype($value).' given.'
-            );
-        }
-    }
-
-    /**
-     * Check if the value is not empty.
-     *
-     * @param string  $name
-     * @param string  $value
-     *
-     * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
-     */
-    private function checkIsNotEmpty($name, $value)
-    {
-        if (empty($value)) {
-            throw new Exceptions\ApiException("The {$name} must not be empty");
-        }
-    }
-
     /* -----------------------------------------------------------------
      |  Other Methods
      | -----------------------------------------------------------------
      */
 
     /**
-     * Send verify request to API and get response.
+     * Parse the response.
      *
-     * @param  array  $query
+     * @param  string  $json
      *
-     * @return array
+     * @return \Arcanedev\NoCaptcha\Utilities\AbstractResponse|mixed
      */
-    private function sendVerifyRequest(array $query = [])
+    protected function parseResponse($json)
     {
-        $url = static::VERIFY_URL.'?'.http_build_query(array_filter($query));
-
-        return $this->request->send($url);
-    }
-
-    /**
-     * Transform the string to an Html serializable object
-     *
-     * @param  string  $html
-     *
-     * @return \Illuminate\Support\HtmlString
-     */
-    protected function toHtmlString($html)
-    {
-        return new HtmlString($html);
+        return ResponseV2::fromJson($json);
     }
 }

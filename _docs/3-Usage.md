@@ -17,25 +17,25 @@ Checkout example below:
 ```php
 <?php
 
-require_once('vendor/autoload.php');
+require_once(__DIR__.'/vendor/autoload.php');
 
-use Arcanedev\NoCaptcha\NoCaptcha;
+use Arcanedev\NoCaptcha\NoCaptchaV2;
 
 $secret  = 'your-secret-key';
 $sitekey = 'your-site-key';
-$captcha = new NoCaptcha($secret, $sitekey);
+$captcha = new NoCaptchaV2($secret, $sitekey);
 
-if ( ! empty($_POST)) {
+if ($_POST) {
     // You need to check also if the $_POST['g-recaptcha-response'] is not empty.
-    $response = $_POST['g-recaptcha-response'];
-    $result   = $captcha->verify($response);
+    $response = $captcha->verify($_POST['g-recaptcha-response'] ?? null);
 
-    echo $result === true
+    echo $response->isSuccess()
         ? 'Yay ! You are a human.'
         : 'No ! You are a robot.';
 
     exit();
 }
+
 ?>
 
 <form action="?" method="POST">
@@ -67,20 +67,23 @@ The code below explains how to enable and customize the invisible reCAPTCHA on y
 ```php
 require_once(__DIR__ . '/../vendor/autoload.php');
 
-use Arcanedev\NoCaptcha\NoCaptcha;
+use Arcanedev\NoCaptcha\NoCaptchaV2;
 
 $secret  = 'your-secret-key';
 $sitekey = 'your-site-key';
-$captcha = new NoCaptcha($secret, $sitekey);
+$captcha = new NoCaptchaV2($secret, $sitekey);
 
-if ( ! empty($_POST)) {
-    $response = $_POST[NoCaptcha::CAPTCHA_NAME];
-    $result   = $captcha->verify($response);
+if ($_POST) {
+    // You need to check also if the $_POST['g-recaptcha-response'] is not empty.
+    $response = $captcha->verify($_POST['g-recaptcha-response'] ?? null);
 
-    echo $result === true ? 'Yay ! You are a human.' : 'No ! You are a robot.';
+    echo $response->isSuccess()
+        ? 'Yay ! You are a human.'
+        : 'No ! You are a robot.';
 
     exit();
 }
+
 ?>
 
 <form method="POST" id="demo-form">
@@ -97,6 +100,50 @@ if ( ! empty($_POST)) {
 ```
 
 **NOTE :** You need to specify the invisible version in your captcha admin page. Check this page for more details: https://developers.google.com/recaptcha/docs/versions
+
+#### Version 3
+
+The code below shows you how to use the ReCaptcha V3:
+
+```php
+<?php
+
+require_once(__DIR__.'/vendor/autoload.php');
+
+use Arcanedev\NoCaptcha\NoCaptchaV3;
+
+$captcha = new NoCaptchaV3(
+    'SECRET-KEY',
+    'SITE-KEY'
+);
+
+if ($_POST) {
+    $response = $captcha->verify($_POST['g-recaptcha-response'] ?? null);
+
+    echo $response->isSuccess()
+        ? 'Yay ! You are a human.'
+        : 'No ! You are a robot.';
+
+    exit();
+}
+
+?>
+
+<form method="POST">
+    <input type="email" name="email"><br>
+    <button type="submit">Submit</button>
+
+    <?php echo $captcha->input('g-recaptcha-response'); ?>
+</form>
+
+<?php echo $captcha->script(); ?>
+
+<script>
+  grecaptcha.ready(function() {
+      grecaptcha.execute('SITE-KEY', {action: 'homepage'});
+  });
+</script>
+```
 
 ### Laravel
 

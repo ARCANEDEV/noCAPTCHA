@@ -36,7 +36,7 @@ class NoCaptchaServiceProvider extends ServiceProvider
         parent::register();
 
         $this->registerConfig();
-        $this->registerNoCaptcha();
+        $this->registerNoCaptchaManager();
     }
 
     /**
@@ -67,26 +67,23 @@ class NoCaptchaServiceProvider extends ServiceProvider
      | -----------------------------------------------------------------
      */
 
-    /**
-     * Register NoCaptcha service.
-     */
-    private function registerNoCaptcha()
+    private function registerNoCaptchaManager()
     {
-        $this->singleton(Contracts\NoCaptcha::class, function($app) {
-            /** @var  \Illuminate\Contracts\Config\Repository  $config */
-            $config = $app['config'];
-
-            return new NoCaptcha(
-                $config->get('no-captcha.secret'),
-                $config->get('no-captcha.sitekey'),
-                $config->get('no-captcha.lang'),
-                $config->get('no-captcha.attributes', [])
-            );
+        $this->bind(Contracts\NoCaptchaManager::class, function ($app) {
+            return new NoCaptchaManager($app);
         });
 
-        $this->app->resolving(Contracts\NoCaptcha::class, function (Contracts\NoCaptcha $noCaptcha, $app) {
-            /** @var  \Illuminate\Foundation\Application  $app */
-            $noCaptcha->setLang($app->getLocale());
+        $this->bind(Contracts\NoCaptcha::class, function ($app) {
+            /**
+             * @var  \Illuminate\Contracts\Config\Repository          $config
+             * @var  \Arcanedev\NoCaptcha\Contracts\NoCaptchaManager  $manager
+             */
+            $config  = $app['config'];
+            $manager = $app[Contracts\NoCaptchaManager::class];
+
+            return $manager->version(
+                $config->get('no-captcha.version')
+            );
         });
     }
 
@@ -99,8 +96,8 @@ class NoCaptchaServiceProvider extends ServiceProvider
     {
         foreach ([FormBuilder::class, 'form'] as $alias) {
             if ($app->bound($alias)) {
-                $app[$alias]->macro('captcha', function($name = null, array $attributes = []) use ($app) {
-                    return $app[Contracts\NoCaptcha::class]->display($name, $attributes);
+                $app[$alias]->macro('captcha', function($name = null) use ($app) {
+                    return $app[Contracts\NoCaptcha::class]->input($name);
                 });
             }
         }

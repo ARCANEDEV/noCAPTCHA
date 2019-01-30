@@ -56,25 +56,3 @@ return [
     // ...
 ];
 ```
-
-## Additional configs
-
-You can customize your captchas by setting-up a global `attributes` in your config file.
-
-```
-<?php
-
-return [
-    // ...
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Attributes
-     | ------------------------------------------------------------------------------------------------
-     */
-    'attributes' => [
-        'data-theme' => null, // 'light', 'dark'
-        'data-type'  => null, // 'image', 'audio'
-        'data-size'  => null, // 'normal', 'compact'
-    ],
-];
-```

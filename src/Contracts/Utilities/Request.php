@@ -6,7 +6,7 @@
  * @package   Arcanedev\NoCaptcha\Contracts\Utilities
  * @author    ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-interface RequestInterface
+interface Request
 {
     /* ------------------------------------------------------------------------------------------------
      |  Main Functions
@@ -18,7 +18,7 @@ interface RequestInterface
      * @param  string  $url
      * @param  bool    $curled
      *
-     * @return array
+     * @return string
      */
     public function send($url, $curled = true);
 }

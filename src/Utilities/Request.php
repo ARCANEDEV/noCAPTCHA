@@ -1,6 +1,6 @@
 <?php namespace Arcanedev\NoCaptcha\Utilities;
 
-use Arcanedev\NoCaptcha\Contracts\Utilities\RequestInterface;
+use Arcanedev\NoCaptcha\Contracts\Utilities\Request as RequestContract;
 use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
 
 /**
@@ -9,7 +9,7 @@ use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
  * @package  Arcanedev\NoCaptcha\Utilities
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class Request implements RequestInterface
+class Request implements RequestContract
 {
     /* -----------------------------------------------------------------
      |  Properties
@@ -69,24 +69,12 @@ class Request implements RequestInterface
     }
 
     /**
-     * Create a simple api request using file_get_contents.
-     *
-     * @return string
-     */
-    protected function simple()
-    {
-        $result = file_get_contents($this->url);
-
-        return $result;
-    }
-
-    /**
      * Run the request and get response.
      *
      * @param  string  $url
      * @param  bool    $curled
      *
-     * @return array
+     * @return string
      */
     public function send($url, $curled = true)
     {
@@ -94,9 +82,9 @@ class Request implements RequestInterface
 
         $result = ($this->isCurlExists() && $curled === true)
             ? $this->curl()
-            : $this->simple();
+            : file_get_contents($this->url);
 
-        return $this->interpretResponse($result);
+        return $this->checkResult($result) ? $result : '{}';
     }
 
     /* -----------------------------------------------------------------
@@ -113,21 +101,18 @@ class Request implements RequestInterface
      */
     private function checkUrl(&$url)
     {
-        if ( ! is_string($url)) {
+        if ( ! is_string($url))
             throw new InvalidUrlException(
                 'The url must be a string value, ' . gettype($url) . ' given'
             );
-        }
 
         $url = trim($url);
 
-        if (empty($url)) {
+        if (empty($url))
             throw new InvalidUrlException('The url must not be empty');
-        }
 
-        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+        if (filter_var($url, FILTER_VALIDATE_URL) === false)
             throw new InvalidUrlException('The url [' . $url . '] is invalid');
-        }
     }
 
     /**
@@ -150,24 +135,5 @@ class Request implements RequestInterface
     private function checkResult($result)
     {
         return is_string($result) && ! empty($result);
-    }
-
-    /* -----------------------------------------------------------------
-     |  Other Methods
-     | -----------------------------------------------------------------
-     */
-
-    /**
-     * Convert the json response to array.
-     *
-     * @param  string  $result
-     *
-     * @return array
-     */
-    private function interpretResponse($result)
-    {
-        return $this->checkResult($result)
-            ? json_decode($result, true)
-            : [];
     }
 }
