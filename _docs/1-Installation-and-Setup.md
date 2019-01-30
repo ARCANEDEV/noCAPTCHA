@@ -22,14 +22,14 @@ For more details, check the [official documentation](https://developers.google.c
 
 ## Version Compatibility
 
-| noCaptcha                         | Laravel                                                                                                             |
-|:----------------------------------|:--------------------------------------------------------------------------------------------------------------------|
-| ![noCaptcha v1.x][no_captcha_1_x] | ![Laravel v4.2][laravel_4_2]                                                                                        |
-| ![noCaptcha v3.x][no_captcha_3_x] | ![Laravel v5.0][laravel_5_0] ![Laravel v5.1][laravel_5_1] ![Laravel v5.2][laravel_5_2] ![Laravel v5.3][laravel_5_3] |
-| ![noCaptcha v4.x][no_captcha_4_x] | ![Laravel v5.4][laravel_5_4]                                                                                        |
-| ![noCaptcha v5.x][no_captcha_5_x] | ![Laravel v5.5][laravel_5_5]                                                                                        |
-| ![noCaptcha v6.x][no_captcha_6_x] | ![Laravel v5.6][laravel_5_6]                                                                                        |
-| ![noCaptcha v7.x][no_captcha_7_x] | ![Laravel v5.7][laravel_5_7]                                                                                        |
+| noCaptcha                                                           | Laravel                                                                                                             |
+|:--------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------|
+| ![noCaptcha v1.x][no_captcha_1_x]                                   | ![Laravel v4.2][laravel_4_2]                                                                                        |
+| ![noCaptcha v3.x][no_captcha_3_x]                                   | ![Laravel v5.0][laravel_5_0] ![Laravel v5.1][laravel_5_1] ![Laravel v5.2][laravel_5_2] ![Laravel v5.3][laravel_5_3] |
+| ![noCaptcha v4.x][no_captcha_4_x]                                   | ![Laravel v5.4][laravel_5_4]                                                                                        |
+| ![noCaptcha v5.x][no_captcha_5_x]                                   | ![Laravel v5.5][laravel_5_5]                                                                                        |
+| ![noCaptcha v6.x][no_captcha_6_x]                                   | ![Laravel v5.6][laravel_5_6]                                                                                        |
+| ![noCaptcha v7.x][no_captcha_7_x] ![noCaptcha v8.x][no_captcha_8_x] | ![Laravel v5.7][laravel_5_7]                                                                                        |
 
 > **Note :** This is a framework-agnostic package, so you can use any version of this package in your PHP project.
 
@@ -49,6 +49,7 @@ For more details, check the [official documentation](https://developers.google.c
 [no_captcha_5_x]: https://img.shields.io/badge/version-5.*-blue.svg?style=flat-square "noCaptcha v5.*"
 [no_captcha_6_x]: https://img.shields.io/badge/version-6.*-blue.svg?style=flat-square "noCaptcha v6.*"
 [no_captcha_7_x]: https://img.shields.io/badge/version-7.*-blue.svg?style=flat-square "noCaptcha v7.*"
+[no_captcha_8_x]: https://img.shields.io/badge/version-8.*-blue.svg?style=flat-square "noCaptcha v8.*"
 
 ## Composer
 
@@ -69,15 +70,6 @@ Once the package is installed, you can register the service provider in `config/
 ],
 ```
 
-**Optional:** And the facade in the `aliases` array:
-
-```php
-'aliases' => [
-    ...
-    'Captcha' => Arcanedev\NoCaptcha\Facades\NoCaptcha::class,
-],
-```
-
 > For Laravel 4.2 (PHP 5.4), the config file is located in `app/config/app.php`
 
 In the `providers` array:
@@ -86,14 +78,5 @@ In the `providers` array:
 'providers' => [
     ...
     'Arcanedev\NoCaptcha\Laravel\ServiceProvider',
-],
-```
-
-And the facade in the `aliases` array:
-
-```php
-'aliases' => [
-    ...
-    'Captcha' => 'Arcanedev\NoCaptcha\Laravel\Facade',
 ],
 ```

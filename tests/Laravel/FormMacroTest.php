@@ -23,7 +23,7 @@ class FormMacroTest extends LaravelTestCase
 
         foreach ([FormBuilder::class, 'form'] as $alias) {
             static::assertEquals(
-                '<div class="g-recaptcha" data-sitekey="no-captcha-sitekey" id="captcha" name="captcha"></div>',
+                '<input type="hidden" id="captcha" name="captcha">',
                 $this->app[$alias]->captcha('captcha')
             );
         }

@@ -56,26 +56,6 @@ class RequestTest extends TestCase
         static::assertInstanceOf(Request::class, $this->request);
     }
 
-    /** @test */
-    public function it_can_curl()
-    {
-        $response = $this->request->send(self::URL_TO_CURL_OR_WHATEVER);
-
-        static::assertInternalType('array', $response);
-        static::assertTrue(isset($response['url']));
-        static::assertSame(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
-    }
-
-    /** @test */
-    public function it_can_get_response_with_the_ugly_file_get_contents()
-    {
-        $response = $this->request->send(self::URL_TO_CURL_OR_WHATEVER, false);
-
-        static::assertInternalType('array', $response);
-        static::assertTrue(isset($response['url']));
-        static::assertSame(self::URL_TO_CURL_OR_WHATEVER, $response['url']);
-    }
-
     /**
      * @test
      *

@@ -1,9 +1,10 @@
 <?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
 
-use Arcanedev\NoCaptcha\NoCaptcha;
+use Arcanedev\NoCaptcha\NoCaptchaV3;
 use Arcanedev\NoCaptcha\Rules\CaptchaRule;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 use Arcanedev\NoCaptcha\Utilities\Request;
+use Arcanedev\NoCaptcha\Utilities\ResponseV3;
 use Prophecy\Argument;
 
 /**
@@ -54,9 +55,9 @@ class ValidatorRuleTest extends LaravelTestCase
         ]);
 
         $validator = $this->validator->make([
-            NoCaptcha::CAPTCHA_NAME => 'google-recaptcha-response',
+            NoCaptchaV3::CAPTCHA_NAME => 'google-recaptcha-response',
         ], [
-            NoCaptcha::CAPTCHA_NAME => ['required', new CaptchaRule],
+            NoCaptchaV3::CAPTCHA_NAME => ['required', new CaptchaRule],
         ]);
 
         static::assertTrue($validator->passes());
@@ -72,9 +73,9 @@ class ValidatorRuleTest extends LaravelTestCase
         ]);
 
         $validator = $this->validator->make([
-            NoCaptcha::CAPTCHA_NAME => 'google-recaptcha-response',
+            NoCaptchaV3::CAPTCHA_NAME => 'google-recaptcha-response',
         ],[
-            NoCaptcha::CAPTCHA_NAME => ['required', new CaptchaRule],
+            NoCaptchaV3::CAPTCHA_NAME => ['required', new CaptchaRule],
         ]);
 
         static::assertFalse($validator->passes());
@@ -82,11 +83,47 @@ class ValidatorRuleTest extends LaravelTestCase
 
         $errors = $validator->messages();
 
-        static::assertTrue($errors->has(NoCaptcha::CAPTCHA_NAME));
+        static::assertTrue($errors->has(NoCaptchaV3::CAPTCHA_NAME));
         static::assertEquals(
             'validation.captcha',
-            $errors->first(NoCaptcha::CAPTCHA_NAME)
+            $errors->first(NoCaptchaV3::CAPTCHA_NAME)
         );
+    }
+
+    /** @test */
+    public function it_can_skip_ips()
+    {
+        $this->mockRequest([
+            'success'     => false,
+            'error-codes' => 'invalid-input-response'
+        ]);
+
+        $validator = $this->validator->make([
+            NoCaptchaV3::CAPTCHA_NAME => 'google-recaptcha-response',
+        ],[
+            NoCaptchaV3::CAPTCHA_NAME => ['required', (new CaptchaRule)->skipIps('127.0.0.1')],
+        ]);
+
+        static::assertTrue($validator->passes());
+    }
+
+    /** @test */
+    public function it_can_skip_ips_via_config_file()
+    {
+        $this->app['config']->set('no-captcha.skip-ips', ['127.0.0.1']);
+
+        $this->mockRequest([
+            'success'     => false,
+            'error-codes' => 'invalid-input-response'
+        ]);
+
+        $validator = $this->validator->make([
+            NoCaptchaV3::CAPTCHA_NAME => 'google-recaptcha-response',
+        ],[
+            NoCaptchaV3::CAPTCHA_NAME => ['required', new CaptchaRule],
+        ]);
+
+        static::assertTrue($validator->passes());
     }
 
     /* -----------------------------------------------------------------
@@ -94,15 +131,16 @@ class ValidatorRuleTest extends LaravelTestCase
      | -----------------------------------------------------------------
      */
 
-    private function mockRequest(array $returns)
+    private function mockRequest(array $response)
     {
-        $request = $this->prophesize(Request::class);
-        $request->send(Argument::type('string'))
-            ->willReturn($returns);
+        $request = tap($this->prophesize(Request::class), function ($request) use ($response) {
+            $request->send(Argument::type('string'))->willReturn(
+                json_encode($response)
+            );
+        })->reveal();
 
-        $captcha = $this->app->make(\Arcanedev\NoCaptcha\Contracts\NoCaptcha::class)
-            ->setRequestClient($request->reveal());
-
-        $this->app[\Arcanedev\NoCaptcha\Contracts\NoCaptcha::class] = $captcha;
+        $this->app[\Arcanedev\NoCaptcha\Contracts\NoCaptcha::class] = $this->app
+            ->make(\Arcanedev\NoCaptcha\Contracts\NoCaptcha::class)
+            ->setRequestClient($request);
     }
 }

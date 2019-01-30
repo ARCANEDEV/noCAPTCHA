@@ -1,24 +1,25 @@
 <?php namespace Arcanedev\NoCaptcha\Tests;
 
-use Arcanedev\NoCaptcha\NoCaptcha;
+use Arcanedev\NoCaptcha\NoCaptchaV2;
+use Arcanedev\NoCaptcha\NoCaptchaV3;
 use Arcanedev\NoCaptcha\Utilities\Request;
 use Prophecy\Argument;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Class     NoCaptchaTest
+ * Class     NoCaptchaV2Test
  *
  * @package  Arcanedev\NoCaptcha\Tests
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class NoCaptchaTest extends TestCase
+class NoCaptchaV2Test extends TestCase
 {
     /* -----------------------------------------------------------------
      |  Properties
      | -----------------------------------------------------------------
      */
 
-    /** @var  \Arcanedev\NoCaptcha\NoCaptcha */
+    /** @var  \Arcanedev\NoCaptcha\NoCaptchaV2 */
     private $noCaptcha;
 
     /* -----------------------------------------------------------------
@@ -44,13 +45,13 @@ class NoCaptchaTest extends TestCase
      |  Tests
      | -----------------------------------------------------------------
      */
-
     /** @test */
     public function it_can_be_instantiated()
     {
-        static::assertInstanceOf(NoCaptcha::class, $this->noCaptcha);
+        static::assertInstanceOf(NoCaptchaV2::class, $this->noCaptcha);
+
         static::assertSame(
-            '<script src="'.NoCaptcha::CLIENT_URL.'" async defer></script>',
+            '<script src="'.NoCaptchaV2::CLIENT_URL.'" async defer></script>',
             $this->noCaptcha->script()->toHtml()
         );
     }
@@ -63,7 +64,6 @@ class NoCaptchaTest extends TestCase
             'data-type' => null,
             'data-size' => null
         ]);
-
         static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" id="captcha" name="captcha"></div>',
             $this->noCaptcha->display('captcha')->toHtml()
@@ -74,8 +74,11 @@ class NoCaptchaTest extends TestCase
      * @test
      *
      * @dataProvider provideNoCaptchaAttributes
+     *
+     * @param  array   $attributes
+     * @param  string  $expected
      */
-    public function it_can_be_instantiated_with_attributes($attributes, $expected)
+    public function it_can_be_instantiated_with_attributes(array $attributes, $expected)
     {
         static::assertSame(
             $expected, $this->createCaptcha(null, $attributes)->display('captcha')->toHtml()
@@ -135,7 +138,7 @@ class NoCaptchaTest extends TestCase
      */
     public function it_must_throw_invalid_type_exception_on_secret_key()
     {
-        new NoCaptcha(null, null);
+        new NoCaptchaV2(null, null);
     }
 
     /**
@@ -146,7 +149,7 @@ class NoCaptchaTest extends TestCase
      */
     public function it_must_throw_api_exception_on_empty_secret_key()
     {
-        new NoCaptcha('   ', null);
+        new NoCaptchaV2('   ', null);
     }
 
     /**
@@ -157,7 +160,7 @@ class NoCaptchaTest extends TestCase
      */
     public function it_must_throw_invalid_type_exception_on_site_key()
     {
-        new NoCaptcha('secret', null);
+        new NoCaptchaV2('secret', null);
     }
 
     /**
@@ -168,7 +171,7 @@ class NoCaptchaTest extends TestCase
      */
     public function it_must_throw_api_exception_on_empty_site_key()
     {
-        new NoCaptcha('secret', '   ');
+        new NoCaptchaV2('secret', '   ');
     }
 
     /** @test */
@@ -176,9 +179,10 @@ class NoCaptchaTest extends TestCase
     {
         $locale = 'fr';
         $this->noCaptcha->setLang($locale);
-        static::assertInstanceOf(NoCaptcha::class, $this->noCaptcha);
+
+        static::assertInstanceOf(NoCaptchaV2::class, $this->noCaptcha);
         static::assertSame(
-            '<script src="'.NoCaptcha::CLIENT_URL.'?hl='.$locale.'" async defer></script>',
+            '<script src="'.NoCaptchaV2::CLIENT_URL.'?hl='.$locale.'" async defer></script>',
             $this->noCaptcha->script()->toHtml()
         );
     }
@@ -186,7 +190,7 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_render_script_tag()
     {
-        $tag = '<script src="'.NoCaptcha::CLIENT_URL.'" async defer></script>';
+        $tag = '<script src="'.NoCaptchaV2::CLIENT_URL.'" async defer></script>';
 
         static::assertSame($tag, $this->noCaptcha->script()->toHtml());
 
@@ -198,8 +202,7 @@ class NoCaptchaTest extends TestCase
     public function it_can_render_script_tag_with_lang()
     {
         $lang = 'fr';
-        $tag  = '<script src="'.NoCaptcha::CLIENT_URL.'?hl='.$lang.'" async defer></script>';
-
+        $tag  = '<script src="'.NoCaptchaV2::CLIENT_URL.'?hl='.$lang.'" async defer></script>';
         $this->noCaptcha = $this->createCaptcha($lang);
 
         static::assertSame($tag, $this->noCaptcha->script()->toHtml());
@@ -256,7 +259,7 @@ class NoCaptchaTest extends TestCase
                     if (document.getElementById(\'captcha-2\')) { window.noCaptcha.render(\'captcha-2\', \'site-key\'); }
                 };
             </script>
-            <script src="'.NoCaptcha::CLIENT_URL.'?onload=captchaRenderCallback&render=explicit" async defer></script>';
+            <script src="'.NoCaptchaV2::CLIENT_URL.'?onload=captchaRenderCallback&render=explicit" async defer></script>';
 
         static::assertSame(
             array_map('trim', preg_split('/\r\n|\r|\n/', $script)),
@@ -419,63 +422,60 @@ class NoCaptchaTest extends TestCase
     /** @test */
     public function it_can_verify()
     {
+        /** @var \Arcanedev\NoCaptcha\Utilities\Request  $requestClient */
         $requestClient = $this->prophesize(Request::class);
         $requestClient->send(Argument::type('string'))
-            ->willReturn(['success' => true]);
+            ->willReturn('{"success": true}');
 
-        /** @var Request $requestClient */
-        $passes = $this->noCaptcha
+        $response = $this->noCaptcha
             ->setRequestClient($requestClient->reveal())
             ->verify('re-captcha-response');
 
-        static::assertTrue($passes);
+        static::assertTrue($response->isSuccess());
     }
 
     /** @test */
     public function it_can_verify_psr7_request()
     {
         /**
-         * @var  ServerRequestInterface  $request
-         * @var  Request                 $requestClient
+         * @var  \Psr\Http\Message\ServerRequestInterface  $request
+         * @var  \Arcanedev\NoCaptcha\Utilities\Request    $requestClient
          */
         $requestClient = $this->prophesize(Request::class);
         $requestClient->send(Argument::type('string'))
-            ->willReturn(['success' => true]);
+            ->willReturn('{"success": true}');
 
         $request = $this->prophesize(ServerRequestInterface::class);
-        $request->getParsedBody()->willReturn([
-            'g-recaptcha-response' => true,
-        ]);
-        $request->getServerParams()->willReturn([
-            'REMOTE_ADDR' => '127.0.0.1'
-        ]);
+        $request->getParsedBody()->willReturn(['g-recaptcha-response' => true]);
+        $request->getServerParams()->willReturn(['REMOTE_ADDR' => '127.0.0.1']);
 
-        $passes = $this->noCaptcha
+        $response = $this->noCaptcha
             ->setRequestClient($requestClient->reveal())
             ->verifyRequest($request->reveal());
 
-        static::assertTrue($passes);
+        static::assertTrue($response->isSuccess());
     }
 
     /** @test */
     public function it_can_verify_with_fails()
     {
-        $passes  = $this->noCaptcha->verify('');
+        $response = $this->noCaptcha->verify('');
 
-        static::assertFalse($passes);
+        static::assertFalse($response->isSuccess());
 
-        $requestClient = $this->prophesize(Request::class);
-        $requestClient->send(Argument::type('string'))
-            ->willReturn([
-                'success'     => false,
-                'error-codes' => 'invalid-input-response'
-            ]);
+        $client = tap($this->prophesize(Request::class), function ($client) {
+            $client->send(Argument::type('string'))
+                ->willReturn(json_encode([
+                    'success'     => false,
+                    'error-codes' => 'invalid-input-response'
+                ]));
+        })->reveal();
 
-        $passes = $this->noCaptcha
-            ->setRequestClient($requestClient->reveal())
+        $response = $this->noCaptcha
+            ->setRequestClient($client)
             ->verify('re-captcha-response');
 
-        static::assertFalse($passes);
+        static::assertFalse($response->isSuccess());
     }
 
     /** @test */
@@ -485,12 +485,10 @@ class NoCaptchaTest extends TestCase
             '<div class="g-recaptcha" data-sitekey="site-key"></div>',
             $this->noCaptcha->display()->toHtml()
         );
-
         static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" data-type="image"></div>',
             $this->noCaptcha->image()->toHtml()
         );
-
         static::assertSame(
             '<div class="g-recaptcha" data-sitekey="site-key" data-type="audio"></div>',
             $this->noCaptcha->audio()->toHtml()
@@ -505,7 +503,7 @@ class NoCaptchaTest extends TestCase
      */
     public function it_must_throw_an_invalid_argument_exception_when_the_generic_captcha_name_is_same_as_captcha_response_name()
     {
-        $this->noCaptcha->display(NoCaptcha::CAPTCHA_NAME);
+        $this->noCaptcha->display(NoCaptchaV2::CAPTCHA_NAME);
     }
 
     /**
@@ -516,7 +514,7 @@ class NoCaptchaTest extends TestCase
      */
     public function it_must_throw_an_invalid_argument_exception_when_the_image_captcha_name_is_same_as_captcha_response_name()
     {
-        $this->noCaptcha->image(NoCaptcha::CAPTCHA_NAME);
+        $this->noCaptcha->image(NoCaptchaV2::CAPTCHA_NAME);
     }
 
     /**
@@ -527,7 +525,7 @@ class NoCaptchaTest extends TestCase
      */
     public function it_must_throw_an_invalid_argument_exception_when_the_audio_captcha_name_is_same_as_captcha_response_name()
     {
-        $this->noCaptcha->audio(NoCaptcha::CAPTCHA_NAME);
+        $this->noCaptcha->audio(NoCaptchaV2::CAPTCHA_NAME);
     }
 
     /* -----------------------------------------------------------------
@@ -541,10 +539,10 @@ class NoCaptchaTest extends TestCase
      * @param  string|null  $lang
      * @param  array        $attributes
      *
-     * @return \Arcanedev\NoCaptcha\NoCaptcha
+     * @return \Arcanedev\NoCaptcha\NoCaptchaV2
      */
     private function createCaptcha($lang = null, array $attributes = [])
     {
-        return new NoCaptcha('secret-key', 'site-key', $lang, $attributes);
+        return new NoCaptchaV2('secret-key', 'site-key', $lang, $attributes);
     }
 }
