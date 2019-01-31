@@ -1,6 +1,8 @@
 <?php namespace Arcanedev\NoCaptcha;
 
-use Arcanedev\NoCaptcha\Utilities\Attributes;
+use Arcanedev\Html\Elements\Button;
+use Arcanedev\Html\Elements\Div;
+use Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException;
 use Arcanedev\NoCaptcha\Utilities\ResponseV2;
 use Illuminate\Support\Arr;
 
@@ -23,33 +25,6 @@ class NoCaptchaV2 extends AbstractNoCaptcha
      * @param bool
      */
     protected $scriptLoaded = false;
-
-    /**
-     * noCaptcha Attributes
-     *
-     * @var \Arcanedev\NoCaptcha\Utilities\Attributes
-     */
-    protected $attributes;
-
-    /* -----------------------------------------------------------------
-     |  Constructor
-     | -----------------------------------------------------------------
-     */
-
-    /**
-     * NoCaptcha constructor.
-     *
-     * @param  string       $secret
-     * @param  string       $siteKey
-     * @param  string|null  $lang
-     * @param  array        $attributes
-     */
-    public function __construct($secret, $siteKey, $lang = null, array $attributes = [])
-    {
-        parent::__construct($secret, $siteKey, $lang);
-
-        $this->setAttributes(new Attributes($attributes));
-    }
 
     /* -----------------------------------------------------------------
      |  Getters & Setters
@@ -78,20 +53,6 @@ class NoCaptchaV2 extends AbstractNoCaptcha
         return static::CLIENT_URL . (count($queries) ? '?' . http_build_query($queries) : '');
     }
 
-    /**
-     * Set noCaptcha Attributes.
-     *
-     * @param  \Arcanedev\NoCaptcha\Utilities\Attributes  $attributes
-     *
-     * @return self
-     */
-    public function setAttributes(Attributes $attributes)
-    {
-        $this->attributes = $attributes;
-
-        return $this;
-    }
-
     /* -----------------------------------------------------------------
      |  Main Methods
      | -----------------------------------------------------------------
@@ -103,16 +64,14 @@ class NoCaptchaV2 extends AbstractNoCaptcha
      * @param  string|null  $name
      * @param  array        $attributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return \Arcanedev\Html\Elements\Div
      */
     public function display($name = null, array $attributes = [])
     {
-        $attributes = $this->attributes->build($this->siteKey, array_merge(
-            $this->attributes->prepareNameAttribute($name),
-            $attributes
+        return Div::make()->attributes(array_merge(
+            static::prepareNameAttribute($name),
+            $this->prepareAttributes($attributes)
         ));
-
-        return $this->toHtmlString("<div {$attributes}></div>");
     }
 
     /**
@@ -121,13 +80,14 @@ class NoCaptchaV2 extends AbstractNoCaptcha
      * @param  string|null  $name
      * @param  array        $attributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return \Arcanedev\Html\Elements\Div
      */
     public function image($name = null, array $attributes = [])
     {
-        return $this->display(
-            $name, array_merge($attributes, $this->attributes->getImageAttribute())
-        );
+        return $this->display($name, array_merge(
+            $attributes,
+            ['data-type' => 'image']
+        ));
     }
 
     /**
@@ -136,31 +96,30 @@ class NoCaptchaV2 extends AbstractNoCaptcha
      * @param  string|null  $name
      * @param  array        $attributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return \Arcanedev\Html\Elements\Div
      */
     public function audio($name = null, array $attributes = [])
     {
-        return $this->display(
-            $name, array_merge($attributes, $this->attributes->getAudioAttribute())
-        );
+        return $this->display($name, array_merge(
+            $attributes,
+            ['data-type' => 'audio']
+        ));
     }
+
     /**
      * Display an invisible Captcha (bind the challenge to a button).
      *
      * @param  string  $value
      * @param  array   $attributes
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return \Arcanedev\Html\Elements\Button
      */
     public function button($value, array $attributes = [])
     {
-        $attributes = $this->attributes->build($this->siteKey, array_merge([
-            'data-callback' => 'onSubmit',
-        ], $attributes));
-
-        return $this->toHtmlString(
-            "<button {$attributes}>{$value}</button>"
-        );
+        return Button::make()->text($value)->attributes(array_merge(
+            ['data-callback' => 'onSubmit'],
+            $this->prepareAttributes($attributes)
+        ));
     }
 
     /**
@@ -243,14 +202,15 @@ class NoCaptchaV2 extends AbstractNoCaptcha
         $script = $this->script($callbackName)->toHtml();
 
         if ( ! empty($script) && ! empty($captchas)) {
-            $script = implode(PHP_EOL, [implode(PHP_EOL, [
+            $script = implode(PHP_EOL, [
                 $this->getApiScript()->toHtml(),
                 '<script>',
                     "var $callbackName = function() {",
                         $this->renderCaptchas($captchas),
                     '};',
-                '</script>'
-            ]), $script]);
+                '</script>',
+                $script,
+            ]);
         }
 
         return $this->toHtmlString($script);
@@ -302,5 +262,71 @@ class NoCaptchaV2 extends AbstractNoCaptcha
     protected function parseResponse($json)
     {
         return ResponseV2::fromJson($json);
+    }
+
+    /**
+     * Prepare the attributes.
+     *
+     * @param  array  $attributes
+     *
+     * @return array
+     */
+    private function prepareAttributes(array $attributes)
+    {
+        $attributes = array_merge(
+            ['class' => 'g-recaptcha', 'data-sitekey' => $this->siteKey],
+            array_filter($attributes)
+        );
+
+        self::checkDataAttribute($attributes, 'data-type', ['image', 'audio'], 'image');
+        self::checkDataAttribute($attributes, 'data-theme', ['light', 'dark'], 'light');
+        self::checkDataAttribute($attributes, 'data-size', ['normal', 'compact', 'invisible'], 'normal');
+        self::checkDataAttribute($attributes, 'data-badge', ['bottomright', 'bottomleft', 'inline'], 'bottomright');
+
+        return $attributes;
+    }
+
+    /**
+     * Check the `data-*` attribute.
+     *
+     * @param  array   $attributes
+     * @param  string  $name
+     * @param  array   $supported
+     * @param  string  $default
+     */
+    private static function checkDataAttribute(array &$attributes, $name, array $supported, $default)
+    {
+        $attribute = $attributes[$name] ?? null;
+
+        if ( ! is_null($attribute)) {
+            $attribute = (is_string($attribute) && in_array($attribute, $supported))
+                ? strtolower(trim($attribute))
+                : $default;
+
+            $attributes[$name] = $attribute;
+        }
+    }
+
+    /**
+     * Prepare the name and id attributes.
+     *
+     * @param  string|null  $name
+     *
+     * @return array
+     *
+     * @throws \Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException
+     */
+    protected static function prepareNameAttribute($name)
+    {
+        if (is_null($name))
+            return [];
+
+        if ($name === AbstractNoCaptcha::CAPTCHA_NAME) {
+            throw new InvalidArgumentException(
+                'The captcha name must be different from "' . AbstractNoCaptcha::CAPTCHA_NAME . '".'
+            );
+        }
+
+        return array_combine(['id', 'name'], [$name, $name]);
     }
 }

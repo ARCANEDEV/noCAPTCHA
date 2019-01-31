@@ -1,5 +1,6 @@
 <?php namespace Arcanedev\NoCaptcha;
 
+use Arcanedev\Html\Elements\Input;
 use Arcanedev\NoCaptcha\Utilities\ResponseV3;
 use Illuminate\Support\Arr;
 
@@ -31,13 +32,11 @@ class NoCaptchaV3 extends AbstractNoCaptcha
     /**
      * @param  string  $name
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return \Arcanedev\Html\Elements\Input
      */
     public function input($name = 'g-recaptcha-response')
     {
-        return $this->toHtmlString(
-            '<input type="hidden" id="'.$name.'" name="'.$name.'">'
-        );
+        return Input::make()->type('hidden')->id($name)->name($name);
     }
 
     /**
@@ -96,8 +95,6 @@ class NoCaptchaV3 extends AbstractNoCaptcha
     {
         return ! (is_null($callbackName) || trim($callbackName) === '');
     }
-
-
 
     /* -----------------------------------------------------------------
      |  Other Methods

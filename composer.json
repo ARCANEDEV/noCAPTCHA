@@ -14,11 +14,12 @@
     "type":    "library",
     "license": "MIT",
     "require": {
-        "php":               ">=7.1.3",
-        "ext-curl":          "*",
-        "ext-json":          "*",
-        "arcanedev/support": "~4.4.0",
-        "psr/http-message":  "~1.0"
+        "php":                ">=7.1.3",
+        "ext-curl":           "*",
+        "ext-json":           "*",
+        "arcanedev/php-html": "~1.0.0",
+        "arcanedev/support":  "~4.4.0",
+        "psr/http-message":   "~1.0"
     },
     "require-dev": {
         "arcanedev/laravel-html": "~5.7.0",
