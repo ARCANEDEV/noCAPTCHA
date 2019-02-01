@@ -3,7 +3,7 @@
 use Arcanedev\NoCaptcha\Contracts\NoCaptcha;
 use Arcanedev\NoCaptcha\Contracts\NoCaptchaManager;
 
-if ( ! function_exists('nocaptcha')) {
+if ( ! function_exists('no_captcha')) {
     /**
      * Get the NoCaptcha builder.
      *

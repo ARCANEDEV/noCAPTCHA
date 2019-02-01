@@ -139,9 +139,9 @@ if ($_POST) {
 <?php echo $captcha->script(); ?>
 
 <script>
-  grecaptcha.ready(function() {
-      grecaptcha.execute('SITE-KEY', {action: 'homepage'});
-  });
+    grecaptcha.ready(function() {
+        grecaptcha.execute('SITE-KEY', {action: 'homepage'});
+    });
 </script>
 ```
 
@@ -156,7 +156,7 @@ Insert reCAPTCHA inside your form using one of this examples:
 ```php
 {!! Form::open([...]) !!}
     // Other inputs...
-    {!! Form::captcha() !!}  OR  {!! Captcha::display() !!}
+    {!! Form::captcha() !!}  OR  {!! no_captcha()->display() !!}
     {!! Form::submit('Submit') !!}
 {!! Form::close() !!}
 
@@ -173,13 +173,13 @@ Insert reCAPTCHA inside your form using one of this examples:
 
 echo Form::open([...]);
     // Other inputs...
-    echo Form::captcha();
+    echo no_captcha()->display()->toHtml();
     echo Form::submit('Submit');
 echo Form::close();
 
 ?>
 
-<?php echo Captcha::script(); ?>
+<?php echo no_captcha()->script()->toHtml(); ?>
 ```
 
 #### Back-end (Controller or somewhere in your project ...)

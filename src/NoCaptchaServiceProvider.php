@@ -2,6 +2,7 @@
 
 use Arcanedev\LaravelHtml\Contracts\FormBuilder;
 use Arcanedev\Support\PackageServiceProvider as ServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class     NoCaptchaServiceProvider
@@ -69,19 +70,15 @@ class NoCaptchaServiceProvider extends ServiceProvider
 
     private function registerNoCaptchaManager()
     {
-        $this->bind(Contracts\NoCaptchaManager::class, function ($app) {
+        $this->singleton(Contracts\NoCaptchaManager::class, function ($app) {
             return new NoCaptchaManager($app);
         });
 
-        $this->bind(Contracts\NoCaptcha::class, function ($app) {
-            /**
-             * @var  \Illuminate\Contracts\Config\Repository          $config
-             * @var  \Arcanedev\NoCaptcha\Contracts\NoCaptchaManager  $manager
-             */
-            $config  = $app['config'];
-            $manager = $app[Contracts\NoCaptchaManager::class];
+        $this->bind(Contracts\NoCaptcha::class, function (Application $app) {
+            /** @var  \Illuminate\Contracts\Config\Repository  $config */
+            $config = $app['config'];
 
-            return $manager->version(
+            return $app->make(Contracts\NoCaptchaManager::class)->version(
                 $config->get('no-captcha.version')
             );
         });
