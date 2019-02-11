@@ -1,8 +1,8 @@
 <?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
 
+use Arcanedev\NoCaptcha\NoCaptchaV2;
 use Arcanedev\NoCaptcha\NoCaptchaV3;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
-use Illuminate\Support\Manager;
 
 /**
  * Class     NoCaptchaManagerTest
@@ -59,7 +59,7 @@ class NoCaptchaManagerTest extends LaravelTestCase
     }
 
     /** @test */
-    public function it_can_build_by_default_version()
+    public function it_can_get_default_driver()
     {
         static::assertInstanceOf(
             NoCaptchaV3::class,
@@ -68,7 +68,16 @@ class NoCaptchaManagerTest extends LaravelTestCase
     }
 
     /** @test */
-    public function it_can_build_by_given_version()
+    public function it_can_get_default_driver_via_helper()
+    {
+        static::assertInstanceOf(
+            NoCaptchaV3::class,
+            no_captcha()
+        );
+    }
+
+    /** @test */
+    public function it_can_get_driver_by_given_version()
     {
         static::assertInstanceOf(
             NoCaptchaV3::class,
@@ -76,7 +85,7 @@ class NoCaptchaManagerTest extends LaravelTestCase
         );
 
         static::assertInstanceOf(
-            NoCaptchaV3::class,
+            NoCaptchaV2::class,
             $this->manager->version('v2')
         );
     }
