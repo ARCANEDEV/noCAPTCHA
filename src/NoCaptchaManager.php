@@ -48,7 +48,7 @@ class NoCaptchaManager extends Manager implements NoCaptchaManagerContract
      */
     public function createV2Driver()
     {
-        return new NoCaptchaV3(
+        return new NoCaptchaV2(
             config('no-captcha.secret'),
             config('no-captcha.sitekey'),
             config('no-captcha.lang') ?: $this->app->getLocale()
