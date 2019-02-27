@@ -89,4 +89,15 @@ class NoCaptchaManagerTest extends LaravelTestCase
             $this->manager->version('v2')
         );
     }
+
+    /**
+     * @test
+     *
+     * @expectedException         \InvalidArgumentException
+     * @expectedExceptionMessage  Driver [v1] not supported.
+     */
+    public function it_must_throw_exception_on_unsupported_version()
+    {
+        $this->manager->version('v1');
+    }
 }

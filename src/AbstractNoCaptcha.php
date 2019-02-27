@@ -17,8 +17,6 @@ abstract class AbstractNoCaptcha implements Contracts\NoCaptcha
      | -----------------------------------------------------------------
      */
 
-    const CLIENT_URL   = 'https://www.google.com/recaptcha/api.js';
-    const VERIFY_URL   = 'https://www.google.com/recaptcha/api/siteverify';
     const CAPTCHA_NAME = 'g-recaptcha-response';
 
     /* -----------------------------------------------------------------
@@ -61,6 +59,13 @@ abstract class AbstractNoCaptcha implements Contracts\NoCaptcha
      * @var \Arcanedev\NoCaptcha\Utilities\ResponseV3|null
      */
     protected $response;
+
+    /**
+     * Use the global domain.
+     *
+     * @var bool
+     */
+    public static $useGlobalDomain = false;
 
     /* -----------------------------------------------------------------
      |  Constructor
@@ -168,6 +173,30 @@ abstract class AbstractNoCaptcha implements Contracts\NoCaptcha
         return $this->response;
     }
 
+    /**
+     * Get the client url.
+     *
+     * @return string
+     */
+    public static function getClientUrl()
+    {
+        return static::$useGlobalDomain
+            ? 'https://www.recaptcha.net/recaptcha/api.js'
+            : 'https://www.google.com/recaptcha/api.js';
+    }
+
+    /**
+     * Get the verification url.
+     *
+     * @return string
+     */
+    public static function getVerificationUrl()
+    {
+        return static::$useGlobalDomain
+            ? 'https://www.recaptcha.net/recaptcha/api/siteverify'
+            : 'https://www.google.com/recaptcha/api/siteverify';
+    }
+
     /* -----------------------------------------------------------------
      |  Main Methods
      | -----------------------------------------------------------------
@@ -220,7 +249,7 @@ abstract class AbstractNoCaptcha implements Contracts\NoCaptcha
     {
         $query = array_filter($query);
         $json  = $this->request->send(
-            static::VERIFY_URL.'?'.http_build_query($query)
+            $this->getVerificationUrl().'?'.http_build_query($query)
         );
 
         return $this->parseResponse($json);
