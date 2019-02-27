@@ -28,14 +28,14 @@ class ValidatorRuleTest extends LaravelTestCase
      | -----------------------------------------------------------------
      */
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->validator = $this->app['validator'];
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->validator);
 

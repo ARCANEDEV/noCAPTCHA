@@ -23,14 +23,14 @@ class NoCaptchaServiceProviderTest extends LaravelTestCase
      | -----------------------------------------------------------------
      */
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->provider = $this->app->getProvider(NoCaptchaServiceProvider::class);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->provider);
 

@@ -31,14 +31,14 @@ class RequestTest extends TestCase
      | -----------------------------------------------------------------
      */
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->request = new Request;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->request);
 
@@ -56,36 +56,30 @@ class RequestTest extends TestCase
         static::assertInstanceOf(Request::class, $this->request);
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
-     * @expectedExceptionMessage  The url must be a string value, NULL given
-     */
+    /** @test */
     public function it_must_throw_invalid_type_exception_on_url()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\InvalidUrlException::class);
+        $this->expectExceptionMessage('The url must be a string value, NULL given');
+
         $this->request->send(null);
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
-     * @expectedExceptionMessage  The url must not be empty
-     */
+    /** @test */
     public function it_must_throw_api_exception_on_url()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\InvalidUrlException::class);
+        $this->expectExceptionMessage('The url must not be empty');
+
         $this->request->send('');
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
-     * @expectedExceptionMessage  The url [trust-me-im-a-valid-url] is invalid
-     */
+    /** @test */
     public function it_must_throw_invalid_url_exception_on_url()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\InvalidUrlException::class);
+        $this->expectExceptionMessage('The url [trust-me-im-a-valid-url] is invalid');
+
         $this->request->send('trust-me-im-a-valid-url');
     }
 }
