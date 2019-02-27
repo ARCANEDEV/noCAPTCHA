@@ -1,6 +1,7 @@
 <?php namespace Arcanedev\NoCaptcha\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Arr;
 
 /**
  * Class     CaptchaRule
@@ -67,7 +68,7 @@ class CaptchaRule implements Rule
      */
     public function skipIps($ip)
     {
-        $this->skipIps = array_wrap($ip);
+        $this->skipIps = Arr::wrap($ip);
 
         return $this;
     }
