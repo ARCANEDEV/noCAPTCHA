@@ -26,14 +26,14 @@ class NoCaptchaV2Test extends TestCase
      | -----------------------------------------------------------------
      */
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->noCaptcha = $this->createCaptcha();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->noCaptcha);
 
@@ -105,15 +105,16 @@ class NoCaptchaV2Test extends TestCase
     /** @test */
     public function it_can_be_instantiated_with_nullable_attributes()
     {
-        $this->noCaptcha = $this->createCaptcha(null, [
+        $this->noCaptcha = $this->createCaptcha(null);
+        $attributes = [
             'data-theme' => null,
             'data-type'  => null,
             'data-size'  => null
-        ]);
+        ];
 
         static::assertSame(
             '<div id="captcha" name="captcha" class="g-recaptcha" data-sitekey="site-key"></div>',
-            $this->noCaptcha->display('captcha')->toHtml()
+            $this->noCaptcha->display('captcha', $attributes)->toHtml()
         );
     }
 
@@ -177,47 +178,39 @@ class NoCaptchaV2Test extends TestCase
         ];
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage  The secret key must be a string value, NULL given
-     */
+    /** @test */
     public function it_must_throw_invalid_type_exception_on_secret_key()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
+        $this->expectExceptionMessage('The secret key must be a string value, NULL given');
+
         new NoCaptchaV2(null, null);
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage  The secret key must not be empty
-     */
+    /** @test */
     public function it_must_throw_api_exception_on_empty_secret_key()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
+        $this->expectExceptionMessage('The secret key must not be empty');
+
         new NoCaptchaV2('   ', null);
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage  The site key must be a string value, NULL given
-     */
+    /** @test */
     public function it_must_throw_invalid_type_exception_on_site_key()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
+        $this->expectExceptionMessage('The site key must be a string value, NULL given');
+
         new NoCaptchaV2('secret', null);
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage  The site key must not be empty
-     */
+    /** @test */
     public function it_must_throw_api_exception_on_empty_site_key()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
+        $this->expectExceptionMessage('The site key must not be empty');
+
         new NoCaptchaV2('secret', '   ');
     }
 
@@ -542,36 +535,30 @@ class NoCaptchaV2Test extends TestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage  The captcha name must be different from "g-recaptcha-response".
-     */
+    /** @test */
     public function it_must_throw_an_invalid_argument_exception_when_the_generic_captcha_name_is_same_as_captcha_response_name()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The captcha name must be different from "g-recaptcha-response".');
+
         $this->noCaptcha->display(NoCaptchaV2::CAPTCHA_NAME);
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage  The captcha name must be different from "g-recaptcha-response".
-     */
+    /** @test */
     public function it_must_throw_an_invalid_argument_exception_when_the_image_captcha_name_is_same_as_captcha_response_name()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The captcha name must be different from "g-recaptcha-response".');
+
         $this->noCaptcha->image(NoCaptchaV2::CAPTCHA_NAME);
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException
-     * @expectedExceptionMessage  The captcha name must be different from "g-recaptcha-response".
-     */
+    /** @test */
     public function it_must_throw_an_invalid_argument_exception_when_the_audio_captcha_name_is_same_as_captcha_response_name()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The captcha name must be different from "g-recaptcha-response".');
+
         $this->noCaptcha->audio(NoCaptchaV2::CAPTCHA_NAME);
     }
 
@@ -584,12 +571,11 @@ class NoCaptchaV2Test extends TestCase
      * Create Captcha for testing
      *
      * @param  string|null  $lang
-     * @param  array        $attributes
      *
      * @return \Arcanedev\NoCaptcha\NoCaptchaV2
      */
-    private function createCaptcha($lang = null, array $attributes = [])
+    private function createCaptcha($lang = null)
     {
-        return new NoCaptchaV2('secret-key', 'site-key', $lang, $attributes);
+        return new NoCaptchaV2('secret-key', 'site-key', $lang);
     }
 }

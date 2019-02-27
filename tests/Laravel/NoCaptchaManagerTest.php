@@ -25,14 +25,14 @@ class NoCaptchaManagerTest extends LaravelTestCase
      | -----------------------------------------------------------------
      */
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->manager = $this->app->make(\Arcanedev\NoCaptcha\Contracts\NoCaptchaManager::class);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         unset($this->manager);
 
@@ -90,14 +90,12 @@ class NoCaptchaManagerTest extends LaravelTestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \InvalidArgumentException
-     * @expectedExceptionMessage  Driver [v1] not supported.
-     */
+    /** @test */
     public function it_must_throw_exception_on_unsupported_version()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Driver [v1] not supported.');
+
         $this->manager->version('v1');
     }
 }

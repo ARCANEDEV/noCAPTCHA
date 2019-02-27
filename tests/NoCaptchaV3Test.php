@@ -26,14 +26,14 @@ class NoCaptchaV3Test extends TestCase
      | -----------------------------------------------------------------
      */
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->noCaptcha = $this->createCaptcha();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->noCaptcha);
 
@@ -110,47 +110,39 @@ class NoCaptchaV3Test extends TestCase
         );
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage  The secret key must be a string value, NULL given
-     */
+    /** @test */
     public function it_must_throw_invalid_type_exception_on_secret_key()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
+        $this->expectExceptionMessage('The secret key must be a string value, NULL given');
+
         $this->createCaptcha(null, null);
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage  The secret key must not be empty
-     */
+    /** @test */
     public function it_must_throw_api_exception_on_empty_secret_key()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
+        $this->expectExceptionMessage('The secret key must not be empty');
+
         $this->createCaptcha('   ', null);
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage  The site key must be a string value, NULL given
-     */
+    /** @test */
     public function it_must_throw_invalid_type_exception_on_site_key()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
+        $this->expectExceptionMessage('The site key must be a string value, NULL given');
+
         $this->createCaptcha('secret', null);
     }
 
-    /**
-     * @test
-     *
-     * @expectedException         \Arcanedev\NoCaptcha\Exceptions\ApiException
-     * @expectedExceptionMessage  The site key must not be empty
-     */
+    /** @test */
     public function it_must_throw_api_exception_on_empty_site_key()
     {
+        $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
+        $this->expectExceptionMessage('The site key must not be empty');
+
         $this->createCaptcha('secret', '   ');
     }
 

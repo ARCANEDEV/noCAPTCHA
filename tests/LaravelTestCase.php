@@ -40,9 +40,8 @@ abstract class LaravelTestCase extends BaseTestCase
     protected function getPackageAliases($app)
     {
         return [
-            'Form'      => \Arcanedev\LaravelHtml\Facades\Form::class,
-            'HTML'      => \Arcanedev\LaravelHtml\Facades\Html::class,
-            'NoCaptcha' => \Arcanedev\NoCaptcha\Facades\NoCaptcha::class,
+            'Form' => \Arcanedev\LaravelHtml\Facades\Form::class,
+            'HTML' => \Arcanedev\LaravelHtml\Facades\Html::class,
         ];
     }
 }
