@@ -1,7 +1,6 @@
 <?php namespace Arcanedev\NoCaptcha\Tests;
 
 use Arcanedev\NoCaptcha\NoCaptchaV2;
-use Arcanedev\NoCaptcha\NoCaptchaV3;
 use Arcanedev\NoCaptcha\Utilities\Request;
 use Prophecy\Argument;
 use Psr\Http\Message\ServerRequestInterface;
@@ -45,13 +44,60 @@ class NoCaptchaV2Test extends TestCase
      |  Tests
      | -----------------------------------------------------------------
      */
+
+    /** @test */
+    public function it_can_get_client_url()
+    {
+        static::assertSame(
+            'https://www.google.com/recaptcha/api.js',
+            NoCaptchaV2::getClientUrl()
+        );
+
+        NoCaptchaV2::$useGlobalDomain = true;
+
+        static::assertSame(
+            'https://www.recaptcha.net/recaptcha/api.js',
+            NoCaptchaV2::getClientUrl()
+        );
+
+        NoCaptchaV2::$useGlobalDomain = false;
+
+        static::assertSame(
+            'https://www.google.com/recaptcha/api.js',
+            NoCaptchaV2::getClientUrl()
+        );
+    }
+
+    /** @test */
+    public function it_can_get_verification_url()
+    {
+        static::assertSame(
+            'https://www.google.com/recaptcha/api/siteverify',
+            NoCaptchaV2::getVerificationUrl()
+        );
+
+        NoCaptchaV2::$useGlobalDomain = true;
+
+        static::assertSame(
+            'https://www.recaptcha.net/recaptcha/api/siteverify',
+            NoCaptchaV2::getVerificationUrl()
+        );
+
+        NoCaptchaV2::$useGlobalDomain = false;
+
+        static::assertSame(
+            'https://www.google.com/recaptcha/api/siteverify',
+            NoCaptchaV2::getVerificationUrl()
+        );
+    }
+
     /** @test */
     public function it_can_be_instantiated()
     {
         static::assertInstanceOf(NoCaptchaV2::class, $this->noCaptcha);
 
         static::assertSame(
-            '<script src="'.NoCaptchaV2::CLIENT_URL.'" async defer></script>',
+            '<script src="'.NoCaptchaV2::getClientUrl().'" async defer></script>',
             $this->noCaptcha->script()->toHtml()
         );
     }
@@ -183,7 +229,7 @@ class NoCaptchaV2Test extends TestCase
 
         static::assertInstanceOf(NoCaptchaV2::class, $this->noCaptcha);
         static::assertSame(
-            '<script src="'.NoCaptchaV2::CLIENT_URL.'?hl='.$locale.'" async defer></script>',
+            '<script src="'.NoCaptchaV2::getClientUrl().'?hl='.$locale.'" async defer></script>',
             $this->noCaptcha->script()->toHtml()
         );
     }
@@ -191,7 +237,7 @@ class NoCaptchaV2Test extends TestCase
     /** @test */
     public function it_can_render_script_tag()
     {
-        $tag = '<script src="'.NoCaptchaV2::CLIENT_URL.'" async defer></script>';
+        $tag = '<script src="'.NoCaptchaV2::getClientUrl().'" async defer></script>';
 
         static::assertSame($tag, $this->noCaptcha->script()->toHtml());
 
@@ -203,7 +249,7 @@ class NoCaptchaV2Test extends TestCase
     public function it_can_render_script_tag_with_lang()
     {
         $lang = 'fr';
-        $tag  = '<script src="'.NoCaptchaV2::CLIENT_URL.'?hl='.$lang.'" async defer></script>';
+        $tag  = '<script src="'.NoCaptchaV2::getClientUrl().'?hl='.$lang.'" async defer></script>';
         $this->noCaptcha = $this->createCaptcha($lang);
 
         static::assertSame($tag, $this->noCaptcha->script()->toHtml());
@@ -260,7 +306,7 @@ class NoCaptchaV2Test extends TestCase
                     if (document.getElementById(\'captcha-2\')) { window.noCaptcha.render(\'captcha-2\', \'site-key\'); }
                 };
             </script>
-            <script src="'.NoCaptchaV2::CLIENT_URL.'?onload=captchaRenderCallback&render=explicit" async defer></script>';
+            <script src="'.NoCaptchaV2::getClientUrl().'?onload=captchaRenderCallback&render=explicit" async defer></script>';
 
         static::assertSame(
             array_map('trim', preg_split('/\r\n|\r|\n/', $script)),

@@ -46,6 +46,52 @@ class NoCaptchaV3Test extends TestCase
      */
 
     /** @test */
+    public function it_can_get_client_url()
+    {
+        static::assertSame(
+            'https://www.google.com/recaptcha/api.js',
+            NoCaptchaV3::getClientUrl()
+        );
+
+        NoCaptchaV3::$useGlobalDomain = true;
+
+        static::assertSame(
+            'https://www.recaptcha.net/recaptcha/api.js',
+            NoCaptchaV3::getClientUrl()
+        );
+
+        NoCaptchaV3::$useGlobalDomain = false;
+
+        static::assertSame(
+            'https://www.google.com/recaptcha/api.js',
+            NoCaptchaV3::getClientUrl()
+        );
+    }
+
+    /** @test */
+    public function it_can_get_verification_url()
+    {
+        static::assertSame(
+            'https://www.google.com/recaptcha/api/siteverify',
+            NoCaptchaV3::getVerificationUrl()
+        );
+
+        NoCaptchaV3::$useGlobalDomain = true;
+
+        static::assertSame(
+            'https://www.recaptcha.net/recaptcha/api/siteverify',
+            NoCaptchaV3::getVerificationUrl()
+        );
+
+        NoCaptchaV3::$useGlobalDomain = false;
+
+        static::assertSame(
+            'https://www.google.com/recaptcha/api/siteverify',
+            NoCaptchaV3::getVerificationUrl()
+        );
+    }
+
+    /** @test */
     public function it_can_be_instantiated()
     {
         static::assertInstanceOf(NoCaptchaV3::class, $this->noCaptcha);

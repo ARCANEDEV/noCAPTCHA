@@ -50,7 +50,7 @@ class NoCaptchaV2 extends AbstractNoCaptcha
             Arr::set($queries, 'render', 'explicit');
         }
 
-        return static::CLIENT_URL . (count($queries) ? '?' . http_build_query($queries) : '');
+        return $this->getClientUrl() . (count($queries) ? '?' . http_build_query($queries) : '');
     }
 
     /* -----------------------------------------------------------------

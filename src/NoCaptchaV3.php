@@ -132,6 +132,6 @@ class NoCaptchaV3 extends AbstractNoCaptcha
         if ($this->hasCallbackName($callbackName))
             Arr::set($queries, 'onload', $callbackName);
 
-        return static::CLIENT_URL . (count($queries) ? '?' . http_build_query($queries) : '');
+        return $this->getClientUrl() . (count($queries) ? '?' . http_build_query($queries) : '');
     }
 }
