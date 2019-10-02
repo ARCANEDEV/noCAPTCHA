@@ -1,7 +1,10 @@
 <?php namespace Arcanedev\NoCaptcha;
 
 use Illuminate\Support\Manager;
-use Arcanedev\NoCaptcha\Contracts\NoCaptchaManager as NoCaptchaManagerContract;
+use Arcanedev\NoCaptcha\Contracts\{
+    NoCaptchaManager as NoCaptchaManagerContract,
+    NoCaptcha as NoCaptchaContract,
+};
 
 /**
  * Class     NoCaptchaManager
@@ -21,9 +24,9 @@ class NoCaptchaManager extends Manager implements NoCaptchaManagerContract
      *
      * @return string
      */
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
-        return config('no-captcha.version');
+        return $this->config('version');
     }
 
     /* -----------------------------------------------------------------
@@ -38,32 +41,61 @@ class NoCaptchaManager extends Manager implements NoCaptchaManagerContract
      *
      * @return \Arcanedev\NoCaptcha\NoCaptchaV3|\Arcanedev\NoCaptcha\NoCaptchaV2
      */
-    public function version($version = null)
+    public function version($version = null): NoCaptchaContract
     {
         return $this->driver($version);
     }
 
     /**
-     * @return \Arcanedev\NoCaptcha\NoCaptchaV3
+     * Create the v2 captcha.
+     *
+     * @return \Arcanedev\NoCaptcha\NoCaptchaV2
      */
-    public function createV2Driver()
+    public function createV2Driver(): NoCaptchaContract
     {
-        return new NoCaptchaV2(
-            config('no-captcha.secret'),
-            config('no-captcha.sitekey'),
-            config('no-captcha.lang') ?: $this->app->getLocale()
-        );
+        return $this->buildDriver(NoCaptchaV2::class);
     }
 
     /**
+     * Create the v3 captcha.
+     *
      * @return \Arcanedev\NoCaptcha\NoCaptchaV3
      */
-    public function createV3Driver()
+    public function createV3Driver(): NoCaptchaContract
     {
-        return new NoCaptchaV3(
-            config('no-captcha.secret'),
-            config('no-captcha.sitekey'),
-            config('no-captcha.lang') ?: $this->app->getLocale()
-        );
+        return $this->buildDriver(NoCaptchaV3::class);
+    }
+
+    /* -----------------------------------------------------------------
+     |  Other Methods
+     | -----------------------------------------------------------------
+     */
+
+    /**
+     * Build a driver.
+     *
+     * @param  string  $driver
+     *
+     * @return \Arcanedev\NoCaptcha\Contracts\NoCaptcha
+     */
+    protected function buildDriver(string $driver): NoCaptchaContract
+    {
+        return $this->container->make($driver, [
+            'secret'  => $this->config('secret'),
+            'siteKey' => $this->config('sitekey'),
+            'locale'  => $this->config('lang') ?: $this->container->getLocale(),
+        ]);
+    }
+
+    /**
+     * Get a value from the config file.
+     *
+     * @param  string      $key
+     *
+     * @return mixed
+     */
+    protected function config(string $key = '')
+    {
+        return $this->container['config']->get("no-captcha.{$key}");
     }
 }

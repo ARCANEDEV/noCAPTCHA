@@ -22,26 +22,10 @@ abstract class LaravelTestCase extends BaseTestCase
      *
      * @return array
      */
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
-            \Arcanedev\LaravelHtml\HtmlServiceProvider::class,
             \Arcanedev\NoCaptcha\NoCaptchaServiceProvider::class,
-        ];
-    }
-
-    /**
-     * Get package aliases.
-     *
-     * @param  \Illuminate\Foundation\Application  $app
-     *
-     * @return array
-     */
-    protected function getPackageAliases($app)
-    {
-        return [
-            'Form' => \Arcanedev\LaravelHtml\Facades\Form::class,
-            'HTML' => \Arcanedev\LaravelHtml\Facades\Html::class,
         ];
     }
 }
