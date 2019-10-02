@@ -22,7 +22,6 @@
         "psr/http-message":   "^1.0"
     },
     "require-dev": {
-        "arcanedev/laravel-html": "^6.0",
         "orchestra/testbench":    "^4.0",
         "phpunit/phpunit":        "^8.0",
         "phpunit/phpcov":         "^6.0"

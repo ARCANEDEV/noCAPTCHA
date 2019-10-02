@@ -1,8 +1,8 @@
 <?php namespace Arcanedev\NoCaptcha;
 
-use Arcanedev\LaravelHtml\Contracts\FormBuilder;
-use Arcanedev\Support\PackageServiceProvider as ServiceProvider;
+use Arcanedev\Support\Providers\PackageServiceProvider as ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
 /**
  * Class     NoCaptchaServiceProvider
@@ -10,7 +10,7 @@ use Illuminate\Contracts\Foundation\Application;
  * @package  Arcanedev\NoCaptcha
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
-class NoCaptchaServiceProvider extends ServiceProvider
+class NoCaptchaServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     /* -----------------------------------------------------------------
      |  Properties
@@ -32,7 +32,7 @@ class NoCaptchaServiceProvider extends ServiceProvider
     /**
      * Register the service provider.
      */
-    public function register()
+    public function register(): void
     {
         parent::register();
 
@@ -43,12 +43,9 @@ class NoCaptchaServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application events.
      */
-    public function boot()
+    public function boot(): void
     {
-        parent::boot();
-
         $this->publishConfig();
-        $this->registerFormMacros($this->app);
     }
 
     /**
@@ -56,7 +53,7 @@ class NoCaptchaServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return [
             Contracts\NoCaptcha::class,
@@ -68,11 +65,12 @@ class NoCaptchaServiceProvider extends ServiceProvider
      | -----------------------------------------------------------------
      */
 
-    private function registerNoCaptchaManager()
+    /**
+     * Register noCaptcha manager & contract.
+     */
+    private function registerNoCaptchaManager(): void
     {
-        $this->singleton(Contracts\NoCaptchaManager::class, function ($app) {
-            return new NoCaptchaManager($app);
-        });
+        $this->singleton(Contracts\NoCaptchaManager::class, NoCaptchaManager::class);
 
         $this->bind(Contracts\NoCaptcha::class, function (Application $app) {
             /** @var  \Illuminate\Contracts\Config\Repository  $config */
@@ -82,21 +80,5 @@ class NoCaptchaServiceProvider extends ServiceProvider
                 $config->get('no-captcha.version')
             );
         });
-    }
-
-    /**
-     * Register Form Macros.
-     *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
-     */
-    private function registerFormMacros($app)
-    {
-        foreach ([FormBuilder::class, 'form'] as $alias) {
-            if ($app->bound($alias)) {
-                $app[$alias]->macro('captcha', function($name = null) use ($app) {
-                    return $app[Contracts\NoCaptcha::class]->input($name);
-                });
-            }
-        }
     }
 }

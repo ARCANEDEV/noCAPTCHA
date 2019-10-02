@@ -156,12 +156,12 @@ Insert reCAPTCHA inside your form using one of this examples:
 ```php
 {!! Form::open([...]) !!}
     // Other inputs...
-    {!! Form::captcha() !!}  OR  {!! no_captcha()->display() !!}
+    {!! no_captcha()->display() !!}
     {!! Form::submit('Submit') !!}
 {!! Form::close() !!}
 
 // Remember what your mother told you
-{!! Captcha::script() !!}
+{!! no_captcha()->script() !!}
 ```
 
 > For Laravel 4.2, use `{{ ... }}` instead of `{!! ... !!}`

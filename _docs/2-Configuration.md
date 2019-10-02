@@ -25,34 +25,8 @@ NOCAPTCHA_SITEKEY=your-site-key
 
 ## Option 2 - Publish configuration file:
 
-Run `php artisan vendor:publish` to publish the config file.
+Run `php artisan vendor:publish  --provider="Arcanedev\NoCaptcha\NoCaptchaServiceProvider"` to publish the config file.
 
 Edit the `secret` and `sitekey` values in `config/no-captcha.php` file:
 
 > For Laravel 4.2, run `php artisan config:publish arcanedev/no-captcha` and the file is located in `app/config/packages/arcanedev/no-captcha/config.php`.
-
-```php
-<?php
-
-return [
-    'secret'  => getenv('NOCAPTCHA_SECRET')  ?: 'no-captcha-secret',
-    'sitekey' => getenv('NOCAPTCHA_SITEKEY') ?: 'no-captcha-sitekey',
-    'lang'    => app()->getLocale(),
-
-    // ...
-];
-```
-
-###### To :
-
-```php
-<?php
-
-return [
-    'secret'  => 'your-secret-key',
-    'sitekey' => 'your-site-key',
-    'lang'    => 'en',              // Optional
-
-    // ...
-];
-```
