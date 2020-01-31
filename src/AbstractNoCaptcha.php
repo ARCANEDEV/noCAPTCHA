@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha;
 
 use Arcanedev\NoCaptcha\Utilities\Request;
 use Illuminate\Support\HtmlString;
@@ -243,7 +247,7 @@ abstract class AbstractNoCaptcha implements Contracts\NoCaptcha
      *
      * @param  array  $query
      *
-     * @return \Arcanedev\NoCaptcha\Utilities\ResponseV3
+     * @return \Arcanedev\NoCaptcha\Contracts\Utilities\Response
      */
     protected function sendVerifyRequest(array $query = [])
     {
@@ -260,7 +264,7 @@ abstract class AbstractNoCaptcha implements Contracts\NoCaptcha
      *
      * @param  string  $json
      *
-     * @return \Arcanedev\NoCaptcha\Utilities\AbstractResponse|mixed
+     * @return \Arcanedev\NoCaptcha\Contracts\Utilities\Response|mixed
      */
     abstract protected function parseResponse($json);
 
@@ -285,7 +289,7 @@ abstract class AbstractNoCaptcha implements Contracts\NoCaptcha
      * @param  string  $name
      * @param  string  $value
      */
-    private static function checkKey($name, &$value)
+    private static function checkKey($name, &$value): void
     {
         self::checkIsString($name, $value);
 
@@ -302,7 +306,7 @@ abstract class AbstractNoCaptcha implements Contracts\NoCaptcha
      *
      * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
      */
-    private static function checkIsString($name, $value)
+    private static function checkIsString($name, $value): void
     {
         if ( ! is_string($value)) {
             throw new Exceptions\ApiException(
@@ -319,7 +323,7 @@ abstract class AbstractNoCaptcha implements Contracts\NoCaptcha
      *
      * @throws \Arcanedev\NoCaptcha\Exceptions\ApiException
      */
-    private static function checkIsNotEmpty($name, $value)
+    private static function checkIsNotEmpty($name, $value): void
     {
         if (empty($value)) {
             throw new Exceptions\ApiException("The {$name} must not be empty");

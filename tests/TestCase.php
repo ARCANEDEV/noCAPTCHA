@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Tests;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Tests;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 

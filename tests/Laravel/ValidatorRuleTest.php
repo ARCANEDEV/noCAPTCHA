@@ -1,10 +1,13 @@
-<?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Tests\Laravel;
 
 use Arcanedev\NoCaptcha\NoCaptchaV3;
 use Arcanedev\NoCaptcha\Rules\CaptchaRule;
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 use Arcanedev\NoCaptcha\Utilities\Request;
-use Arcanedev\NoCaptcha\Utilities\ResponseV3;
 use Prophecy\Argument;
 
 /**
@@ -48,7 +51,7 @@ class ValidatorRuleTest extends LaravelTestCase
      */
 
     /** @test */
-    public function it_can_passes_captcha_rule()
+    public function it_can_passes_captcha_rule(): void
     {
         $this->mockRequest([
             'success' => true
@@ -65,7 +68,7 @@ class ValidatorRuleTest extends LaravelTestCase
     }
 
     /** @test */
-    public function it_can_fails_captcha_rule()
+    public function it_can_fails_captcha_rule(): void
     {
         $this->mockRequest([
             'success'     => false,
@@ -91,7 +94,7 @@ class ValidatorRuleTest extends LaravelTestCase
     }
 
     /** @test */
-    public function it_can_skip_ips()
+    public function it_can_skip_ips(): void
     {
         $this->mockRequest([
             'success'     => false,
@@ -108,7 +111,7 @@ class ValidatorRuleTest extends LaravelTestCase
     }
 
     /** @test */
-    public function it_can_skip_ips_via_config_file()
+    public function it_can_skip_ips_via_config_file(): void
     {
         $this->app['config']->set('no-captcha.skip-ips', ['127.0.0.1']);
 
@@ -131,7 +134,7 @@ class ValidatorRuleTest extends LaravelTestCase
      | -----------------------------------------------------------------
      */
 
-    private function mockRequest(array $response)
+    private function mockRequest(array $response): void
     {
         $request = tap($this->prophesize(Request::class), function ($request) use ($response) {
             $request->send(Argument::type('string'))->willReturn(

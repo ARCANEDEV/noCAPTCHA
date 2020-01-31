@@ -1,7 +1,10 @@
-<?php namespace Arcanedev\NoCaptcha;
+<?php
 
-use Arcanedev\Html\Elements\Button;
-use Arcanedev\Html\Elements\Div;
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha;
+
+use Arcanedev\Html\Elements\{Button, Div};
 use Arcanedev\NoCaptcha\Exceptions\InvalidArgumentException;
 use Arcanedev\NoCaptcha\Utilities\ResponseV2;
 use Illuminate\Support\Arr;
@@ -154,7 +157,7 @@ class NoCaptchaV2 extends AbstractNoCaptcha
                     captchas: [],
                     reset: function(name) {
                         var captcha = window.noCaptcha.get(name);
-        
+
                         if (captcha)
                             window.noCaptcha.resetById(captcha.id);
                     },
@@ -179,9 +182,9 @@ class NoCaptchaV2 extends AbstractNoCaptcha
                             id: grecaptcha.render(name, {'sitekey' : sitekey}),
                             name: name
                         };
-                        
+
                         window.noCaptcha.captchas.push(captcha);
-                        
+
                         return captcha;
                     }
                 }
@@ -223,7 +226,7 @@ class NoCaptchaV2 extends AbstractNoCaptcha
      *
      * @return string
      */
-    private function renderCaptchas(array $captchas)
+    private function renderCaptchas(array $captchas): string
     {
         return implode(PHP_EOL, array_map(function($captcha) {
             return "if (document.getElementById('{$captcha}')) { window.noCaptcha.render('{$captcha}', '{$this->siteKey}'); }";
@@ -242,7 +245,7 @@ class NoCaptchaV2 extends AbstractNoCaptcha
      *
      * @return bool
      */
-    private function hasCallbackName($callbackName)
+    private function hasCallbackName($callbackName): bool
     {
         return ! (is_null($callbackName) || trim($callbackName) === '');
     }
@@ -271,7 +274,7 @@ class NoCaptchaV2 extends AbstractNoCaptcha
      *
      * @return array
      */
-    private function prepareAttributes(array $attributes)
+    private function prepareAttributes(array $attributes): array
     {
         $attributes = array_merge(
             ['class' => 'g-recaptcha', 'data-sitekey' => $this->siteKey],
@@ -294,7 +297,7 @@ class NoCaptchaV2 extends AbstractNoCaptcha
      * @param  array   $supported
      * @param  string  $default
      */
-    private static function checkDataAttribute(array &$attributes, $name, array $supported, $default)
+    private static function checkDataAttribute(array &$attributes, $name, array $supported, $default): void
     {
         $attribute = $attributes[$name] ?? null;
 

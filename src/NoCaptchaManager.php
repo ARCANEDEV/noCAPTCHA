@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha;
 
 use Illuminate\Support\Manager;
 use Arcanedev\NoCaptcha\Contracts\{
@@ -96,6 +100,6 @@ class NoCaptchaManager extends Manager implements NoCaptchaManagerContract
      */
     protected function config(string $key = '')
     {
-        return $this->container['config']->get("no-captcha.{$key}");
+        return $this->config->get("no-captcha.{$key}");
     }
 }

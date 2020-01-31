@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Contracts\Utilities;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Contracts\Utilities;
 
 /**
  * Interface  RequestInterface

@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Utilities;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Utilities;
 
 use Arcanedev\NoCaptcha\Contracts\Utilities\Response as ResponseContract;
 
@@ -133,7 +137,7 @@ class ResponseV3 extends AbstractResponse implements ResponseContract
      *
      * @param  array  $array
      *
-     * @return \Arcanedev\NoCaptcha\Utilities\ResponseV3
+     * @return \Arcanedev\NoCaptcha\Utilities\ResponseV3|mixed
      */
     public static function fromArray(array $array)
     {

@@ -1,7 +1,10 @@
-<?php namespace Arcanedev\NoCaptcha\Tests\Laravel;
+<?php
 
-use Arcanedev\NoCaptcha\NoCaptchaV2;
-use Arcanedev\NoCaptcha\NoCaptchaV3;
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Tests\Laravel;
+
+use Arcanedev\NoCaptcha\{NoCaptchaV2, NoCaptchaV3};
 use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 
 /**
@@ -45,7 +48,7 @@ class NoCaptchaManagerTest extends LaravelTestCase
      */
 
     /** @test */
-    public function it_can_be_instantiated()
+    public function it_can_be_instantiated(): void
     {
         $expectations = [
             \Illuminate\Support\Manager::class,
@@ -59,7 +62,7 @@ class NoCaptchaManagerTest extends LaravelTestCase
     }
 
     /** @test */
-    public function it_can_get_default_driver()
+    public function it_can_get_default_driver(): void
     {
         static::assertInstanceOf(
             NoCaptchaV3::class,
@@ -68,7 +71,7 @@ class NoCaptchaManagerTest extends LaravelTestCase
     }
 
     /** @test */
-    public function it_can_get_default_driver_via_helper()
+    public function it_can_get_default_driver_via_helper(): void
     {
         static::assertInstanceOf(
             NoCaptchaV3::class,
@@ -77,7 +80,7 @@ class NoCaptchaManagerTest extends LaravelTestCase
     }
 
     /** @test */
-    public function it_can_get_driver_by_given_version()
+    public function it_can_get_driver_by_given_version(): void
     {
         static::assertInstanceOf(
             NoCaptchaV3::class,
@@ -91,7 +94,7 @@ class NoCaptchaManagerTest extends LaravelTestCase
     }
 
     /** @test */
-    public function it_must_throw_exception_on_unsupported_version()
+    public function it_must_throw_exception_on_unsupported_version(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Driver [v1] not supported.');
