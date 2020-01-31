@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Utilities;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Utilities;
 
 /**
  * Class     ResponseV2
@@ -18,7 +22,7 @@ class ResponseV2 extends AbstractResponse
      *
      * @param  array $array
      *
-     * @return \Arcanedev\NoCaptcha\Utilities\ResponseV2
+     * @return \Arcanedev\NoCaptcha\Utilities\ResponseV2|mixed
      */
     public static function fromArray(array $array)
     {

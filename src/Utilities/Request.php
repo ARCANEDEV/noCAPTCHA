@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Utilities;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Utilities;
 
 use Arcanedev\NoCaptcha\Contracts\Utilities\Request as RequestContract;
 use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
@@ -56,7 +60,7 @@ class Request implements RequestContract
      */
     protected function curl()
     {
-        $curl    = curl_init();
+        $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL            => $this->url,
             CURLOPT_RETURNTRANSFER => true,
@@ -99,7 +103,7 @@ class Request implements RequestContract
      *
      * @throws \Arcanedev\NoCaptcha\Exceptions\InvalidUrlException
      */
-    private function checkUrl(&$url)
+    private function checkUrl(&$url): void
     {
         if ( ! is_string($url))
             throw new InvalidUrlException(
@@ -120,7 +124,7 @@ class Request implements RequestContract
      *
      * @return bool
      */
-    private function isCurlExists()
+    private function isCurlExists(): bool
     {
         return function_exists('curl_version');
     }
@@ -132,7 +136,7 @@ class Request implements RequestContract
      *
      * @return bool
      */
-    private function checkResult($result)
+    private function checkResult($result): bool
     {
         return is_string($result) && ! empty($result);
     }

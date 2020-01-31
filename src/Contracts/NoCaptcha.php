@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Contracts;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Contracts;
 
 use Arcanedev\NoCaptcha\Contracts\Utilities\Request;
 

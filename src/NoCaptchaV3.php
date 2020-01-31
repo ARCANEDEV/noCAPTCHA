@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha;
 
 use Arcanedev\Html\Elements\Input;
 use Arcanedev\NoCaptcha\Utilities\ResponseV3;

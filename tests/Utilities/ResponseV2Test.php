@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Tests\Utilities;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Tests\Utilities;
 
 use Arcanedev\NoCaptcha\Tests\TestCase;
 use Arcanedev\NoCaptcha\Utilities\ResponseV2;
@@ -17,7 +21,7 @@ class ResponseV2Test extends TestCase
      */
 
     /** @test */
-    public function it_can_be_instantiated()
+    public function it_can_be_instantiated(): void
     {
         $response = new ResponseV2(true);
 
@@ -25,7 +29,7 @@ class ResponseV2Test extends TestCase
     }
 
     /** @test */
-    public function it_can_be_instantiated_from_json()
+    public function it_can_be_instantiated_from_json(): void
     {
         $response = ResponseV2::fromJson('{"success": true}');
 
@@ -33,7 +37,7 @@ class ResponseV2Test extends TestCase
     }
 
     /** @test */
-    public function it_can_convert_to_json()
+    public function it_can_convert_to_json(): void
     {
         $response = ResponseV2::fromArray(['success' => true]);
 
@@ -47,7 +51,7 @@ class ResponseV2Test extends TestCase
     }
 
     /** @test */
-    public function it_can_be_instantiated_from_array()
+    public function it_can_be_instantiated_from_array(): void
     {
         $response = ResponseV2::fromArray(['success' => true]);
 
@@ -55,7 +59,7 @@ class ResponseV2Test extends TestCase
     }
 
     /** @test */
-    public function it_can_get_response_data()
+    public function it_can_get_response_data(): void
     {
         $response = new ResponseV2(
             false,
@@ -83,7 +87,7 @@ class ResponseV2Test extends TestCase
     }
 
     /** @test */
-    public function it_can_convert_to_array()
+    public function it_can_convert_to_array(): void
     {
         $response = new ResponseV2(
             false,
@@ -104,7 +108,7 @@ class ResponseV2Test extends TestCase
     }
 
     /** @test */
-    public function it_can_check_the_hostname()
+    public function it_can_check_the_hostname(): void
     {
         $response = ResponseV2::fromArray([
             'success'  => true,

@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha;
 
 use Arcanedev\Support\Providers\PackageServiceProvider as ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;

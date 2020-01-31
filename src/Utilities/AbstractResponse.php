@@ -1,7 +1,10 @@
-<?php namespace Arcanedev\NoCaptcha\Utilities;
+<?php
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Utilities;
+
+use Illuminate\Contracts\Support\{Arrayable, Jsonable};
 use JsonSerializable;
 
 /**

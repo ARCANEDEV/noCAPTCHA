@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Exceptions;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Exceptions;
 
 /**
  * Class     InvalidUrlException

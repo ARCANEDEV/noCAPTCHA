@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Tests;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Tests;
 
 use Arcanedev\NoCaptcha\NoCaptchaV3;
 use Arcanedev\NoCaptcha\Utilities\Request;
@@ -14,39 +18,12 @@ use Psr\Http\Message\ServerRequestInterface;
 class NoCaptchaV3Test extends TestCase
 {
     /* -----------------------------------------------------------------
-     |  Properties
-     | -----------------------------------------------------------------
-     */
-
-    /** @var  \Arcanedev\NoCaptcha\NoCaptchaV3 */
-    private $noCaptcha;
-
-    /* -----------------------------------------------------------------
-     |  Main Methods
-     | -----------------------------------------------------------------
-     */
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->noCaptcha = $this->createCaptcha();
-    }
-
-    public function tearDown(): void
-    {
-        unset($this->noCaptcha);
-
-        parent::tearDown();
-    }
-
-    /* -----------------------------------------------------------------
      |  Tests
      | -----------------------------------------------------------------
      */
 
     /** @test */
-    public function it_can_get_client_url()
+    public function it_can_get_client_url(): void
     {
         static::assertSame(
             'https://www.google.com/recaptcha/api.js',
@@ -69,7 +46,7 @@ class NoCaptchaV3Test extends TestCase
     }
 
     /** @test */
-    public function it_can_get_verification_url()
+    public function it_can_get_verification_url(): void
     {
         static::assertSame(
             'https://www.google.com/recaptcha/api/siteverify',
@@ -92,26 +69,30 @@ class NoCaptchaV3Test extends TestCase
     }
 
     /** @test */
-    public function it_can_be_instantiated()
+    public function it_can_be_instantiated(): void
     {
-        static::assertInstanceOf(NoCaptchaV3::class, $this->noCaptcha);
+        $noCaptcha = $this->createCaptcha();
+
+        static::assertInstanceOf(NoCaptchaV3::class, $noCaptcha);
         static::assertSame(
             '<script src="https://www.google.com/recaptcha/api.js?render=site-key"></script>',
-            $this->noCaptcha->script()->toHtml()
+            $noCaptcha->script()->toHtml()
         );
     }
 
     /** @test */
-    public function it_can_be_instantiated_with_defaults()
+    public function it_can_be_instantiated_with_defaults(): void
     {
+        $noCaptcha = $this->createCaptcha();
+
         static::assertSame(
             '<input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">',
-            $this->noCaptcha->input()->toHtml()
+            $noCaptcha->input()->toHtml()
         );
     }
 
     /** @test */
-    public function it_must_throw_invalid_type_exception_on_secret_key()
+    public function it_must_throw_invalid_type_exception_on_secret_key(): void
     {
         $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
         $this->expectExceptionMessage('The secret key must be a string value, NULL given');
@@ -120,7 +101,7 @@ class NoCaptchaV3Test extends TestCase
     }
 
     /** @test */
-    public function it_must_throw_api_exception_on_empty_secret_key()
+    public function it_must_throw_api_exception_on_empty_secret_key(): void
     {
         $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
         $this->expectExceptionMessage('The secret key must not be empty');
@@ -129,7 +110,7 @@ class NoCaptchaV3Test extends TestCase
     }
 
     /** @test */
-    public function it_must_throw_invalid_type_exception_on_site_key()
+    public function it_must_throw_invalid_type_exception_on_site_key(): void
     {
         $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
         $this->expectExceptionMessage('The site key must be a string value, NULL given');
@@ -138,7 +119,7 @@ class NoCaptchaV3Test extends TestCase
     }
 
     /** @test */
-    public function it_must_throw_api_exception_on_empty_site_key()
+    public function it_must_throw_api_exception_on_empty_site_key(): void
     {
         $this->expectException(\Arcanedev\NoCaptcha\Exceptions\ApiException::class);
         $this->expectExceptionMessage('The site key must not be empty');
@@ -147,58 +128,64 @@ class NoCaptchaV3Test extends TestCase
     }
 
     /** @test */
-    public function it_can_switch_locale()
+    public function it_can_switch_locale(): void
     {
-        $this->noCaptcha->setLang('fr');
+        $noCaptcha = $this->createCaptcha()->setLang('fr');
 
-        static::assertInstanceOf(NoCaptchaV3::class, $this->noCaptcha);
+        static::assertInstanceOf(NoCaptchaV3::class, $noCaptcha);
         static::assertSame(
             '<script src="https://www.google.com/recaptcha/api.js?hl=fr&render=site-key"></script>',
-            $this->noCaptcha->script()->toHtml()
+            $noCaptcha->script()->toHtml()
         );
     }
 
     /** @test */
-    public function it_can_render_script_tag()
+    public function it_can_render_script_tag(): void
     {
+        $noCaptcha = $this->createCaptcha();
+
         static::assertSame(
             '<script src="https://www.google.com/recaptcha/api.js?render=site-key"></script>',
-            $this->noCaptcha->script()->toHtml()
+            $noCaptcha->script()->toHtml()
         );
 
         // Echo out only once
-        static::assertEmpty($this->noCaptcha->script()->toHtml());
+        static::assertEmpty($noCaptcha->script()->toHtml());
     }
 
     /** @test */
-    public function it_can_render_script_tag_with_lang()
+    public function it_can_render_script_tag_with_lang(): void
     {
-        $this->noCaptcha->setLang('fr');
+        $noCaptcha = $this->createCaptcha()->setLang('fr');
 
         static::assertSame(
             '<script src="https://www.google.com/recaptcha/api.js?hl=fr&render=site-key"></script>',
-            $this->noCaptcha->script()->toHtml()
+            $noCaptcha->script()->toHtml()
         );
 
         // Not twice
-        static::assertEmpty($this->noCaptcha->script()->toHtml());
+        static::assertEmpty($noCaptcha->script()->toHtml());
     }
 
     /** @test */
-    public function it_can_render_script_tag_with_onload_callback()
+    public function it_can_render_script_tag_with_onload_callback(): void
     {
+        $noCaptcha = $this->createCaptcha();
+
         static::assertSame(
             '<script src="https://www.google.com/recaptcha/api.js?render=site-key&onload=no_captcha_onload"></script>',
-            $this->noCaptcha->script('no_captcha_onload')->toHtml()
+            $noCaptcha->script('no_captcha_onload')->toHtml()
         );
 
         // Not twice
-        static::assertEmpty($this->noCaptcha->script()->toHtml());
+        static::assertEmpty($noCaptcha->script()->toHtml());
     }
 
     /** @test */
-    public function it_can_render_api_script()
+    public function it_can_render_api_script(): void
     {
+        $noCaptcha = $this->createCaptcha();
+
         static::assertSame(
             "<script>
                 window.noCaptcha = {
@@ -208,21 +195,23 @@ class NoCaptchaV3Test extends TestCase
                     }
                 }
             </script>",
-            $this->noCaptcha->getApiScript()->toHtml()
+            $noCaptcha->getApiScript()->toHtml()
         );
     }
 
     /** @test */
-    public function it_can_verify()
+    public function it_can_verify(): void
     {
-        static::assertNull($this->noCaptcha->getLastResponse());
+        $noCaptcha = $this->createCaptcha();
+
+        static::assertNull($noCaptcha->getLastResponse());
 
         /** @var  \Arcanedev\NoCaptcha\Utilities\Request  $request */
         $request = tap($this->prophesize(Request::class), function ($request) {
             $request->send(Argument::type('string'))->willReturn('{"success": true}');
         })->reveal();
 
-        $response = $this->noCaptcha
+        $response = $noCaptcha
             ->setRequestClient($request)
             ->verify('re-captcha-response');
 
@@ -230,12 +219,12 @@ class NoCaptchaV3Test extends TestCase
 
         static::assertSame(
             $response,
-            $this->noCaptcha->getLastResponse()
+            $noCaptcha->getLastResponse()
         );
     }
 
     /** @test */
-    public function it_can_verify_psr7_request()
+    public function it_can_verify_psr7_request(): void
     {
         /** @var  \Arcanedev\NoCaptcha\Utilities\Request  $client */
         $client = tap($this->prophesize(Request::class), function ($client) {
@@ -254,7 +243,7 @@ class NoCaptchaV3Test extends TestCase
             ]);
         })->reveal();
 
-        $response = $this->noCaptcha
+        $response = $this->createCaptcha()
             ->setRequestClient($client)
             ->verifyRequest($request);
 
@@ -262,9 +251,11 @@ class NoCaptchaV3Test extends TestCase
     }
 
     /** @test */
-    public function it_can_verify_with_fails()
+    public function it_can_verify_with_fails(): void
     {
-        $response = $this->noCaptcha->verify('');
+        $noCaptcha = $this->createCaptcha();
+
+        $response = $noCaptcha->verify('');
 
         static::assertFalse($response->isSuccess());
 
@@ -277,7 +268,7 @@ class NoCaptchaV3Test extends TestCase
             );
         })->reveal();
 
-        $response = $this->noCaptcha
+        $response = $noCaptcha
             ->setRequestClient($request)
             ->verify('re-captcha-response');
 
@@ -285,11 +276,13 @@ class NoCaptchaV3Test extends TestCase
     }
 
     /** @test */
-    public function it_can_render_captcha_with_optional_name()
+    public function it_can_render_captcha_with_optional_name(): void
     {
+        $noCaptcha = $this->createCaptcha();
+
         static::assertSame(
             '<input type="hidden" id="g-recaptcha" name="g-recaptcha">',
-            $this->noCaptcha->input('g-recaptcha')->toHtml()
+            $noCaptcha->input('g-recaptcha')->toHtml()
         );
     }
 

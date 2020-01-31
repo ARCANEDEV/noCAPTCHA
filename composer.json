@@ -18,11 +18,11 @@
         "ext-curl":           "*",
         "ext-json":           "*",
         "arcanedev/php-html": "^3.0",
-        "arcanedev/support":  "^5.0",
+        "arcanedev/support":  "^5.1",
         "psr/http-message":   "^1.0"
     },
     "require-dev": {
-        "orchestra/testbench":    "^4.0",
+        "orchestra/testbench":    "^4.5",
         "phpunit/phpunit":        "^8.0",
         "phpunit/phpcov":         "^6.0"
     },

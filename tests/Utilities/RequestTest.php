@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Tests\Utilities;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Tests\Utilities;
 
 use Arcanedev\NoCaptcha\Tests\TestCase;
 use Arcanedev\NoCaptcha\Utilities\Request;
@@ -51,13 +55,20 @@ class RequestTest extends TestCase
      */
 
     /** @test */
-    public function it_can_be_instantiated()
+    public function it_can_be_instantiated(): void
     {
-        static::assertInstanceOf(Request::class, $this->request);
+        $expectations = [
+            \Arcanedev\NoCaptcha\Contracts\Utilities\Request::class,
+            \Arcanedev\NoCaptcha\Utilities\Request::class,
+        ];
+
+        foreach ($expectations as $expected) {
+            static::assertInstanceOf($expected, $this->request);
+        }
     }
 
     /** @test */
-    public function it_must_throw_invalid_type_exception_on_url()
+    public function it_must_throw_invalid_type_exception_on_url(): void
     {
         $this->expectException(\Arcanedev\NoCaptcha\Exceptions\InvalidUrlException::class);
         $this->expectExceptionMessage('The url must be a string value, NULL given');
@@ -66,7 +77,7 @@ class RequestTest extends TestCase
     }
 
     /** @test */
-    public function it_must_throw_api_exception_on_url()
+    public function it_must_throw_api_exception_on_url(): void
     {
         $this->expectException(\Arcanedev\NoCaptcha\Exceptions\InvalidUrlException::class);
         $this->expectExceptionMessage('The url must not be empty');
@@ -75,7 +86,7 @@ class RequestTest extends TestCase
     }
 
     /** @test */
-    public function it_must_throw_invalid_url_exception_on_url()
+    public function it_must_throw_invalid_url_exception_on_url(): void
     {
         $this->expectException(\Arcanedev\NoCaptcha\Exceptions\InvalidUrlException::class);
         $this->expectExceptionMessage('The url [trust-me-im-a-valid-url] is invalid');
