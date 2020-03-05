@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Arcanedev\NoCaptcha;
 
+use Arcanedev\NoCaptcha\Contracts\NoCaptcha as NoCaptchaContract;
+use Arcanedev\NoCaptcha\Contracts\NoCaptchaManager as NoCaptchaManagerContract;
 use Arcanedev\Support\Providers\PackageServiceProvider as ServiceProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
@@ -49,7 +51,9 @@ class NoCaptchaServiceProvider extends ServiceProvider implements DeferrableProv
      */
     public function boot(): void
     {
-        $this->publishConfig();
+        if ($this->app->runningInConsole()) {
+            $this->publishConfig();
+        }
     }
 
     /**
@@ -60,7 +64,8 @@ class NoCaptchaServiceProvider extends ServiceProvider implements DeferrableProv
     public function provides(): array
     {
         return [
-            Contracts\NoCaptcha::class,
+            NoCaptchaContract::class,
+            NoCaptchaManagerContract::class,
         ];
     }
 
@@ -74,13 +79,13 @@ class NoCaptchaServiceProvider extends ServiceProvider implements DeferrableProv
      */
     private function registerNoCaptchaManager(): void
     {
-        $this->singleton(Contracts\NoCaptchaManager::class, NoCaptchaManager::class);
+        $this->singleton(NoCaptchaManagerContract::class, NoCaptchaManager::class);
 
-        $this->bind(Contracts\NoCaptcha::class, function (Application $app) {
+        $this->bind(NoCaptchaContract::class, function (Application $app) {
             /** @var  \Illuminate\Contracts\Config\Repository  $config */
             $config = $app['config'];
 
-            return $app->make(Contracts\NoCaptchaManager::class)->version(
+            return $app->make(NoCaptchaManagerContract::class)->version(
                 $config->get('no-captcha.version')
             );
         });

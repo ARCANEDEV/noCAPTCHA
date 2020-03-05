@@ -28,7 +28,7 @@ reCAPTCHA comes in the form of a widget that you can easily add to your blog, fo
   * Easy setup &amp; configuration.
   * Well documented &amp; IDE Friendly.
   * Well tested with maximum code quality.
-  * Laravel `4.2 | 5.x | 6.x` are supported.
+  * Laravel `4.2` to `7.x` are supported.
   * PSR-7 Support (ServerRequest verification).
   * Made with :heart: &amp; :coffee:.
 
@@ -65,8 +65,8 @@ If you discover any security related issues, please email arcanedev.maroc@gmail.
 [badge_downloads]:    https://img.shields.io/packagist/dt/arcanedev/no-captcha.svg?style=flat-square
 
 [link-author]:        https://github.com/arcanedev-maroc
-[link-github-status]: https://github.com/ARCANEDEV/noCAPTCHA/actions
 [link-github-repo]:   https://github.com/ARCANEDEV/noCAPTCHA
+[link-github-status]: https://github.com/ARCANEDEV/noCAPTCHA/actions
 [link-github-issues]: https://github.com/ARCANEDEV/noCAPTCHA/issues
 [link-contributors]:  https://github.com/ARCANEDEV/noCAPTCHA/graphs/contributors
 [link-packagist]:     https://packagist.org/packages/arcanedev/no-captcha
