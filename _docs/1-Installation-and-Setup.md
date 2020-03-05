@@ -20,38 +20,41 @@ For more details, check the [official documentation](https://developers.google.c
 
 | noCaptcha                                                           | Laravel                                                                                                             |
 |:--------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------|
-| ![noCaptcha v1.x][no_captcha_1_x]                                   | ![Laravel v4.2][laravel_4_2]                                                                                        |
-| ![noCaptcha v3.x][no_captcha_3_x]                                   | ![Laravel v5.0][laravel_5_0] ![Laravel v5.1][laravel_5_1] ![Laravel v5.2][laravel_5_2] ![Laravel v5.3][laravel_5_3] |
-| ![noCaptcha v4.x][no_captcha_4_x]                                   | ![Laravel v5.4][laravel_5_4]                                                                                        |
-| ![noCaptcha v5.x][no_captcha_5_x]                                   | ![Laravel v5.5][laravel_5_5]                                                                                        |
-| ![noCaptcha v6.x][no_captcha_6_x]                                   | ![Laravel v5.6][laravel_5_6]                                                                                        |
-| ![noCaptcha v7.x][no_captcha_7_x] ![noCaptcha v8.x][no_captcha_8_x] | ![Laravel v5.7][laravel_5_7]                                                                                        |
-| ![noCaptcha v9.x][no_captcha_9_x]                                   | ![Laravel v5.8][laravel_5_8]                                                                                        |
+| ![noCaptcha v11.x][no_captcha_11_x]                                 | ![Laravel v7.x][laravel_7_x]                                                                                        |
 | ![noCaptcha v10.x][no_captcha_10_x]                                 | ![Laravel v6.x][laravel_6_x]                                                                                        |
+| ![noCaptcha v9.x][no_captcha_9_x]                                   | ![Laravel v5.8][laravel_5_8]                                                                                        |
+| ![noCaptcha v7.x][no_captcha_7_x] ![noCaptcha v8.x][no_captcha_8_x] | ![Laravel v5.7][laravel_5_7]                                                                                        |
+| ![noCaptcha v6.x][no_captcha_6_x]                                   | ![Laravel v5.6][laravel_5_6]                                                                                        |
+| ![noCaptcha v5.x][no_captcha_5_x]                                   | ![Laravel v5.5][laravel_5_5]                                                                                        |
+| ![noCaptcha v4.x][no_captcha_4_x]                                   | ![Laravel v5.4][laravel_5_4]                                                                                        |
+| ![noCaptcha v3.x][no_captcha_3_x]                                   | ![Laravel v5.0][laravel_5_0] ![Laravel v5.1][laravel_5_1] ![Laravel v5.2][laravel_5_2] ![Laravel v5.3][laravel_5_3] |
+| ![noCaptcha v1.x][no_captcha_1_x]                                   | ![Laravel v4.2][laravel_4_2]                                                                                        |
 
 > **Note :** This is a framework-agnostic package, so you can use any version of this package in your PHP project.
 
-[laravel_4_2]:    https://img.shields.io/badge/v4.2-supported-brightgreen.svg?style=flat-square "Laravel v4.2"
-[laravel_5_0]:    https://img.shields.io/badge/v5.0-supported-brightgreen.svg?style=flat-square "Laravel v5.0"
-[laravel_5_1]:    https://img.shields.io/badge/v5.1-supported-brightgreen.svg?style=flat-square "Laravel v5.1"
-[laravel_5_2]:    https://img.shields.io/badge/v5.2-supported-brightgreen.svg?style=flat-square "Laravel v5.2"
-[laravel_5_3]:    https://img.shields.io/badge/v5.3-supported-brightgreen.svg?style=flat-square "Laravel v5.3"
-[laravel_5_4]:    https://img.shields.io/badge/v5.4-supported-brightgreen.svg?style=flat-square "Laravel v5.4"
-[laravel_5_5]:    https://img.shields.io/badge/v5.5-supported-brightgreen.svg?style=flat-square "Laravel v5.5"
-[laravel_5_6]:    https://img.shields.io/badge/v5.6-supported-brightgreen.svg?style=flat-square "Laravel v5.6"
-[laravel_5_7]:    https://img.shields.io/badge/v5.7-supported-brightgreen.svg?style=flat-square "Laravel v5.7"
-[laravel_5_8]:    https://img.shields.io/badge/v5.8-supported-brightgreen.svg?style=flat-square "Laravel v5.8"
+[laravel_7_x]:    https://img.shields.io/badge/v7.x-supported-brightgreen.svg?style=flat-square "Laravel v7.x"
 [laravel_6_x]:    https://img.shields.io/badge/v6.x-supported-brightgreen.svg?style=flat-square "Laravel v6.x"
+[laravel_5_8]:    https://img.shields.io/badge/v5.8-supported-brightgreen.svg?style=flat-square "Laravel v5.8"
+[laravel_5_7]:    https://img.shields.io/badge/v5.7-supported-brightgreen.svg?style=flat-square "Laravel v5.7"
+[laravel_5_6]:    https://img.shields.io/badge/v5.6-supported-brightgreen.svg?style=flat-square "Laravel v5.6"
+[laravel_5_5]:    https://img.shields.io/badge/v5.5-supported-brightgreen.svg?style=flat-square "Laravel v5.5"
+[laravel_5_4]:    https://img.shields.io/badge/v5.4-supported-brightgreen.svg?style=flat-square "Laravel v5.4"
+[laravel_5_3]:    https://img.shields.io/badge/v5.3-supported-brightgreen.svg?style=flat-square "Laravel v5.3"
+[laravel_5_2]:    https://img.shields.io/badge/v5.2-supported-brightgreen.svg?style=flat-square "Laravel v5.2"
+[laravel_5_1]:    https://img.shields.io/badge/v5.1-supported-brightgreen.svg?style=flat-square "Laravel v5.1"
+[laravel_5_0]:    https://img.shields.io/badge/v5.0-supported-brightgreen.svg?style=flat-square "Laravel v5.0"
+[laravel_4_2]:    https://img.shields.io/badge/v4.2-supported-brightgreen.svg?style=flat-square "Laravel v4.2"
 
-[no_captcha_1_x]: https://img.shields.io/badge/version-1.x-blue.svg?style=flat-square "noCaptcha v1.x"
-[no_captcha_3_x]: https://img.shields.io/badge/version-3.x-blue.svg?style=flat-square "noCaptcha v3.x"
-[no_captcha_4_x]: https://img.shields.io/badge/version-4.x-blue.svg?style=flat-square "noCaptcha v4.x"
-[no_captcha_5_x]: https://img.shields.io/badge/version-5.x-blue.svg?style=flat-square "noCaptcha v5.x"
-[no_captcha_6_x]: https://img.shields.io/badge/version-6.x-blue.svg?style=flat-square "noCaptcha v6.x"
-[no_captcha_7_x]: https://img.shields.io/badge/version-7.x-blue.svg?style=flat-square "noCaptcha v7.x"
-[no_captcha_8_x]: https://img.shields.io/badge/version-8.x-blue.svg?style=flat-square "noCaptcha v8.x"
-[no_captcha_9_x]: https://img.shields.io/badge/version-9.x-blue.svg?style=flat-square "noCaptcha v9.x"
+[no_captcha_11_x]: https://img.shields.io/badge/version-11.x-blue.svg?style=flat-square "noCaptcha v11.x"
 [no_captcha_10_x]: https://img.shields.io/badge/version-10.x-blue.svg?style=flat-square "noCaptcha v10.x"
+[no_captcha_9_x]: https://img.shields.io/badge/version-9.x-blue.svg?style=flat-square "noCaptcha v9.x"
+[no_captcha_8_x]: https://img.shields.io/badge/version-8.x-blue.svg?style=flat-square "noCaptcha v8.x"
+[no_captcha_7_x]: https://img.shields.io/badge/version-7.x-blue.svg?style=flat-square "noCaptcha v7.x"
+[no_captcha_6_x]: https://img.shields.io/badge/version-6.x-blue.svg?style=flat-square "noCaptcha v6.x"
+[no_captcha_5_x]: https://img.shields.io/badge/version-5.x-blue.svg?style=flat-square "noCaptcha v5.x"
+[no_captcha_4_x]: https://img.shields.io/badge/version-4.x-blue.svg?style=flat-square "noCaptcha v4.x"
+[no_captcha_3_x]: https://img.shields.io/badge/version-3.x-blue.svg?style=flat-square "noCaptcha v3.x"
+[no_captcha_1_x]: https://img.shields.io/badge/version-1.x-blue.svg?style=flat-square "noCaptcha v1.x"
 
 ## Composer
 
