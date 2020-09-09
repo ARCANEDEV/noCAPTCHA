@@ -9,7 +9,6 @@ use Arcanedev\NoCaptcha\Contracts\Utilities\Request;
 /**
  * Interface  NoCaptcha
  *
- * @package   Arcanedev\NoCaptcha\Contracts
  * @author    ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 interface NoCaptcha

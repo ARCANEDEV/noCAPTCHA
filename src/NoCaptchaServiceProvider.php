@@ -13,7 +13,6 @@ use Illuminate\Contracts\Support\DeferrableProvider;
 /**
  * Class     NoCaptchaServiceProvider
  *
- * @package  Arcanedev\NoCaptcha
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class NoCaptchaServiceProvider extends ServiceProvider implements DeferrableProvider

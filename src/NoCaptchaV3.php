@@ -11,7 +11,6 @@ use Illuminate\Support\Arr;
 /**
  * Class     NoCaptchaV3
  *
- * @package  Arcanedev\NoCaptcha
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class NoCaptchaV3 extends AbstractNoCaptcha

@@ -11,7 +11,6 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Class     AbstractNoCaptcha
  *
- * @package  Arcanedev\NoCaptcha
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class AbstractNoCaptcha implements Contracts\NoCaptcha

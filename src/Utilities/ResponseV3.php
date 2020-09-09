@@ -9,7 +9,6 @@ use Arcanedev\NoCaptcha\Contracts\Utilities\Response as ResponseContract;
 /**
  * Class     ResponseV3
  *
- * @package  Arcanedev\NoCaptcha\Utilities
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ResponseV3 extends AbstractResponse implements ResponseContract
@@ -20,19 +19,9 @@ class ResponseV3 extends AbstractResponse implements ResponseContract
      */
 
     /**
-     * Invalid JSON received
-     */
-    const E_INVALID_JSON = 'invalid-json';
-
-    /**
      * Could not connect to service
      */
     const E_CONNECTION_FAILED = 'connection-failed';
-
-    /**
-     * Not a success, but no error codes received!
-     */
-    const E_UNKNOWN_ERROR = 'unknown-error';
 
     /**
      * Expected hostname did not match
@@ -98,8 +87,8 @@ class ResponseV3 extends AbstractResponse implements ResponseContract
     {
         parent::__construct($success, $errorCodes, $hostname, $challengeTs, $apkPackageName);
 
-        $this->score          = $score;
-        $this->action         = $action;
+        $this->score  = $score;
+        $this->action = $action;
     }
 
     /* -----------------------------------------------------------------
@@ -151,7 +140,7 @@ class ResponseV3 extends AbstractResponse implements ResponseContract
             return new static(true, [], $hostname, $challengeTs, $apkPackageName, $score, $action);
 
         if ( ! (isset($array['error-codes']) && is_array($array['error-codes'])))
-            $array['error-codes'] = [ResponseV3::E_UNKNOWN_ERROR];
+            $array['error-codes'] = [static::E_UNKNOWN_ERROR];
 
         return new static(false, $array['error-codes'], $hostname, $challengeTs, $apkPackageName, $score, $action);
     }

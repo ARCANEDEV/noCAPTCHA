@@ -13,7 +13,6 @@ use Prophecy\Argument;
 /**
  * Class     ValidatorRuleTest
  *
- * @package  Arcanedev\NoCaptcha\Tests\Laravel
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ValidatorRuleTest extends LaravelTestCase

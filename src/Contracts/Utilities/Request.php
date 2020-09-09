@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Arcanedev\NoCaptcha\Contracts\Utilities;
 
 /**
- * Interface  RequestInterface
+ * Interface  Request
  *
- * @package   Arcanedev\NoCaptcha\Contracts\Utilities
  * @author    ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 interface Request

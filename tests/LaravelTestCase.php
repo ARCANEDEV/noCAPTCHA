@@ -5,15 +5,22 @@ declare(strict_types=1);
 namespace Arcanedev\NoCaptcha\Tests;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * Class     LaravelTestCase
  *
- * @package  Arcanedev\NoCaptcha\Tests
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class LaravelTestCase extends BaseTestCase
 {
+    /* -----------------------------------------------------------------
+     |  Traits
+     | -----------------------------------------------------------------
+     */
+
+    use ProphecyTrait;
+
     /* -----------------------------------------------------------------
      |  Main Methods
      | -----------------------------------------------------------------

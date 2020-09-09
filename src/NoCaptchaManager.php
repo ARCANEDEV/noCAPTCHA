@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace Arcanedev\NoCaptcha;
 
 use Illuminate\Support\Manager;
-use Arcanedev\NoCaptcha\Contracts\{
-    NoCaptchaManager as NoCaptchaManagerContract,
-    NoCaptcha as NoCaptchaContract,
-};
+use Arcanedev\NoCaptcha\Contracts\NoCaptcha as NoCaptchaContract;
+use Arcanedev\NoCaptcha\Contracts\NoCaptchaManager as NoCaptchaManagerContract;
 
 /**
  * Class     NoCaptchaManager
  *
- * @package  Arcanedev\NoCaptcha
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class NoCaptchaManager extends Manager implements NoCaptchaManagerContract
