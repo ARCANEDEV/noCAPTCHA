@@ -10,7 +10,6 @@ use Arcanedev\NoCaptcha\Utilities\ResponseV3;
 /**
  * Class     ResponseV3Test
  *
- * @package  Arcanedev\NoCaptcha\Tests\Utilities
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ResponseV3Test extends TestCase

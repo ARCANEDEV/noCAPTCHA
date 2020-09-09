@@ -10,7 +10,6 @@ use Arcanedev\NoCaptcha\Utilities\Request;
 /**
  * Class     RequestTest
  *
- * @package  Arcanedev\NoCaptcha\Tests\Utilities
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class RequestTest extends TestCase

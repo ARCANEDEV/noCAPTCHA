@@ -12,7 +12,6 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Class     NoCaptchaV3Test
  *
- * @package  Arcanedev\NoCaptcha\Tests
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class NoCaptchaV3Test extends TestCase

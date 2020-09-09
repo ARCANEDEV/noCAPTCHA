@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Arcanedev\NoCaptcha\Contracts\Utilities;
 
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\{Arrayable, Jsonable};
 use JsonSerializable;
 
 /**
- * Interface     Response
+ * Interface  Response
  *
- * @package  Arcanedev\NoCaptcha\Contracts\Utilities
- * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ * @author    ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 interface Response extends Arrayable, Jsonable, JsonSerializable
 {

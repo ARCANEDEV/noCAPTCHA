@@ -7,7 +7,6 @@ namespace Arcanedev\NoCaptcha\Utilities;
 /**
  * Class     ResponseV2
  *
- * @package  Arcanedev\NoCaptcha\Utilities
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class ResponseV2 extends AbstractResponse
@@ -34,7 +33,7 @@ class ResponseV2 extends AbstractResponse
             return new static(true, [], $hostname, $challengeTs, $apkPackageName);
 
         if ( ! (isset($array['error-codes']) && is_array($array['error-codes'])))
-            $array['error-codes'] = [ResponseV3::E_UNKNOWN_ERROR];
+            $array['error-codes'] = [static::E_UNKNOWN_ERROR];
 
         return new static(false, $array['error-codes'], $hostname, $challengeTs, $apkPackageName);
     }

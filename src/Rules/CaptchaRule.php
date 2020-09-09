@@ -1,4 +1,8 @@
-<?php namespace Arcanedev\NoCaptcha\Rules;
+<?php
+
+declare(strict_types=1);
+
+namespace Arcanedev\NoCaptcha\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Arr;
@@ -6,7 +10,6 @@ use Illuminate\Support\Arr;
 /**
  * Class     CaptchaRule
  *
- * @package  Arcanedev\NoCaptcha\Rules
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class CaptchaRule implements Rule

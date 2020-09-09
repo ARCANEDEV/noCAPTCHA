@@ -10,7 +10,6 @@ use Arcanedev\NoCaptcha\Tests\LaravelTestCase;
 /**
  * Class     NoCaptchaManagerTest
  *
- * @package  Arcanedev\NoCaptcha\Tests\Laravel
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class NoCaptchaManagerTest extends LaravelTestCase

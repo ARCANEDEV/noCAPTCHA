@@ -10,7 +10,6 @@ use Arcanedev\NoCaptcha\Exceptions\InvalidUrlException;
 /**
  * Class     Request
  *
- * @package  Arcanedev\NoCaptcha\Utilities
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 class Request implements RequestContract

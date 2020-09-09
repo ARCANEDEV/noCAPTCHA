@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Arcanedev\NoCaptcha\Contracts;
 
 /**
- * Interface     NoCaptchaManager
+ * Interface  NoCaptchaManager
  *
- * @package  Arcanedev\NoCaptcha\Contracts
- * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
+ * @author    ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 interface NoCaptchaManager
 {

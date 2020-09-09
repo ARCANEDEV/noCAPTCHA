@@ -10,7 +10,6 @@ use JsonSerializable;
 /**
  * Class     AbstractResponse
  *
- * @package  Arcanedev\NoCaptcha\Utilities
  * @author   ARCANEDEV <arcanedev.maroc@gmail.com>
  */
 abstract class AbstractResponse implements Arrayable, Jsonable, JsonSerializable
@@ -21,6 +20,11 @@ abstract class AbstractResponse implements Arrayable, Jsonable, JsonSerializable
      */
 
     /**
+     * Invalid JSON received
+     */
+    const E_INVALID_JSON = 'invalid-json';
+
+    /**
      * Did not receive a 200 from the service
      */
     const E_BAD_RESPONSE = 'bad-response';
@@ -29,6 +33,11 @@ abstract class AbstractResponse implements Arrayable, Jsonable, JsonSerializable
      * ReCAPTCHA response not provided
      */
     const E_MISSING_INPUT_RESPONSE = 'missing-input-response';
+
+    /**
+     * Not a success, but no error codes received!
+     */
+    const E_UNKNOWN_ERROR = 'unknown-error';
 
     /* -----------------------------------------------------------------
      |  Properties
@@ -82,10 +91,8 @@ abstract class AbstractResponse implements Arrayable, Jsonable, JsonSerializable
      * @param  string|null  $hostname
      * @param  string|null  $challengeTs
      * @param  string|null  $apkPackageName
-     * @param  float|null   $score
-     * @param  string|null  $action
      */
-    public function __construct($success, array $errorCodes = [], $hostname = null, $challengeTs = null, $apkPackageName = null, $score = null, $action = null)
+    public function __construct($success, array $errorCodes = [], $hostname = null, $challengeTs = null, $apkPackageName = null)
     {
         $this->success        = $success;
         $this->errorCodes     = $errorCodes;
@@ -156,7 +163,7 @@ abstract class AbstractResponse implements Arrayable, Jsonable, JsonSerializable
         $responseData = json_decode($json, true);
 
         if ( ! $responseData)
-            return new static(false, [ResponseV3::E_INVALID_JSON]);
+            return new static(false, [static::E_INVALID_JSON]);
 
         return static::fromArray($responseData);
     }
