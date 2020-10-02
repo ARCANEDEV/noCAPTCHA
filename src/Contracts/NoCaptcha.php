@@ -23,7 +23,7 @@ interface NoCaptcha
      *
      * @param  \Arcanedev\NoCaptcha\Contracts\Utilities\Request  $request
      *
-     * @return self
+     * @return $this
      */
     public function setRequestClient(Request $request);
 
@@ -32,9 +32,16 @@ interface NoCaptcha
      *
      * @param  string  $lang
      *
-     * @return self
+     * @return $this
      */
     public function setLang($lang);
+
+    /**
+     * Get language code.
+     *
+     * @return string|null
+     */
+    public function getLang();
 
     /* -----------------------------------------------------------------
      |  Main Methods

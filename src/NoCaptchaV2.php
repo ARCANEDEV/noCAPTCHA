@@ -45,7 +45,7 @@ class NoCaptchaV2 extends AbstractNoCaptcha
         $queries = [];
 
         if ($this->hasLang())
-            Arr::set($queries, 'hl', $this->lang);
+            Arr::set($queries, 'hl', $this->getLang());
 
         if ($this->hasCallbackName($callbackName)) {
             Arr::set($queries, 'onload', $callbackName);
