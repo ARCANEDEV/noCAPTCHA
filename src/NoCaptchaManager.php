@@ -84,7 +84,7 @@ class NoCaptchaManager extends Manager implements NoCaptchaManagerContract
         return $this->container->make($driver, [
             'secret'  => $this->config('secret'),
             'siteKey' => $this->config('sitekey'),
-            'locale'  => $this->config('lang') ?: $this->container->getLocale(),
+            'lang'    => $this->config('lang') ?: $this->container->getLocale(),
         ]);
     }
 

@@ -81,15 +81,16 @@ class NoCaptchaManagerTest extends LaravelTestCase
     /** @test */
     public function it_can_get_driver_by_given_version(): void
     {
-        static::assertInstanceOf(
-            NoCaptchaV3::class,
-            $this->manager->version('v3')
-        );
+        $versions = [
+            'v3' => NoCaptchaV3::class,
+            'v2' => NoCaptchaV2::class,
+        ];
 
-        static::assertInstanceOf(
-            NoCaptchaV2::class,
-            $this->manager->version('v2')
-        );
+        foreach ($versions as $version => $class) {
+            $captcha = $this->manager->version();
+
+            static::assertInstanceOf(NoCaptchaV3::class, $captcha);
+        }
     }
 
     /** @test */
@@ -99,5 +100,23 @@ class NoCaptchaManagerTest extends LaravelTestCase
         $this->expectExceptionMessage('Driver [v1] not supported.');
 
         $this->manager->version('v1');
+    }
+
+    /** @test */
+    public function it_can_set_lang_from_locale()
+    {
+        $versions = [
+            'v3' => NoCaptchaV3::class,
+            'v2' => NoCaptchaV2::class,
+        ];
+
+        $this->app->setLocale('fr');
+
+        foreach ($versions as $version => $class) {
+            $captcha = $this->manager->version($version);
+
+            static::assertInstanceOf($class, $captcha);
+            static::assertSame('fr', $captcha->getLang());
+        }
     }
 }

@@ -38,8 +38,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
-        "coverage": "phpunit --coverage-html build/coverage/html"
+        "test": "phpunit --testdox"
     },
     "extra": {
         "branch-alias": {
