@@ -73,7 +73,7 @@ class NoCaptchaV3 extends AbstractNoCaptcha
             "<script>
                 window.noCaptcha = {
                     render: function(action, callback) {
-                        grecaptcha.execute('".$this->getSiteKey()."', {action})
+                        grecaptcha.execute('".$this->getSiteKey()."', {action: action})
                               .then(callback);
                     }
                 }
