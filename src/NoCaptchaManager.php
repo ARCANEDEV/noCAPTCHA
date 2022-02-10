@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Arcanedev\NoCaptcha;
 
-use Illuminate\Support\Manager;
 use Arcanedev\NoCaptcha\Contracts\NoCaptcha as NoCaptchaContract;
 use Arcanedev\NoCaptcha\Contracts\NoCaptchaManager as NoCaptchaManagerContract;
+use Illuminate\Support\Manager;
 
 /**
  * Class     NoCaptchaManager
