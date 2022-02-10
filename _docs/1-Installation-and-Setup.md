@@ -20,6 +20,7 @@ For more details, check the [official documentation](https://developers.google.c
 
 | Laravel                      | noCaptcha                                                           |
 |:-----------------------------|:--------------------------------------------------------------------|
+| ![Laravel v9.x][laravel_9_x] | ![noCaptcha v13.x][no_captcha_13_x]                                 |
 | ![Laravel v8.x][laravel_8_x] | ![noCaptcha v12.x][no_captcha_12_x]                                 |
 | ![Laravel v7.x][laravel_7_x] | ![noCaptcha v11.x][no_captcha_11_x]                                 |
 | ![Laravel v6.x][laravel_6_x] | ![noCaptcha v10.x][no_captcha_10_x]                                 |
@@ -36,6 +37,7 @@ For more details, check the [official documentation](https://developers.google.c
 
 > **Note :** This is a framework-agnostic package, so you can use any version of this package in your PHP project.
 
+[laravel_9_x]: https://img.shields.io/badge/version-9.x-blue.svg?style=flat-square "Laravel v9.x"
 [laravel_8_x]: https://img.shields.io/badge/version-8.x-blue.svg?style=flat-square "Laravel v8.x"
 [laravel_7_x]: https://img.shields.io/badge/version-7.x-blue.svg?style=flat-square "Laravel v7.x"
 [laravel_6_x]: https://img.shields.io/badge/version-6.x-blue.svg?style=flat-square "Laravel v6.x"
@@ -50,6 +52,7 @@ For more details, check the [official documentation](https://developers.google.c
 [laravel_5_0]: https://img.shields.io/badge/version-5.0-blue.svg?style=flat-square "Laravel v5.0"
 [laravel_4_2]: https://img.shields.io/badge/version-4.2-blue.svg?style=flat-square "Laravel v4.2"
 
+[no_captcha_13_x]: https://img.shields.io/badge/version-13.x-blue.svg?style=flat-square "noCaptcha v13.x"
 [no_captcha_12_x]: https://img.shields.io/badge/version-12.x-blue.svg?style=flat-square "noCaptcha v12.x"
 [no_captcha_11_x]: https://img.shields.io/badge/version-11.x-blue.svg?style=flat-square "noCaptcha v11.x"
 [no_captcha_10_x]: https://img.shields.io/badge/version-10.x-blue.svg?style=flat-square "noCaptcha v10.x"
