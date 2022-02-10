@@ -14,7 +14,7 @@
     "type":    "library",
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^8.0",
         "ext-curl": "*",
         "ext-json": "*",
         "arcanedev/php-html": "^6.0",
@@ -24,7 +24,7 @@
     "require-dev": {
         "orchestra/testbench": "^7.0",
         "phpspec/prophecy-phpunit": "^2.0",
-        "phpunit/phpunit": "^9.3.3"
+        "phpunit/phpunit": "^9.5.8"
     },
     "autoload": {
         "psr-4": {
